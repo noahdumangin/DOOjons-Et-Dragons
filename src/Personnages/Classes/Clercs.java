@@ -1,8 +1,10 @@
-package Personnages;
+package classes;
+
+import Personnages.Personnage;
 
 import java.util.ArrayList;
 
-public class Personnage
+public class Clerc extends Personnage
 {
     private String m_nom;
     private Race m_race;
