@@ -8,4 +8,6 @@ public class Stat
     private int initiative;
 
     public Stat ()
+    {
+    }
 }

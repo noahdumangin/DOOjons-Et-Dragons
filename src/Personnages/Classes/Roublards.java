@@ -7,7 +7,7 @@ import Personnages.*;
 
 import java.util.ArrayList;
 
-public class Clercs extends Personnage
+public class Roublards extends Personnage
 {
     private String m_nom;
     private String m_race;
