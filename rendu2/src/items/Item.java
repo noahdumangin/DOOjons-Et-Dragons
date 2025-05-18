@@ -9,4 +9,8 @@ public class Item {
         this.m_nom=nom;
         this.m_heavy=heavy;
     }
+    public String getNom()
+    {
+        return m_nom;
+    }
 }

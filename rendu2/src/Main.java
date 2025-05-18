@@ -31,16 +31,26 @@ public class Main {
 
         Lucas.afficherStats();
 
-        Monstre dragon = new Monstre(1, "Dragon", 5, new Des(4,20), 20,6, 8,10,4);
+        Monstre dragon = new Monstre(1, "Dragon", 5, new Des(4,20), 20,6, 8,10,4,6);
+
+        System.out.println(Lucas.getWeapon());
+        Lucas.equiperArme(Baton);
+        System.out.println(Lucas.getWeapon());
+
 
 
         Donjon donjon = new Donjon(18, 18);
+        donjon.getCase(1,0).setItem(CoteMaille);
         donjon.getCase(0, 0).setPersonnage(Lucas);
-        donjon.getCase(3,3).setMonstre(dragon);
+        donjon.getCase(2,0).setMonstre(dragon);
         donjon.getCase(3,7).estObstacle=true;
         donjon.getCase(4,7).estObstacle=true;
-
         donjon.afficher();
+
+        donjon.deplacerPersonnage(Lucas,"A1","B1");
+        Lucas.attaquer(donjon, "C1");
+        donjon.afficher();
+
     }
 }
 
@@ -51,15 +61,14 @@ public class Main {
 
 
 
-/*Premier rendu et mise en commun
+
+/*
+Second rendu :
 Ce qui a été fait :
-Création de personnages
-Création d'équipements
+-refonte complète du système de personnages, de classes, de races, d'items
+-Création du donjon, ainsi que des méthodes permettant de set, déplacer les différentes entités
 
 Ce qu'il reste à faire :
-Créations de stats random à partir de la classe outils.Des
-Ajout des items de base de chaque classes lors de la création d'un personnage
-Création de monstres
-Création du système de combats
-Création du donjon/gestion des cases
+-Système de tour par tour
+-Affichage de l'ordre des tours
  */

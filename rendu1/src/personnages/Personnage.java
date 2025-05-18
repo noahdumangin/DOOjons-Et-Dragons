@@ -1,50 +1,56 @@
 package personnages;
 import items.*;
+
 import java.util.ArrayList;
-
-
+import outils.Des;
+import donjon.*;
 public class Personnage {
-    public String m_nom;
+    private String m_nom;
 
-    public int m_hp=0;
-    public int m_strength=0;
-    public int m_dext=0;
-    public int m_speed=0;
-    public int m_init=0;
+    private int m_hp;
+    private int m_max_hp;
+    private int m_strength;
+    private int m_dext;
+    private int m_speed;
+    private int m_init;
+
+    private ArrayList<Item> m_inventory;
+
+    private Armor m_armor;
+
+    private Weapon m_weapon;
 
 
-    public Personnage(String nom, String race)
+    public Personnage(String nom, Race race, Classes classes)
     {
+        Des Buffer = new Des(4,4);
+        ArrayList<Integer> BuffDes = Buffer.genererRandom();
         this.m_nom=nom;
-        switch (race)
-        {
-            case "Humain":
-                this.m_hp+=2;
-                this.m_strength+=2;
-                this.m_dext+=2;
-                this.m_speed+=2;
-                this.m_init+=2;
-                break;
-            case "Nain":
-                this.m_strength+=2;
-                break;
-            case "Elfe":
-                this.m_dext+=6;
-                break;
-            case "Halfelins":
-                this.m_dext+=4;
-                this.m_speed+=2;
-                break;
-        }
+        this.m_hp=race.getHp()+classes.getHp();
+        this.m_strength=race.getStrength()+BuffDes.get(0);
+        this.m_dext=race.getDext()+BuffDes.get(1);
+        this.m_speed=race.getSpeed()+BuffDes.get(2);
+        this.m_init=race.getInit()+BuffDes.get(3);
+        this.m_inventory=classes.getInventory();
+        this.m_max_hp=m_hp;
 
 
     }
     public void afficherStats() {
         System.out.println("Nom : " + m_nom);
-        System.out.println("PV : " + m_hp);
+        System.out.println("PV : " + m_hp +"/"+m_max_hp);
         System.out.println("Force : " + m_strength);
         System.out.println("Dexterité : " + m_dext);
         System.out.println("Vitesse : " + m_speed);
         System.out.println("Initiative : " + m_init);
+    }
+
+    public String getNom()
+    {
+        return m_nom;
+    }
+    public void seDeplacer()
+    {
+
     }
 }
