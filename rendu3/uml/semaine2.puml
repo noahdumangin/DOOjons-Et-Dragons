@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+package personnages
+{
+    class Personnage
+    {
+        -m_nom:String
+        -m_max_hp:Integer
+        -m_hp:Integer
+        -m_strength:Integer
+        -m_dext:Integer
+        -m_speed:Integer
+        -m_init:Integer
+        -m_armor:Armor
+        -m_weapon:Weapon
+        +<<create>>Personnage(nom:String,race:Race,classes:Classes)
+        +afficherStats()
+        +getNom():String
+    }
+}
+package items
+{
+    class Item
+    {
+        #m_nom:String
+        #m_heavy:Boolean
+
+        +<<create>>Item(nom:String, heavy:Boolean)
+    }
+    class Weapon
+    {
+        -m_dmg:Des
+        -m_atk_reach:Integer
+        +<<create>>Weapon(nom:String,heavy:Boolean,dmg:Des,atk_reach:Integer)
+        +retournerDmg():Integer
+    }
+}
+Item--|>Weapon
+Personnage "1" o-> "1\n -m_inventory[*]" Item:possède\t\t>
+
+
+@enduml
