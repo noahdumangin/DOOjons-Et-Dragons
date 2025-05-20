@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import outils.Des;
 import donjon.*;
 import monstres.Monstre;
+import sorts.*;
 public class Personnage {
     private String m_nom;
 
@@ -238,5 +239,20 @@ public class Personnage {
         return m_hp <= 0;
     }
 
+    public Sort lancerSort(Sort sort)
+    {
+        return sort;
+    }
+
+    public int setHP(int hp)
+    {
+        this.m_hp=hp;
+        return hp;
+    }
+    public int addHP(int hp)
+    {
+        this.m_hp+=hp;
+        return hp;
+    }
 
 }
