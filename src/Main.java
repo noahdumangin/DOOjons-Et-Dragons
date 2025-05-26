@@ -69,7 +69,7 @@ public class Main {
 
 
 
-*/
+
 /*
 Second rendu :
 Ce qui a été fait :
@@ -88,277 +88,268 @@ import personnages.*;
 import donjon.*;
 import outils.Des;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    private static ArrayList<EntiteCombat> ordreTour = new ArrayList<>();
     private static int tourActuel = 0;
     private static Scanner scanner = new Scanner(System.in);
+    private static Random randomNumbers = new Random();
 
     public static void main(String[] args) {
-        System.out.println("Bienvenue dans DOOnjon et Dragons\n");
+        System.out.println("Bienvenue dans\n");
+        System.out.println(
 
-        // Initialisation des races
-        Race Humain = new Race("Humain", 2,2,2,2,2);
-        Race Elfe = new Race("Elfe", 0,0,6,0,0);
-        Race Nain = new Race("Nain", 0,6,0,0,0);
-        Race Halfelins = new Race("Halfelins", 0,0,0,4,2);
+                "▓█████▄  ▒█████   ▒█████   ███▄    █  ▄▄▄██▀▀▀▒█████   ███▄    █   ██████         \n" +
+                        "▒██▀ ██▌▒██▒  ██▒▒██▒  ██▒ ██ ▀█   █    ▒██  ▒██▒  ██▒ ██ ▀█   █ ▒██    ▒         \n" +
+                        "░██   █▌▒██░  ██▒▒██░  ██▒▓██  ▀█ ██▒   ░██  ▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄           \n" +
+                        "░▓█▄   ▌▒██   ██░▒██   ██░▓██▒  ▐▌██▒▓██▄██▓ ▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒        \n" +
+                        "░▒████▓ ░ ████▓▒░░ ████▓▒░▒██░   ▓██░ ▓███▒  ░ ████▓▒░▒██░   ▓██░▒██████▒▒        \n" +
+                        " ▒▒▓  ▒ ░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░   ▒ ▒  ▒▓▒▒░  ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░        \n" +
+                        " ░ ▒  ▒   ░ ▒ ▒░   ░ ▒ ▒░ ░ ░░   ░ ▒░ ▒ ░▒░    ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░        \n" +
+                        " ░ ░  ░ ░ ░ ░ ▒  ░ ░ ░ ▒     ░   ░ ░  ░ ░ ░  ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░          \n" +
+                        "   ░        ░ ░      ░ ░           ░  ░   ░      ░ ░           ░       ░          \n" +
+                        " ░                                                                                \n" +
+                        "▓█████▄▄▄█████▓   ▓█████▄  ██▀███   ▄▄▄        ▄████  ▒█████   ███▄    █   ██████ \n" +
+                        "▓█   ▀▓  ██▒ ▓▒   ▒██▀ ██▌▓██ ▒ ██▒▒████▄     ██▒ ▀█▒▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ \n" +
+                        "▒███  ▒ ▓██░ ▒░   ░██   █▌▓██ ░▄█ ▒▒██  ▀█▄  ▒██░▄▄▄░▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   \n" +
+                        "▒▓█  ▄░ ▓██▓ ░    ░▓█▄   ▌▒██▀▀█▄  ░██▄▄▄▄██ ░▓█  ██▓▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒\n" +
+                        "░▒████▒ ▒██▒ ░    ░▒████▓ ░██▓ ▒██▒ ▓█   ▓██▒░▒▓███▀▒░ ████▓▒░▒██░   ▓██░▒██████▒▒\n" +
+                        "░░ ▒░ ░ ▒ ░░       ▒▒▓  ▒ ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░ ░▒   ▒ ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░\n" +
+                        " ░ ░  ░   ░        ░ ▒  ▒   ░▒ ░ ▒░  ▒   ▒▒ ░  ░   ░   ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░\n" +
+                        "   ░    ░          ░ ░  ░   ░░   ░   ░   ▒   ░ ░   ░ ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░  \n" +
+                        "   ░  ░              ░       ░           ░  ░      ░     ░ ░           ░       ░  \n" +
+                        "                   ░                                                              \n" +
+                        "\n");
 
-        // Création des armes et armures
-        Weapon Baton = new Weapon("Baton",false, new Des(1,6),1);
-        Weapon Fronde = new Weapon("Fronde",false,new Des(1,4),6);
-        Armor CoteMaille = new Armor("Cote de Maille", true,11);
+        // Initialisation des races :
+        Race Humain = new Race("Humain", 2, 2, 2, 2, 2);
+        Race Elfe = new Race("Elfe", 0, 0, 6, 0, 0);
+        Race Nain = new Race("Nain", 0, 6, 0, 0, 0);
+        Race Halfelins = new Race("Halfelins", 0, 0, 0, 4, 2);
+
+
+
+        //Création des armures légères :
+        Armor ArmureEcailles = new Armor("Armures d'écailles", false, 9);
+        Armor DemiPlate = new Armor("Demi-Plate", false, 10);
+
+        //Création des armures lourdes :
+        Armor CoteMaille = new Armor("Cote de maille", true, 11);
+        Armor Harnois = new Armor("Harnois", true, 12);
+
+        // Création des armes courantes au corps à corps :
+        Weapon Baton = new Weapon("Baton", false, new Des(1, 6), 1);
+        Weapon MasseArme = new Weapon("Masse d'arme", false, new Des(1, 6), 1);
+
+        //Création des armes de guerre au corps-à-corps :
+        Weapon EpeeLongue = new Weapon("Epée Longue", true, new Des(1, 8), 1);
+        Weapon Rapiere = new Weapon("Rapière", true, new Des(1, 8), 1);
+        Weapon EpeeDeuxMains = new Weapon("Epée à deux mains", true, new Des(2, 6), 1);
+
+        //Création des armes à distance :
+        Weapon Fronde = new Weapon("Fronde", false, new Des(1, 4), 6);
+        Weapon ArbaleteLegere = new Weapon("Arbalète légère", false, new Des(1, 8), 16);
+        Weapon ArcCourt = new Weapon("Arc Court", false, new Des(1, 6), 16);
+
+
+
         ArrayList<Item> inventaireMagicien = new ArrayList<>();
+        ArrayList<Item> inventaireClerc = new ArrayList<>();
+        ArrayList<Item> inventaireGuerrier = new ArrayList<>();
+        ArrayList<Item> inventaireRoublard = new ArrayList<>();
+
+
+
+        // Création inventaire Magicien
         inventaireMagicien.add(Baton);
         inventaireMagicien.add(Fronde);
 
-        // Création de l'inventaire
-        ArrayList<Item> inventaireGuerrier = new ArrayList<>();
-        inventaireGuerrier.add(Baton);
-        inventaireGuerrier.add(Fronde);
+        // Création inventaire Clerc
+        inventaireClerc.add(MasseArme);
+        inventaireClerc.add(ArmureEcailles);
+        inventaireClerc.add(ArbaleteLegere);
+
+        //Création inventaire Guerrier
+        inventaireGuerrier.add(CoteMaille);
+        inventaireGuerrier.add(EpeeLongue);
+        inventaireGuerrier.add(ArbaleteLegere);
+
+        //Création inventaire Roublard
+        inventaireRoublard.add(Rapiere);
+        inventaireRoublard.add(ArcCourt);
 
         // Création des classes
         Classes Magicien = new Classes(12, inventaireMagicien);
+        Classes Clerc = new Classes(16, inventaireClerc);
+        Classes Guerrier = new Classes(20, inventaireGuerrier);
+        Classes Roublard = new Classes(16, inventaireRoublard);
+
 
         // Création des personnages
+        String temp_nom="Michel";
+        Race temp_race=Humain;
+        Classes temp_classe=Guerrier;
+        int temp_id_race;
+        int temp_id_classe;
+        ArrayList<Personnage>ListePerso = new ArrayList<>();
+
+
+
+
+
+
+        //Début partie non définini
+        System.out.println("Combien de personnages voulez vous créer ?");
+        int nb_persos = scanner.nextInt();
+        scanner.nextLine();
+        for (int i=0; i<nb_persos; i++)
+        {
+            System.out.println("Rentrez le nom du personnage");
+            temp_nom=scanner.nextLine();
+
+            System.out.println("Rentrez la race du personnage\n1.Humain\n2.Elfe\n3.Nain\n4.Halfelins");
+            temp_id_race=scanner.nextInt();
+            switch(temp_id_race)
+            {
+                case 1:
+                    temp_race=Humain;
+                    break;
+                case 2:
+                    temp_race=Elfe;
+                    break;
+                case 3:
+                    temp_race=Nain;
+                    break;
+                case 4:
+                    temp_race=Halfelins;
+                    break;
+                default:
+                    System.out.println("Choix incorrect");
+                    break;
+
+            }
+            System.out.println("Rentrez la classe du personnage\n1.Magicien\n2.Clerc\n3.Guerrier\n4.Roublard");
+            temp_id_classe=scanner.nextInt();
+            scanner.nextLine();
+            switch (temp_id_classe)
+            {
+                case 1:
+                    temp_classe=Magicien;
+                    break;
+                case 2:
+                    temp_classe=Clerc;
+                     break;
+                case 3:
+                    temp_classe=Guerrier;
+                    break;
+                case 4:
+                    temp_classe=Roublard;
+                    break;
+
+                default:
+                    System.out.println("Choix incorrect");
+                    break;
+            }
+
+            Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
+            ListePerso.add(personnage);
+        }
+
+        //Création des monstres
+        ArrayList<Monstre> ListeMonstre = new ArrayList<>();
+        int temp_num;
+        String temp_specie;
+        int temp_atk_reach;
+        int temp_nb_des;
+        int temp_type_des;
+        int temp_hp;
+        int temp_strength;
+        int temp_dext;
+        int temp_CA;
+        int temp_init;
+        int temp_speed;
+        System.out.println("Rentrez le nombre de monstres à créer");
+        int nb_monstres = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i=0; i<nb_monstres; i++)
+        {
+            System.out.println("Rentrez le nom de l'espèce de monstre");
+            temp_specie=scanner.nextLine();
+            System.out.println("Rentrez sa portée");
+            temp_atk_reach=scanner.nextInt();
+            System.out.println("Rentrez le nombre de dés qu'il lancera pour attaquer");
+            temp_nb_des=scanner.nextInt();
+            System.out.println("Rentrez le type de dés");
+            temp_type_des=scanner.nextInt();
+            System.out.println("Rentrez ses pv");
+            temp_hp= scanner.nextInt();
+            System.out.println("Rentrez sa force");
+            temp_strength= scanner.nextInt();
+            System.out.println("Rentrez sa dextérité");
+            temp_dext=scanner.nextInt();
+            System.out.println("Rentrez sa vitesse");
+            temp_speed= scanner.nextInt();
+            System.out.println("Rentrez sa classe d'armure");
+            temp_CA= scanner.nextInt();
+            System.out.println("Rentrez son initiative");
+            temp_init=scanner.nextInt();
+
+
+            Monstre monstre = new Monstre(1, temp_specie, temp_atk_reach, new Des(temp_nb_des, temp_type_des), temp_hp, temp_strength, temp_dext, temp_CA, temp_init, temp_speed);
+            ListeMonstre.add(monstre);
+        }
+
         Personnage joueur = new Personnage("Conan", Humain, Magicien);
+
+
+        // Création du donjon
+        Donjon donjon = new Donjon(10, 10);
+        /*
+        for(int i=0;i<nb_persos;i++)
+        {
+            donjon.getCase(randomNumbers.nextInt(10), randomNumbers.nextInt(10)).setPersonnage(ListePerso.get(i));
+        }
+        for(int i=0;i<nb_monstres;i++)
+        {
+            donjon.getCase(randomNumbers.nextInt(10), randomNumbers.nextInt(10)).setMonstre(ListeMonstre.get(i));
+        }*/
 
         // Création des monstres
         Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 12, 2, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 13, 1, 5);
 
-        // Création du donjon
-        Donjon donjon = new Donjon(10, 10);
-        donjon.getCase(0, 0).setPersonnage(joueur);
+        Personnage Lucas = new Personnage("Lucas le grand",Elfe,Magicien);
+
+        Lucas.afficherStats();
+
         donjon.getCase(3, 3).setMonstre(gobelin);
         donjon.getCase(7, 7).setMonstre(orc);
-        donjon.getCase(2, 2).setItem(new Weapon("Arc", false, new Des(1, 6), 5));
+        donjon.getCase(1,5).setMonstre(orc);
 
-        // Initialisation de l'ordre des tours
-        initialiserOrdreTour(joueur, gobelin, orc);
+        donjon.getCase(2, 2).setItem(EpeeDeuxMains);
+        //Lucas.poser(6,6);
+        donjon.getCase(6,6).setPersonnage(Lucas);
+        donjon.afficher();
+        System.out.println(gobelin.getSpeed());
+        gobelin.seDeplacer(4,3,donjon);
 
-        // Boucle principale du jeu
-        boucleDeJeu(donjon, joueur);
-    }
+        //Lucas.seDeplacer(6,7,donjon);
+        donjon.afficher();
 
-    // Classe interne pour gérer l'ordre des tours
-    static class EntiteCombat {
-        Object entite;
-        int initiative;
+        gobelin.seDeplacer(4,4,donjon);
 
-        public EntiteCombat(Object entite, int initiative) {
-            this.entite = entite;
-            this.initiative = initiative;
-        }
-    }
+        //Lucas.seDeplacer(6,8,donjon);
+        //Lucas.seDeplacer(4,6,donjon);
 
-    private static void initialiserOrdreTour(Personnage joueur, Monstre... monstres) {
-        // Ajout du joueur
-        ordreTour.add(new EntiteCombat(joueur, joueur.getInit()));
 
-        // Ajout des monstres
-        for (Monstre m : monstres) {
-            ordreTour.add(new EntiteCombat(m, m.getInit()));
-        }
+        donjon.afficher();
 
-        // Tri par initiative (décroissant)
-        Collections.sort(ordreTour, Comparator.comparingInt(e -> -e.initiative));
 
-        System.out.println("\nOrdre d'initiative:");
-        for (EntiteCombat ec : ordreTour) {
-            if (ec.entite instanceof Personnage) {
-                System.out.println(((Personnage) ec.entite).getNom() + " (Init: " + ec.initiative + ")");
-            } else {
-                System.out.println(((Monstre) ec.entite).getSpecie() + " (Init: " + ec.initiative + ")");
-            }
-        }
-        System.out.println();
-    }
 
-    private static void boucleDeJeu(Donjon donjon, Personnage joueur) {
-        boolean jeuEnCours = true;
 
-        while (jeuEnCours) {
-            EntiteCombat entiteActuelle = ordreTour.get(tourActuel % ordreTour.size());
+        //Début du système de tour par tour
 
-            // Affichage du plateau
-            donjon.afficher();
 
-            if (entiteActuelle.entite instanceof Personnage) {
-                // Tour du joueur
-                tourJoueur(donjon, (Personnage) entiteActuelle.entite);
-            } else {
-                // Tour du monstre
-                tourMonstre(donjon, (Monstre) entiteActuelle.entite, joueur);
-            }
-
-            // Vérification des conditions de victoire/défaite
-            if (joueur.estMort()) {
-                System.out.println("Défaite! " + joueur.getNom() + " a été vaincu!");
-                jeuEnCours = false;
-            } else if (tousMonstresMorts(donjon)) {
-                System.out.println("Victoire! Tous les monstres ont été vaincus!");
-                joueur.prendreDegats(-joueur.getMaxHp()); // Soigne complètement
-                jeuEnCours = false;
-            }
-
-            tourActuel++;
-        }
-    }
-
-    private static void tourJoueur(Donjon donjon, Personnage joueur) {
-        System.out.println("\n--- Tour de " + joueur.getNom() + " ---");
-        System.out.println("PV: " + joueur.getHp() + "/" + joueur.getMaxHp());
-        System.out.println("Actions disponibles: 1. Se déplacer 2. Attaquer 3. Ramasser objet 4. S'équiper");
-
-        int actionsRestantes = 3;
-        while (actionsRestantes > 0) {
-            System.out.print("\nAction " + (4 - actionsRestantes) + "/3 - Choix: ");
-            int choix = scanner.nextInt();
-
-            switch (choix) {
-                case 1: // Déplacement
-                    System.out.print("Case de destination (ex: B3): ");
-                    String destination = scanner.next();
-                    if (joueur.seDeplacer(donjon, destination)) {
-                        System.out.println(joueur.getNom() + " se déplace vers " + destination);
-                    }
-                    break;
-
-                case 2: // Attaque
-                    System.out.print("Case à attaquer (ex: C4): ");
-                    String cible = scanner.next();
-                    joueur.attaquer(donjon, cible);
-                    break;
-
-                case 3: // Ramasser objet
-                    joueur.recupererItem(donjon);
-                    break;
-
-                case 4: // Équipement
-                    gererEquipement(joueur);
-                    break;
-
-                default:
-                    System.out.println("Action invalide!");
-                    continue;
-            }
-
-            actionsRestantes--;
-        }
-    }
-
-    private static void tourMonstre(Donjon donjon, Monstre monstre, Personnage joueur) {
-        System.out.println("\n--- Tour du " + monstre.getSpecie() + " ---");
-
-        // IA simple: se déplacer vers le joueur et attaquer
-        try {
-            // Trouver la position du monstre et du joueur
-            int[] posMonstre = trouverPosition(donjon, monstre);
-            int[] posJoueur = trouverPosition(donjon, joueur);
-
-            if (posMonstre != null && posJoueur != null) {
-                // Calculer la distance
-                int distance = Math.abs(posJoueur[0] - posMonstre[0]) +
-                        Math.abs(posJoueur[1] - posMonstre[1]);
-
-                // Si à portée d'attaque
-                if (distance <= monstre.getAtkReach()) {
-                    String caseJoueur = convertirCoordonneesEnCase(posJoueur[0], posJoueur[1]);
-                    monstre.attaquer(donjon, caseJoueur);
-                } else {
-                    // Se rapprocher du joueur
-                    String direction = calculerDirection(posMonstre, posJoueur);
-                    monstre.seDeplacer(donjon, direction);
-                    System.out.println(monstre.getSpecie() + " se déplace vers " + direction);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(monstre.getSpecie() + " passe son tour");
-        }
-    }
-
-    // Méthodes utilitaires
-    private static int[] trouverPosition(Donjon donjon, Object entite) {
-        for (int x = 0; x < donjon.getTailleX(); x++) {
-            for (int y = 0; y < donjon.getTailleY(); y++) {
-                Case c = donjon.getCase(x, y);
-                if (c != null) {
-                    if (entite instanceof Personnage && c.getPersonnage() == entite) {
-                        return new int[]{x, y};
-                    } else if (entite instanceof Monstre && c.getMonstre() == entite) {
-                        return new int[]{x, y};
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    private static String convertirCoordonneesEnCase(int x, int y) {
-        return "" + (char)('A' + x) + (y + 1);
-    }
-
-    private static String calculerDirection(int[] posActuelle, int[] posCible) {
-        int dx = posCible[0] - posActuelle[0];
-        int dy = posCible[1] - posActuelle[1];
-
-        // Priorité au déplacement horizontal
-        if (Math.abs(dx) > Math.abs(dy)) {
-            return convertirCoordonneesEnCase(
-                    posActuelle[0] + (dx > 0 ? 1 : -1),
-                    posActuelle[1]);
-        } else {
-            return convertirCoordonneesEnCase(
-                    posActuelle[0],
-                    posActuelle[1] + (dy > 0 ? 1 : -1));
-        }
-    }
-
-    private static void gererEquipement(Personnage joueur) {
-        System.out.println("1. Équiper une arme 2. Équiper une armure 3. Déséquiper");
-        int choix = scanner.nextInt();
-
-        if (choix == 1) {
-            ArrayList<Weapon> armes = new ArrayList<>();
-            for (Item item : joueur.getInventory()) {
-                if (item instanceof Weapon) {
-                    armes.add((Weapon) item);
-                }
-            }
-
-            if (armes.isEmpty()) {
-                System.out.println("Aucune arme disponible!");
-                return;
-            }
-
-            System.out.println("Armes disponibles:");
-            for (int i = 0; i < armes.size(); i++) {
-                System.out.println((i + 1) + ". " + armes.get(i).getNom());
-            }
-
-            int choixArme = scanner.nextInt() - 1;
-            if (choixArme >= 0 && choixArme < armes.size()) {
-                joueur.equiperArme(armes.get(choixArme));
-                System.out.println(joueur.getNom() + " équipe " + armes.get(choixArme).getNom());
-            }
-        } else if (choix == 2) {
-            // Même logique pour les armures
-        }
-    }
-
-    private static boolean tousMonstresMorts(Donjon donjon) {
-        for (int x = 0; x < donjon.getTailleX(); x++) {
-            for (int y = 0; y < donjon.getTailleY(); y++) {
-                Case c = donjon.getCase(x, y);
-                if (c != null && c.getMonstre() != null) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

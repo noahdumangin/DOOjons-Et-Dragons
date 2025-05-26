@@ -1,12 +1,19 @@
 package personnages;
+import donjon.Donjon;
+import entite.Entite;
 import items.*;
+import donjon.*;
 
 import java.util.ArrayList;
-import outils.Des;
-import donjon.*;
+
 import monstres.Monstre;
-public class Personnage {
+import outils.Des;
+
+public class Personnage implements Entite {
     private String m_nom;
+
+    private int m_x;
+    private int m_y;
 
     private int m_hp;
     private int m_max_hp;
@@ -120,8 +127,8 @@ public class Personnage {
     }
 
     public int getCA() {
-        // CA de base = 10
-        int baseCA = 10;
+        // CA de base = 1
+        int baseCA = 1;
 
         // Si une armure est équipée, on ajoute son bonus
         if (m_armor != null) {
@@ -136,107 +143,55 @@ public class Personnage {
         return m_max_hp;
     }
 
-    // Dans Personnage.java
-    public boolean seDeplacer(Donjon donjon, String caseArrivee) {
-        // Trouver la case actuelle du personnage
-        int[] coordActuelles = trouverPositionDansDonjon(donjon);
-        if (coordActuelles == null) return false;
-
-        return donjon.deplacerPersonnage(this, coordActuelles[0] + "," + coordActuelles[1], caseArrivee);
-    }
-
-    public int[] trouverPositionDansDonjon(Donjon donjon) {
-        for (int x = 0; x < donjon.getTailleX(); x++) {
-            for (int y = 0; y < donjon.getTailleY(); y++) {
-                Case c = donjon.getCase(x, y);
-                if (c != null && c.getPersonnage() == this) {
-                    return new int[]{x, y};
-                }
-            }
-        }
-        return null;
-    }
-
-    public void recupererItem(Donjon donjon) {
-        int[] position = trouverPositionDansDonjon(donjon);
-        if (position == null) return;
-
-        Case caseActuelle = donjon.getCase(position[0], position[1]);
-        Item item = caseActuelle.getItem();
-
-        if (item != null) {
-            m_inventory.add(item);
-            caseActuelle.setItem(null);
-            System.out.println(m_nom + " a récupéré " + item.getNom());
-        }
-    }
-
-    // Dans Personnage.java
-    public boolean attaquer(Donjon donjon, String caseCible) {
-        if (m_weapon == null) {
-            System.out.println("Aucune arme équipée !");
-            return false;
-        }
-
-        int[] coordAttaquant = trouverPositionDansDonjon(donjon);
-        int[] coordCible = donjon.convertirCaseEnCoordonnees(caseCible);
-
-        if (coordAttaquant == null || coordCible == null) return false;
-
-        // Vérifier la portée
-        int distance = Math.abs(coordCible[0] - coordAttaquant[0]) +
-                Math.abs(coordCible[1] - coordAttaquant[1]);
-
-        if (distance > m_weapon.getAtk_reach()) {
-            System.out.println("Cible hors de portée !");
-            return false;
-        }
-
-        Case caseCibleObj = donjon.getCase(coordCible[0], coordCible[1]);
-        Monstre monstreCible = caseCibleObj.getMonstre();
-
-        if (monstreCible == null) {
-            System.out.println("Aucun monstre à attaquer sur cette case !");
-            return false;
-        }
-
-        // Jet d'attaque
-        Des deAttaque = new Des(1, 20);
-        int jetAttaque = deAttaque.genererRandom().get(0);
-        int bonus = m_weapon.getAtk_reach() > 1 ? m_dext : m_strength;
-        int totalAttaque = jetAttaque + bonus;
-
-        System.out.println(m_nom + " attaque " + monstreCible.getSpecie() +
-                " (Jet: " + jetAttaque + " + Bonus: " + bonus + " = " + totalAttaque +
-                " vs CA: " + monstreCible.getArmorClass() + ")");
-
-        if (totalAttaque > monstreCible.getArmorClass()) {
-            // Touche !
-            int degats = m_weapon.retournerDmg();
-            monstreCible.prendreDegats(degats);
-            System.out.println(m_nom + " inflige " + degats + " dégâts à " + monstreCible.getSpecie());
-
-            if (monstreCible.estMort()) {
-                System.out.println(monstreCible.getSpecie() + " est mort !");
-                caseCibleObj.setMonstre(null);
-            }
-            return true;
-        } else {
-            System.out.println("Attaque ratée !");
-            return false;
-        }
-    }
-    public void prendreDegats(int degats) {
-        this.m_hp -= degats;
-        if (this.m_hp < 0) {
-            this.m_hp = 0;
-        }
-        System.out.println(m_nom + " a maintenant " + m_hp + "/" + m_max_hp + " PV");
-    }
 
     public boolean estMort() {
         return m_hp <= 0;
     }
 
+    /*public void poser(int x, int y)
+    {
+        m_x=x;
+        m_y=y;
+    }*/
+    public void setPosition(int x, int y)
+    {
+        this.m_x=x;
+        this.m_y=y;
+    }
+    @Override
+    public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
+    {
+        int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
+        if(distance <= m_speed/3)
+        {
+            if (donjon.getCase(dest_x,dest_y).isLibre())
+            {
+                //System.out.println(m_x +"-"+ m_y);
+                donjon.getCase(m_x,m_y).setPersonnage(null);
+                this.m_x=dest_x;
+                this.m_y=dest_y;
+                donjon.getCase(dest_x,dest_y).setPersonnage(this);
+            }
+        }
+        else
+        {
+            System.out.println("distance trop élevée");
+        }
+
+    }
+
+    @Override
+    public void attaquer(Case case_cible)
+    {
+        if(case_cible.getM_x())
+        {
+
+        }
+    }
+
+    public void prendreDegats(int degat)
+    {
+        this.m_hp -= degat;
+    }
 
 }

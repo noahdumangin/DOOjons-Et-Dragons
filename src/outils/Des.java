@@ -6,7 +6,6 @@ public class Des {
     static Random randomNumbers = new Random();
     private int m_nb_des;
     private int m_type_des;
-    static int somme=0;
 
     public Des(int nb_des, int type_des) {
         this.m_nb_des = nb_des;
@@ -20,6 +19,17 @@ public class Des {
             resultat.add(randomNumbers.nextInt(m_type_des)+1);
         }
         return resultat;
+    }
+
+    public int sommeDes()
+    {
+        int somme = 0;
+        ArrayList<Integer> des = genererRandom();
+        for (int val : des)
+        {
+            somme += val;
+        }
+        return somme;
     }
 }
 
