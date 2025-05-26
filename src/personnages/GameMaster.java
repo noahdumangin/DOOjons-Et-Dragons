@@ -53,6 +53,5 @@ public class GameMaster
     public void changeCase(Donjon plateau, Case newCase,int x, int y)
     {
         plateau.setCase(x,y,newCase);
-        //blabla
     }
 }
