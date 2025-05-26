@@ -1,0 +1,34 @@
+package personnages;
+
+import donjon.Donjon;
+import monstres.Monstre;
+import outils.Des;
+
+public class GameMaster
+{
+    private String m_nom;
+
+    public GameMaster(String nom)
+    {
+        m_nom = nom;
+    }
+
+    public void degatMonstre(Monstre cible, Des des)
+    {
+        cible.prendreDegats(des.sommeDes());
+    }
+
+    public void degatPerso(Personnage cible, Des des)
+    {
+        cible.prendreDegats(des.sommeDes());
+    }
+
+    public Donjon deplacerMonstre(Donjon plateau, Monstre cible,String coordo)
+    {
+    }
+
+    public Donjon addObstacle()
+    {
+
+    }
+}
