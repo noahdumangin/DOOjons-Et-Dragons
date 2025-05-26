@@ -179,6 +179,10 @@ public class Personnage implements Entite {
         }
 
     }
+    public int addHP(int hp) {
+        this.m_hp += hp;
+        return hp;
+    }
 
     @Override
     public void attaquer(Case case_cible)
