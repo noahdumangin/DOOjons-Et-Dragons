@@ -5,26 +5,27 @@ import items.*;
 import monstres.*;
 
 public class Case {
-    private int x;
-    private int y;
+    private int m_x;
+    private int m_y;
     private Personnage personnage;
     private Item item;
     private Monstre monstre;
     public Boolean estObstacle=false;
 
     public Case(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.m_x = x;
+        this.m_y = y;
+
     }
 
     // Getters et Setters
-    public int getX()
+    public int getM_x()
     {
-        return x;
+        return m_x;
     }
-    public int getY()
+    public int getM_y()
     {
-        return y;
+        return m_y;
     }
     public Personnage getPersonnage()
     {
@@ -33,6 +34,10 @@ public class Case {
     public void setPersonnage(Personnage p)
     {
         this.personnage = p;
+        if(this.personnage !=null)
+        {
+            this.personnage.setPosition(m_x,m_y);
+        }
     }
 
     public Monstre getMonstre()
@@ -42,6 +47,10 @@ public class Case {
     public void setMonstre(Monstre m)
     {
         this.monstre=m;
+        if(this.monstre!=null)
+        {
+            this.monstre.setPosition(m_x,m_y);
+        }
     }
 
     public Item getItem()
@@ -62,7 +71,15 @@ public class Case {
     public String toString() {
         if (personnage != null)
         {
-            return personnage.getNom().substring(0,3);
+            if (personnage.getNom().length() >= 3)
+            {
+                return personnage.getNom().substring(0,3);
+
+            }
+            else
+            {
+                return String.format("%-3s", personnage.getNom());
+            }
         }
         if (estObstacle)
         {
@@ -74,7 +91,15 @@ public class Case {
         }
         if (monstre!=null)
         {
-            return monstre.getSpecie().substring(0,3);
+            if (monstre.getSpecie().length() >= 3)
+            {
+                return monstre.getSpecie().substring(0,3).toString();
+
+            }
+            else
+            {
+                return String.format("%-3s", monstre.getSpecie());
+            }
         }
         return " . ";
     }

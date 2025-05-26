@@ -88,14 +88,12 @@ import personnages.*;
 import donjon.*;
 import outils.Des;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static int tourActuel = 0;
     private static Scanner scanner = new Scanner(System.in);
+    private static Random randomNumbers = new Random();
 
     public static void main(String[] args) {
         System.out.println("Bienvenue dans\n");
@@ -129,6 +127,8 @@ public class Main {
         Race Nain = new Race("Nain", 0, 6, 0, 0, 0);
         Race Halfelins = new Race("Halfelins", 0, 0, 0, 4, 2);
 
+
+
         //Création des armures légères :
         Armor ArmureEcailles = new Armor("Armures d'écailles", false, 9);
         Armor DemiPlate = new Armor("Demi-Plate", false, 10);
@@ -152,10 +152,13 @@ public class Main {
         Weapon ArcCourt = new Weapon("Arc Court", false, new Des(1, 6), 16);
 
 
+
         ArrayList<Item> inventaireMagicien = new ArrayList<>();
         ArrayList<Item> inventaireClerc = new ArrayList<>();
         ArrayList<Item> inventaireGuerrier = new ArrayList<>();
         ArrayList<Item> inventaireRoublard = new ArrayList<>();
+
+
 
         // Création inventaire Magicien
         inventaireMagicien.add(Baton);
@@ -188,20 +191,23 @@ public class Main {
         Classes temp_classe=Guerrier;
         int temp_id_race;
         int temp_id_classe;
-        int temp_HP;
-        int temp_STRENGTH;
-        int temp_DEXT;
-        int temp_SPEED;
-        int temp_INIT;
-        System.out.println("Combien de personnages voulez vous créer ?\n");
+        ArrayList<Personnage>ListePerso = new ArrayList<>();
+
+
+
+
+
+
+        //Début partie non définini
+        System.out.println("Combien de personnages voulez vous créer ?");
         int nb_persos = scanner.nextInt();
         scanner.nextLine();
         for (int i=0; i<nb_persos; i++)
         {
-            System.out.println("Rentrez le nom du personnage\n");
+            System.out.println("Rentrez le nom du personnage");
             temp_nom=scanner.nextLine();
 
-            System.out.println("Rentrez la race du personnage\n1.Humain\n2.Elfe\n3.Nain\n4.Halfelins\n5.Créer nouvelle race");
+            System.out.println("Rentrez la race du personnage\n1.Humain\n2.Elfe\n3.Nain\n4.Halfelins");
             temp_id_race=scanner.nextInt();
             switch(temp_id_race)
             {
@@ -216,15 +222,13 @@ public class Main {
                     break;
                 case 4:
                     temp_race=Halfelins;
-                case 5:
-                    System.out.println("Rentrez le nom de la nouvelle race\n");
                     break;
                 default:
                     System.out.println("Choix incorrect");
                     break;
 
             }
-            System.out.println("Rentrez la classe du personnage\n1.Magicien\n2.Clerc\n3.Guerrier\n4.Roublard\n5.Créer nouvelle classe");
+            System.out.println("Rentrez la classe du personnage\n1.Magicien\n2.Clerc\n3.Guerrier\n4.Roublard");
             temp_id_classe=scanner.nextInt();
             scanner.nextLine();
             switch (temp_id_classe)
@@ -241,35 +245,110 @@ public class Main {
                 case 4:
                     temp_classe=Roublard;
                     break;
-                case 5:
-                    System.out.println("Rentrez le nom de la nouvelle classe");
-                    break;
+
                 default:
                     System.out.println("Choix incorrect");
                     break;
             }
 
-            Personnage Personnage = new Personnage(temp_nom,temp_race,temp_classe);
-
+            Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
+            ListePerso.add(personnage);
         }
 
-        
+        //Création des monstres
+        ArrayList<Monstre> ListeMonstre = new ArrayList<>();
+        int temp_num;
+        String temp_specie;
+        int temp_atk_reach;
+        int temp_nb_des;
+        int temp_type_des;
+        int temp_hp;
+        int temp_strength;
+        int temp_dext;
+        int temp_CA;
+        int temp_init;
+        int temp_speed;
+        System.out.println("Rentrez le nombre de monstres à créer");
+        int nb_monstres = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.println("Rentrez");
+        for (int i=0; i<nb_monstres; i++)
+        {
+            System.out.println("Rentrez le nom de l'espèce de monstre");
+            temp_specie=scanner.nextLine();
+            System.out.println("Rentrez sa portée");
+            temp_atk_reach=scanner.nextInt();
+            System.out.println("Rentrez le nombre de dés qu'il lancera pour attaquer");
+            temp_nb_des=scanner.nextInt();
+            System.out.println("Rentrez le type de dés");
+            temp_type_des=scanner.nextInt();
+            System.out.println("Rentrez ses pv");
+            temp_hp= scanner.nextInt();
+            System.out.println("Rentrez sa force");
+            temp_strength= scanner.nextInt();
+            System.out.println("Rentrez sa dextérité");
+            temp_dext=scanner.nextInt();
+            System.out.println("Rentrez sa vitesse");
+            temp_speed= scanner.nextInt();
+            System.out.println("Rentrez sa classe d'armure");
+            temp_CA= scanner.nextInt();
+            System.out.println("Rentrez son initiative");
+            temp_init=scanner.nextInt();
+
+
+            Monstre monstre = new Monstre(1, temp_specie, temp_atk_reach, new Des(temp_nb_des, temp_type_des), temp_hp, temp_strength, temp_dext, temp_CA, temp_init, temp_speed);
+            ListeMonstre.add(monstre);
+        }
 
         Personnage joueur = new Personnage("Conan", Humain, Magicien);
+
+
+        // Création du donjon
+        Donjon donjon = new Donjon(10, 10);
+        /*
+        for(int i=0;i<nb_persos;i++)
+        {
+            donjon.getCase(randomNumbers.nextInt(10), randomNumbers.nextInt(10)).setPersonnage(ListePerso.get(i));
+        }
+        for(int i=0;i<nb_monstres;i++)
+        {
+            donjon.getCase(randomNumbers.nextInt(10), randomNumbers.nextInt(10)).setMonstre(ListeMonstre.get(i));
+        }*/
 
         // Création des monstres
         Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 12, 2, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 13, 1, 5);
 
-        // Création du donjon
-        Donjon donjon = new Donjon(10, 10);
-        donjon.getCase(0, 0).setPersonnage(joueur);
+        Personnage Lucas = new Personnage("Lucas le grand",Elfe,Magicien);
+
+        Lucas.afficherStats();
+
         donjon.getCase(3, 3).setMonstre(gobelin);
         donjon.getCase(7, 7).setMonstre(orc);
+        donjon.getCase(1,5).setMonstre(orc);
+
         donjon.getCase(2, 2).setItem(EpeeDeuxMains);
+        //Lucas.poser(6,6);
+        donjon.getCase(6,6).setPersonnage(Lucas);
         donjon.afficher();
+        System.out.println(gobelin.getSpeed());
+        gobelin.seDeplacer(4,3,donjon);
+
+        //Lucas.seDeplacer(6,7,donjon);
+        donjon.afficher();
+
+        gobelin.seDeplacer(4,4,donjon);
+
+        //Lucas.seDeplacer(6,8,donjon);
+        //Lucas.seDeplacer(4,6,donjon);
+
+
+        donjon.afficher();
+
+
+
+
+        //Début du système de tour par tour
 
 
     }

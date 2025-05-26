@@ -1,8 +1,8 @@
 package items;
 
 public class Item {
-    protected String m_nom;
-    protected boolean m_heavy;
+    private String m_nom;
+    private boolean m_heavy;
 
     public Item(String nom, boolean heavy)
     {
