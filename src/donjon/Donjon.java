@@ -45,6 +45,13 @@ public class Donjon {
         return m_tailleY;
     }
 
+    public void setCase(int x, int y, Case newCase)
+    {
+        if (x >= 0 && x < m_tailleX && y >= 0 && y < m_tailleY)
+        {
+            this.m_plateau[x][y] = newCase;
+        }
+    }
 
 
 

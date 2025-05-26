@@ -101,6 +101,11 @@ public class Monstre implements Entite {
 
     }
 
+    public void prendreDegats(int degat)
+    {
+        this.m_hp -= degat;
+    }
+
 
 }
 
