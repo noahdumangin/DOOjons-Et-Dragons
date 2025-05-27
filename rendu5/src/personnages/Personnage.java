@@ -268,6 +268,9 @@ public class Personnage implements Entite {
             meurt(donjon);
         }
     }
+    public void addHP(int Soin){
+        m_hp += Soin;
+    }
 
     public void meurt(Donjon donjon)
     {
