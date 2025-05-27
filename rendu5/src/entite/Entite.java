@@ -1,12 +1,11 @@
 package entite;
 
-import donjon.Case;
 import donjon.Donjon;
 
-public interface Entite {
+public interface Entite
+{
+    void seDeplacer(int x_cible, int y_cible, Donjon donjon);
 
-    public void seDeplacer(int dest_x, int dest_y, Donjon donjon);
-
-    public void attaquer();
+    void attaquer(int x_cible, int y_cible, Donjon donjon);
 
 }

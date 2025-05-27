@@ -316,28 +316,55 @@ public class Main {
         }*/
 
         // Création des monstres
-        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 12, 2, 6);
-        Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 13, 1, 5);
+        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 2, 6);
+        Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
-        Personnage Lucas = new Personnage("Lucas le grand",Elfe,Magicien);
+        Personnage Lucas = new Personnage("Lucas le gay",Elfe,Magicien);
 
         Lucas.afficherStats();
-
+        Lucas.afficherInventaire();
         donjon.getCase(3, 3).setMonstre(gobelin);
         donjon.getCase(7, 7).setMonstre(orc);
         donjon.getCase(1,5).setMonstre(orc);
 
         donjon.getCase(2, 2).setItem(EpeeDeuxMains);
-        //Lucas.poser(6,6);
         donjon.getCase(6,6).setPersonnage(Lucas);
         donjon.afficher();
         System.out.println(gobelin.getSpeed());
         gobelin.seDeplacer(4,3,donjon);
-
-        //Lucas.seDeplacer(6,7,donjon);
+        Lucas.equiperArme(Baton);
+        Lucas.seDeplacer(6,7,donjon);
         donjon.afficher();
 
         gobelin.seDeplacer(4,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        Lucas.seDeplacer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+        gobelin.attaquer(5,4,donjon);
+        Lucas.attaquer(4,4,donjon);
+
+
+
+
+
+        /*Lucas.seDeplacer(2,2,donjon);
+        Lucas.afficherInventaire();
+        Lucas.recupItem(donjon);
+        Lucas.afficherInventaire();*/
 
         //Lucas.seDeplacer(6,8,donjon);
         //Lucas.seDeplacer(4,6,donjon);

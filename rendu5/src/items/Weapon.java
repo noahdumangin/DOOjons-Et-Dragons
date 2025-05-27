@@ -1,8 +1,6 @@
 package items;
 import outils.Des;
 
-import java.util.ArrayList;
-
 public class Weapon extends Item{
 
     private Des m_dmg;
@@ -17,6 +15,10 @@ public class Weapon extends Item{
     public int getAtk_reach()
     {
         return m_atk_reach;
+    }
+    public Des getDmg()
+    {
+        return m_dmg;
     }
 }
 
