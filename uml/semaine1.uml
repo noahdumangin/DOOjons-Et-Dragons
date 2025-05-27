@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/qmey/Cours/Programmation/P21/SAE/projet-doojon-et-dragons-master/src</OriginalElement>
+  <nodes>
+    <node x="427.81389554849056" y="511.4770728129649">Main</node>
+    <node x="1088.4037306048708" y="330.2412696108419">items.Weapons.Weapon</node>
+    <node x="1426.25257412558" y="475.7262644740152">items.Item</node>
+    <node x="634.0087244799209" y="377.2412696108419">Stats</node>
+    <node x="1886.8308020880245" y="230.2971744021846">items.Armors.Light.ScaleArmor</node>
+    <node x="1771.2380231389654" y="68.90300316432666">items.Armors.Heavy.ChainMail</node>
+    <node x="-175.34716053235465" y="268.2185256590212">personnages.classes.Clerc</node>
+    <node x="41.529331534048424" y="268.2185256590212">personnages.classes.Guerrier</node>
+    <node x="469.8152899401931" y="268.2185256590212">personnages.classes.Roublard</node>
+    <node x="2178.3555792022494" y="183.0137373078502">Des</node>
+    <node x="710.9230753773808" y="122.10504322809902">items.Weapons.MartialCAC.Rapier</node>
+    <node x="2274.5189915725814" y="327.48497760949726">items.Armors.Light.HalfPlate</node>
+    <node x="1039.6907220525097" y="122.10504322809902">items.Weapons.SimpleRange.LightCrossbow</node>
+    <node x="2049.5797352789673" y="333.57398640407087">items.Armors.Heavy.Harness</node>
+    <node x="1595.229074037415" y="116.66178108912902">items.Weapons.SimpleCAC.Staff</node>
+    <node x="1729.7023281026543" y="321.57398640407087">items.Armors.Armor</node>
+    <node x="264.17231073712077" y="268.2185256590212">personnages.classes.Mage</node>
+    <node x="1408.4604353136167" y="122.5023951071247">items.Weapons.SimpleRange.ShortBow</node>
+    <node x="1254.3378576654693" y="122.5023951071247">items.Weapons.MartialCAC.Longsword</node>
+    <node x="864.4580094564303" y="122.10504322809902">items.Weapons.SimpleCAC.Mace</node>
+    <node x="-28.216550338120086" y="447.91672078746313">personnages.Personnage</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="items.Weapons.MartialCAC.Longsword" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="-8.499315981680411E-5" y="26.99960489287531" />
+      <point x="1323.8377726723095" y="217.0" />
+      <point x="1198.9041780841133" y="217.0" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+    <edge source="items.Weapons.SimpleRange.LightCrossbow" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="-3.0125444436635007E-4" y="26.99995677190097" />
+      <point x="1124.1904207980654" y="217.0" />
+      <point x="1198.9041780841133" y="217.0" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+    <edge source="items.Armors.Heavy.Harness" target="items.Armors.Armor" relationship="GENERALIZATION">
+      <point x="39.75495560374111" y="-27.000172802264274" />
+      <point x="2147.8346908827084" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="380.741269610842" />
+      <point x="84.50030633900906" y="20.167283206771117" />
+    </edge>
+    <edge source="items.Weapons.SimpleCAC.Staff" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="-4.887895311185275E-4" y="-26.999707072012825" />
+      <point x="1642.728585247884" y="63.3300740171162" />
+      <point x="1198.9041780841133" y="63.3300740171162" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+    <edge source="personnages.classes.Mage" target="personnages.Personnage" relationship="GENERALIZATION">
+      <point x="1.5576945838802203E-4" y="27.000442246137197" />
+      <point x="357.17246650657916" y="383.0" />
+      <point x="84.78362998790814" y="383.0" />
+      <point x="1.8032602822160015E-4" y="-39.0004378370399" />
+    </edge>
+    <edge source="items.Weapons.SimpleCAC.Mace" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="8.681417284606141E-6" y="-26.999811439867273" />
+      <point x="913.9580181378476" y="217.0" />
+      <point x="1198.9041780841133" y="217.0" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+    <edge source="personnages.classes.Clerc" target="personnages.Personnage" relationship="GENERALIZATION">
+      <point x="4.942687512414778E-4" y="27.000106653908404" />
+      <point x="-83.84666626360341" y="383.0" />
+      <point x="84.78362998790814" y="383.0" />
+      <point x="1.8032602822160015E-4" y="-39.0004378370399" />
+    </edge>
+    <edge source="Main" target="personnages.classes.Clerc" relationship="CREATE">
+      <point x="0.0" y="39.0" />
+      <point x="515.3138955484906" y="575.7941728022643" />
+      <point x="-171.78184658963164" y="575.7941728022643" />
+      <point x="-87.93468605727698" y="27.0" />
+    </edge>
+    <edge source="items.Weapons.MartialCAC.Rapier" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="1.6646058770675154E-4" y="27.000385178655108" />
+      <point x="763.9232418379685" y="217.0" />
+      <point x="1198.9041780841133" y="217.0" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+    <edge source="items.Armors.Light.HalfPlate" target="items.Armors.Armor" relationship="GENERALIZATION">
+      <point x="-4.7645770837334567E-4" y="-26.999828622610835" />
+      <point x="2337.518515114873" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="380.741269610842" />
+      <point x="84.50030633900906" y="20.167283206771117" />
+    </edge>
+    <edge source="personnages.classes.Roublard" target="personnages.Personnage" relationship="GENERALIZATION">
+      <point x="-2.899401930562817E-4" y="26.999762128161365" />
+      <point x="573.815" y="383.0" />
+      <point x="84.78362998790814" y="383.0" />
+      <point x="1.8032602822160015E-4" y="-39.0004378370399" />
+    </edge>
+    <edge source="Main" target="personnages.classes.Mage" relationship="CREATE">
+      <point x="-30.0" y="39.0" />
+      <point x="485.31389554849056" y="371.6723210900085" />
+      <point x="372.17246650657916" y="371.6723210900085" />
+      <point x="15.000155769458388" y="27.0" />
+    </edge>
+    <edge source="personnages.classes.Guerrier" target="personnages.Personnage" relationship="GENERALIZATION">
+      <point x="1.4469519987869717E-4" y="-26.99955340256423" />
+      <point x="143.0294762292483" y="383.0" />
+      <point x="84.78362998790814" y="383.0" />
+      <point x="1.8032602822160015E-4" y="-39.0004378370399" />
+    </edge>
+    <edge source="items.Armors.Heavy.ChainMail" target="items.Armors.Armor" relationship="GENERALIZATION">
+      <point x="56.24039524072032" y="27.000305435619005" />
+      <point x="1893.4784183796858" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="380.741269610842" />
+      <point x="84.50030633900906" y="20.167283206771117" />
+    </edge>
+    <edge source="items.Weapons.Weapon" target="items.Item" relationship="GENERALIZATION">
+      <point x="-14.999552520757561" y="-50.49953021799843" />
+      <point x="1183.9041780841133" y="202.0" />
+      <point x="1492.2526829063518" y="202.0" />
+      <point x="1.0878077182496781E-4" y="-38.9997163649611" />
+    </edge>
+    <edge source="Main" target="items.Armors.Heavy.Harness" relationship="CREATE">
+      <point x="15.0" y="39.0" />
+      <point x="530.3138955484906" y="560.3856228076146" />
+      <point x="643.7726621748509" y="560.3856228076146" />
+      <point x="643.7726621748509" y="360.57398640407087" />
+      <point x="-58.5" y="0.0" />
+    </edge>
+    <edge source="items.Armors.Armor" target="items.Item" relationship="GENERALIZATION">
+      <point x="3.063390090574103E-4" y="39.000283206771115" />
+      <point x="1814.2026344416633" y="202.0" />
+      <point x="1492.2526829063518" y="202.0" />
+      <point x="1.0878077182496781E-4" y="-38.9997163649611" />
+    </edge>
+    <edge source="items.Armors.Light.ScaleArmor" target="items.Armors.Armor" relationship="GENERALIZATION">
+      <point x="4.566786019495339E-4" y="-27.000385753871285" />
+      <point x="1960.3312587666264" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="-5.669925982883797" />
+      <point x="2050.217585247884" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="358.22362169790256" />
+      <point x="2037.2957809451364" y="380.741269610842" />
+      <point x="84.50030633900906" y="20.167283206771117" />
+    </edge>
+    <edge source="Main" target="personnages.classes.Guerrier" relationship="CREATE">
+      <point x="-15.0" y="39.0" />
+      <point x="500.31389554849056" y="318.8038089095118" />
+      <point x="1597.0819729366406" y="318.8038089095118" />
+      <point x="1597.0819729366406" y="338.0807263845352" />
+      <point x="1287.0253378459852" y="338.0807263845352" />
+      <point x="1287.0253378459852" y="295.2185256590212" />
+      <point x="101.5" y="0.0" />
+    </edge>
+    <edge source="Main" target="items.Weapons.SimpleRange.LightCrossbow" relationship="CREATE">
+      <point x="0.0" y="-39.0" />
+      <point x="515.3138955484906" y="231.6618621523579" />
+      <point x="555.6547903489742" y="231.6618621523579" />
+      <point x="555.6547903489742" y="-30.921305435619004" />
+      <point x="1124.1907220525097" y="-30.921305435619004" />
+      <point x="0.0" y="-27.0" />
+    </edge>
+    <edge source="items.Weapons.SimpleRange.ShortBow" target="items.Weapons.Weapon" relationship="GENERALIZATION">
+      <point x="4.5223172787700605E-4" y="27.000040636066956" />
+      <point x="1472.9608875453446" y="217.0" />
+      <point x="1198.9041780841133" y="217.0" />
+      <point x="4.4747924243893067E-4" y="-50.49953021799843" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5076734192756293" showDependencies="true" x="1050.2542235550277" y="99.1473926964938" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

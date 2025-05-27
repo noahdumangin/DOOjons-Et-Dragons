@@ -1,0 +1,220 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Packages
+package "donjon" {
+    class Case {
+        - x: int
+        - y: int
+        - personnage: Personnage
+        - item: Item
+        - monstre: Monstre
+        - estObstacle: Boolean
+        + getX(): int
+        + getY(): int
+        + getPersonnage(): Personnage
+        + setPersonnage(Personnage)
+        + getMonstre(): Monstre
+        + setMonstre(Monstre)
+        + getItem(): Item
+        + setItem(Item)
+        + isLibre(): boolean
+        + toString(): String
+    }
+
+    class Donjon {
+        - m_plateau: Case[][]
+        - m_tailleX: int
+        - m_tailleY: int
+        + Donjon(int, int)
+        + afficher(): void
+        + getCase(int, int): Case
+        + convertirCaseEnCoordonnees(String): int[]
+        + deplacerPersonnage(Personnage, String, String): boolean
+        + deplacerMonstre(Monstre, String, String): boolean
+        + getTailleX(): int
+        + getTailleY(): int
+    }
+}
+
+package "items" {
+    class Item {
+        # m_nom: String
+        # m_heavy: boolean
+        + Item(String, boolean)
+        + getNom(): String
+    }
+
+    class Weapon {
+        - m_dmg: Des
+        - m_atk_reach: int
+        + Weapon(String, boolean, Des, int)
+        + retournerDmg(): int
+        + getAtk_reach(): int
+    }
+
+    class Armor {
+        - m_CA: int
+        + Armor(String, boolean, int)
+        + getCA(): int
+    }
+}
+
+package "monstres" {
+    class Monstre {
+        - m_num: int
+        - m_specie: String
+        - m_atk_reach: int
+        - m_dmg: Des
+        - m_hp: int
+        - m_strength: int
+        - m_dext: int
+        - m_armor_class: int
+        - m_init: int
+        - m_speed: int
+        - m_max_hp: int
+        + Monstre(int, String, int, Des, int, int, int, int, int, int)
+        + getSpecie(): String
+        + getSpeed(): int
+        + getInit(): int
+        + getAtkReach(): int
+        + getCA(): int
+        + seDeplacer(Donjon, String): boolean
+        + trouverPositionDansDonjon(Donjon): int[]
+        + getArmorClass(): int
+        + estMort(): boolean
+        + attaquer(Donjon, String): boolean
+        + prendreDegats(int): void
+    }
+}
+
+package "outils" {
+    class Des {
+        - m_nb_des: int
+        - m_type_des: int
+        + Des(int, int)
+        + genererRandom():Integer[*]
+    }
+}
+
+package "personnages" {
+    class Personnage {
+        - m_nom: String
+        - m_hp: int
+        - m_max_hp: int
+        - m_strength: int
+        - m_dext: int
+        - m_speed: int
+        - m_init: int
+        - m_inventory: ArrayList<Item>
+        - m_armor: Armor
+        - m_weapon: Weapon
+        + Personnage(String, Race, Classes)
+        + afficherStats(): void
+        + getNom(): String
+        + equiperArme(Weapon): void
+        + equiperArmure(Armor): void
+        + desequiperArme(Weapon): void
+        + desequiperArmmure(Armor): void
+        + getHp(): int
+        + getStrength(): int
+        + getDext(): int
+        + getSpeed(): int
+        + getInit(): int
+        + getWeapon(): Weapon
+        + getArmor(): Armor
+        + getInventory(): ArrayList<Item>
+        + getCA(): int
+        + getMaxHp(): int
+        + seDeplacer(Donjon, String): boolean
+        + trouverPositionDansDonjon(Donjon): int[]
+        + recupererItem(Donjon): void
+        + attaquer(Donjon, String): boolean
+        + prendreDegats(int): void
+        + estMort(): boolean
+    }
+
+    class Classes {
+        - m_hp: int
+        - m_inventory: ArrayList<Item>
+        + Classes(int, ArrayList<Item>)
+        + getHp(): int
+        + getInventory(): ArrayList<Item>
+    }
+
+    class Race {
+        - m_nom: String
+        - m_hp: int
+        - m_strength: int
+        - m_dext: int
+        - m_speed: int
+        - m_init: int
+        + Race(String, int, int, int, int, int)
+        + getNom(): String
+        + getHp(): int
+        + getStrength(): int
+        + getDext(): int
+        + getSpeed(): int
+        + getInit(): int
+    }
+}
+
+' Classe Main (en dehors des packages)
+class Main {
+    - static ordreTour: ArrayList<EntiteCombat>
+    - static tourActuel: int
+    - static scanner: Scanner
+    + main(String[]): void
+    - initialiserOrdreTour(Personnage, Monstre...): void
+    - boucleDeJeu(Donjon, Personnage): void
+    - tourJoueur(Donjon, Personnage): void
+    - tourMonstre(Donjon, Monstre, Personnage): void
+    - trouverPosition(Donjon, Object): int[]
+    - convertirCoordonneesEnCase(int, int): String
+    - calculerDirection(int[], int[]): String
+    - gererEquipement(Personnage): void
+    - tousMonstresMorts(Donjon): boolean
+}
+
+class EntiteCombat {
+    - entite: Object
+    - initiative: int
+    + EntiteCombat(Object, int)
+}
+
+' Relations
+Item <|-- Weapon
+Item <|-- Armor
+
+Personnage "1" *-- "1" Race
+Personnage "1" *-- "1" Classes
+Personnage "1" *-- "0..1" Weapon
+Personnage "1" *-- "0..1" Armor
+Personnage "1" *-- "*" Item : inventory
+
+Case "1" *-- "0..1" Personnage
+Case "1" *-- "0..1" Monstre
+Case "1" *-- "0..1" Item
+
+Donjon "1" *-- "*" Case
+
+Personnage --> Des : utilise
+Monstre --> Des : utilise
+Weapon --> Des : utilise
+
+Personnage --> Donjon : interagis avec
+Monstre --> Donjon : interagis avec
+
+' Relations avec Main
+Main --> Personnage
+Main --> Monstre
+Main --> Donjon
+Main --> Item
+Main --> Weapon
+Main --> Armor
+Main --> EntiteCombat
+
+Main ..> Case : utilise
+Main ..> Des : utilise
+Main ..> Scanner : utilise
+@enduml
