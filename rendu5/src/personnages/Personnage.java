@@ -1,9 +1,9 @@
 package personnages;
+
 import donjon.Donjon;
 import items.*;
 import entite.Entite;
 import java.util.ArrayList;
-
 import outils.Des;
 
 public class Personnage implements Entite {

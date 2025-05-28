@@ -2,7 +2,7 @@ package monstres;
 
 import entite.Entite;
 import outils.Des;
-import donjon.*;
+import donjon.Donjon;
 import personnages.*;
 
 import java.util.ArrayList;

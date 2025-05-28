@@ -1,6 +1,6 @@
 package donjon;
-import personnages.*;
-import monstres.*;
+import personnages.Personnage;
+import monstres.Monstre;
 public class Donjon {
     private Case[][] m_plateau;
     private int m_tailleX;

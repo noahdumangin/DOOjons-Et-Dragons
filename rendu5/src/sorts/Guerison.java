@@ -1,5 +1,7 @@
 package sorts;
+
 import personnages.*;
+
 public class Guerison extends Sort{
     private String m_persochoisi;
 
