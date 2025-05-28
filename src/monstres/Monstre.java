@@ -100,11 +100,14 @@ public class Monstre implements Entite {
     {
 
     }
-
-    public void prendreDegats(int degat)
-    {
-        this.m_hp -= degat;
+    public void prendreDegats(int degats) {
+        this.m_hp -= degats;
+        if (this.m_hp < 0) {
+            this.m_hp = 0;
+        }
+        System.out.println(m_specie + " #" + m_num + " a maintenant " + m_hp + " PV");
     }
+
 
 
 }
