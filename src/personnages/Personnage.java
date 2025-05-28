@@ -86,7 +86,7 @@ public class Personnage implements Entite {
             m_weapon=null;
         }
     }
-    public void desequiperArmmure(Armor armor)
+    public void desequiperArmure(Armor armor)
     {
         if(m_armor==armor)
         {
@@ -286,5 +286,8 @@ public class Personnage implements Entite {
         return m_y;
     }
 
+    public boolean estMort() {
+        return estMort;
+    }
 
 }
