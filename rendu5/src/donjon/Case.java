@@ -64,7 +64,14 @@ public class Case {
 
     public boolean isLibre()
     {
-        return personnage == null && !estObstacle;
+        if(getPersonnage()==null && getMonstre() == null && !estObstacle)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override

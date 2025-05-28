@@ -191,7 +191,7 @@ public class Main {
         Classes temp_classe=Guerrier;
         int temp_id_race;
         int temp_id_classe;
-        ArrayList<Personnage>ListePerso = new ArrayList<>();
+        //ArrayList<Personnage>ListePerso = new ArrayList<>();
 
 
 
@@ -252,11 +252,11 @@ public class Main {
             }
 
             Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
-            ListePerso.add(personnage);
+            //ListePerso.add(personnage);
         }
-
+        MJ aaa = new MJ();
         //Création des monstres
-        ArrayList<Monstre> ListeMonstre = new ArrayList<>();
+        //ArrayList<Monstre> ListeMonstre = new ArrayList<>();
         int temp_num;
         String temp_specie;
         int temp_atk_reach;
@@ -297,7 +297,7 @@ public class Main {
 
 
             Monstre monstre = new Monstre(1, temp_specie, temp_atk_reach, new Des(temp_nb_des, temp_type_des), temp_hp, temp_strength, temp_dext, temp_CA, temp_init, temp_speed);
-            ListeMonstre.add(monstre);
+            //ListeMonstre.add(monstre);
         }
 
         Personnage joueur = new Personnage("Conan", Humain, Magicien);
@@ -319,7 +319,7 @@ public class Main {
         Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 2, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
-        Personnage Lucas = new Personnage("Lucas le gay",Elfe,Magicien);
+        Personnage Lucas = new Personnage("Lucas",Elfe,Magicien);
 
         Lucas.afficherStats();
         Lucas.afficherInventaire();
@@ -333,12 +333,12 @@ public class Main {
         System.out.println(gobelin.getSpeed());
         gobelin.seDeplacer(4,3,donjon);
         Lucas.equiperArme(Baton);
-        Lucas.seDeplacer(6,7,donjon);
+        Lucas.seDeplacer(5,4,donjon);
+
         donjon.afficher();
 
         gobelin.seDeplacer(4,4,donjon);
         Lucas.attaquer(4,4,donjon);
-        Lucas.seDeplacer(5,4,donjon);
         Lucas.attaquer(4,4,donjon);
         gobelin.attaquer(5,4,donjon);
         Lucas.attaquer(4,4,donjon);
@@ -356,6 +356,10 @@ public class Main {
         Lucas.attaquer(4,4,donjon);
         gobelin.attaquer(5,4,donjon);
         Lucas.attaquer(4,4,donjon);
+
+        donjon.afficher();
+
+
 
 
 
@@ -370,7 +374,6 @@ public class Main {
         //Lucas.seDeplacer(4,6,donjon);
 
 
-        donjon.afficher();
 
 
 

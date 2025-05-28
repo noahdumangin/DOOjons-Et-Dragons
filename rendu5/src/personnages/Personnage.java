@@ -180,6 +180,7 @@ public class Personnage implements Entite {
                 this.m_y=dest_y;
                 donjon.getCase(dest_x,dest_y).setPersonnage(this);
             }
+            System.out.println("La case est occupée");
         }
         else
         {
