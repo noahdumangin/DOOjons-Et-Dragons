@@ -1,5 +1,5 @@
 package donjon;
-
+import entite.Entite;
 import personnages.*;
 import items.*;
 import monstres.*;
@@ -11,6 +11,8 @@ public class Case {
     private Item item;
     private Monstre monstre;
     public Boolean estObstacle=false;
+
+    private Entite entite;
 
     public Case(int x, int y) {
         this.m_x = x;
@@ -53,6 +55,16 @@ public class Case {
         }
     }
 
+    public Entite getEntite()
+    {
+        return entite;
+    }
+
+    public Entite setEntite (Entite e)
+    {
+        return this.entite=e;
+    }
+
     public Item getItem()
     {
         return item;
@@ -76,18 +88,7 @@ public class Case {
 
     @Override
     public String toString() {
-        if (personnage != null)
-        {
-            if (personnage.getNom().length() >= 3)
-            {
-                return personnage.getNom().substring(0,3);
 
-            }
-            else
-            {
-                return String.format("%-3s", personnage.getNom());
-            }
-        }
         if (estObstacle)
         {
             return "[ ]";
@@ -96,16 +97,16 @@ public class Case {
         {
             return " * ";
         }
-        if (monstre!=null)
+        
+        if (entite != null)
         {
-            if (monstre.getSpecie().length() >= 3)
+            if(entite.toString().length() >=3)
             {
-                return monstre.getSpecie().substring(0,3).toString();
-
+                return entite.toString().substring(0,3).toString();
             }
             else
             {
-                return String.format("%-3s", monstre.getSpecie());
+                return String.format("%-3s", entite.toString());
             }
         }
         return " . ";

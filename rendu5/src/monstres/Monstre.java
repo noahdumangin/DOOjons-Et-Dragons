@@ -3,8 +3,6 @@ package monstres;
 import outils.Des;
 import donjon.*;
 import entite.Entite;
-import personnages.Personnage;
-
 public class Monstre implements Entite {
 
     private int m_x;
@@ -46,30 +44,72 @@ public class Monstre implements Entite {
     {
         return m_speed;
     }
+
+
+
+    @Override
+    public int getAtk_reach() {
+        return m_atk_reach;
+    }
+
     public int getInit()
     {
         return m_init;
     }
-    public int getAtkReach()
-    {
-        return m_atk_reach;
-    }
+
+    @Override
     public int getCA()
     {
         return m_armor_class;
     }
+    public int getDext()
+    {
+        return m_dext;
+    }
+    public int getStrength()
+    {
+        return m_strength;
+    }
+    @Override
+    public int getDmg()
+    {
+        return m_dmg.genererRandom();
+    }
+
+    @Override
+    public int getCaractAtt(int portee) {
+        if(m_atk_reach>1)
+        {
+            return m_dext;
+        }
+        else
+        {
+            return m_strength;
+        }
+    }
+
     public int getArmorClass() {
         return m_armor_class;
     }
-    public boolean estMort() {
-        return m_hp <= 0;
-    }
 
+
+    @Override
     public void setPosition(int x, int y)
     {
         this.m_x=x;
         this.m_y=y;
     }
+    @Override
+    public int getX()
+    {
+        return this.m_x;
+    }
+    @Override
+    public int getY()
+    {
+        return this.m_y;
+    }
+
     public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
     {
         int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
@@ -92,7 +132,44 @@ public class Monstre implements Entite {
 
     }
 
-    public void attaquer(int x_cible, int y_cible, Donjon donjon) {
+
+
+    @Override
+    public String  afficherHP()
+    {
+        return ("PV "+m_specie+ " : " +m_hp+"/"+m_max_hp);
+    }
+
+    @Override
+    public boolean estMort() {
+        if(m_hp>0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void setHp(int new_hp)
+    {
+        this.m_hp=new_hp;
+    }
+    @Override
+    public int changeHp(int new_hp)
+    {
+        return this.m_hp+=new_hp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return m_specie;
+    }
+
+}
+
+//Limbes
+
+/*public void attaquer(int x_cible, int y_cible, Donjon donjon) {
         Des attaque = new Des(1, 20);
         int buff_attaque = attaque.genererRandom();
         int distance = Math.abs(x_cible - m_x) + Math.abs(y_cible - m_y);
@@ -140,31 +217,4 @@ public class Monstre implements Entite {
         {
             System.out.println("L'attaque a échoué ! La classe d'armure de " + cible.getNom() + " était trop élevée");
         }
-    }
-
-    public void afficherHP()
-    {
-        System.out.println("PV "+m_specie+ " : " +m_hp+"/"+m_max_hp);
-    }
-    public void setHp(int new_hp)
-    {
-        this.m_hp=new_hp;
-    }
-
-    public void changeHp(int new_hp, Donjon donjon)
-    {
-        this.m_hp+=new_hp;
-        if(m_hp<=0)
-        {
-            meurt(donjon);
-        }
-    }
-
-    public void meurt(Donjon donjon)
-    {
-        System.out.println(m_specie +" est mort :)");
-        donjon.getCase(m_x,m_y).setMonstre(null);
-    }
-
-}
-
+    }*/

@@ -87,6 +87,7 @@ import monstres.Monstre;
 import personnages.*;
 import donjon.*;
 import outils.Des;
+import systeme.MJ;
 
 import java.util.*;
 
@@ -254,7 +255,7 @@ public class Main {
             Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
             //ListePerso.add(personnage);
         }
-        MJ aaa = new MJ();
+
         //Création des monstres
         //ArrayList<Monstre> ListeMonstre = new ArrayList<>();
         int temp_num;
@@ -305,6 +306,7 @@ public class Main {
 
         // Création du donjon
         Donjon donjon = new Donjon(10, 10);
+        MJ Maitre = new MJ(donjon);
         /*
         for(int i=0;i<nb_persos;i++)
         {
@@ -316,48 +318,40 @@ public class Main {
         }*/
 
         // Création des monstres
+
         Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 2, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
         Personnage Lucas = new Personnage("Lucas",Elfe,Magicien);
-
+        Lucas.equiperArme(Baton);
         Lucas.afficherStats();
         Lucas.afficherInventaire();
-        donjon.getCase(3, 3).setMonstre(gobelin);
-        donjon.getCase(7, 7).setMonstre(orc);
-        donjon.getCase(1,5).setMonstre(orc);
 
-        donjon.getCase(2, 2).setItem(EpeeDeuxMains);
-        donjon.getCase(6,6).setPersonnage(Lucas);
-        donjon.afficher();
-        System.out.println(gobelin.getSpeed());
-        gobelin.seDeplacer(4,3,donjon);
-        Lucas.equiperArme(Baton);
-        Lucas.seDeplacer(5,4,donjon);
+        Maitre.ajouterEntite(gobelin,0,0);
 
-        donjon.afficher();
-
-        gobelin.seDeplacer(4,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
-        gobelin.attaquer(5,4,donjon);
-        Lucas.attaquer(4,4,donjon);
+        Maitre.ajouterEntite(Lucas,2,0);
+        Maitre.deplacerEntite(gobelin,1,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
+        Maitre.attaquer(Lucas,2,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
+        Maitre.attaquer(gobelin,2,0);
+        Maitre.attaquer(Lucas,1,0);
 
         donjon.afficher();
+
+        //Maitre.meurt(gobelin);
+
+        donjon.afficher();
+
+
 
 
 

@@ -1,10 +1,7 @@
 package personnages;
-import donjon.Donjon;
 import items.*;
 import entite.Entite;
 import java.util.ArrayList;
-
-import monstres.Monstre;
 import outils.Des;
 
 public class Personnage implements Entite {
@@ -56,10 +53,6 @@ public class Personnage implements Entite {
         System.out.println("Initiative : " + m_init);
     }
 
-    public String getNom()
-    {
-        return m_nom;
-    }
 
     public void equiperArme(Weapon weapon)
     {
@@ -137,6 +130,7 @@ public class Personnage implements Entite {
         }
     }
 
+    @Override
     public int getCA() {
         // CA de base = 1
         int baseCA = 1;
@@ -148,6 +142,46 @@ public class Personnage implements Entite {
 
         return baseCA;
     }
+    @Override
+    public int getAtk_reach()
+    {
+        int base_atk_reach=1;
+
+        if (m_weapon!=null)
+        {
+            return base_atk_reach+ m_weapon.getAtk_reach();
+        }
+        return base_atk_reach;
+
+    }
+
+    @Override
+    public int getDmg() {
+        if(m_weapon==null)
+        {
+            return 0;
+        }
+        else
+        {
+            return m_weapon.getDmg().genererRandom();
+        }
+    }
+
+    @Override
+    public int getCaractAtt(int portee) {
+        if(m_weapon==null)
+        {
+            return 0;
+        }
+        if (portee>1)
+        {
+            return m_dext;
+        }
+        else
+        {
+            return m_strength;
+        }
+    }
 
 
     public int getMaxHp() {
@@ -155,22 +189,69 @@ public class Personnage implements Entite {
     }
 
 
-
-
-    /*public void poser(int x, int y)
+    @Override
+    public int getX()
     {
-        m_x=x;
-        m_y=y;
-    }*/
+        return m_x;
+    }
+
+    @Override
+    public int getY()
+    {
+        return m_y;
+    }
+
+
+    @Override
     public void setPosition(int x, int y)
     {
         this.m_x=x;
         this.m_y=y;
     }
-    public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
+
+    @Override
+    public String afficherHP()
+    {
+        return ("PV "+m_nom+" : "+m_hp+"/"+m_max_hp);
+    }
+
+    @Override
+    public boolean estMort() {
+        if(m_hp>0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void setHp(int new_hp)
+    {
+        this.m_hp=new_hp;
+    }
+    @Override
+    public int changeHp(int new_hp)
+    {
+        return this.m_hp+=new_hp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return m_nom;
+    }
+
+
+}
+
+
+
+
+
+//Limbes
+/*public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
     {
         int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
-        if(distance <= m_speed*999)
+        if(distance <= m_speed*999)//remplacé *999 par /3 plus tard, c'est juste pour simplifier les déplacements
         {
             if (donjon.getCase(dest_x,dest_y).isLibre())
             {
@@ -221,7 +302,7 @@ public class Personnage implements Entite {
         if (total_attaque >= cible.getCA()) {
             int degats = m_weapon.getDmg().genererRandom();
             System.out.println(m_nom + " attaque " + cible.getSpecie() + " et inflige " + degats + " dégâts !");
-            cible.changeHp(-degats, donjon);
+            cible.changeHp(-degats);
             cible.afficherHP();
         }
         else
@@ -237,32 +318,12 @@ public class Personnage implements Entite {
             m_inventory.add(donjon.getCase(m_x,m_y).getItem());
             donjon.getCase(m_x,m_y).setItem(null);
         }
-    }
+    }*/
 
-    public void afficherHP()
-    {
-        System.out.println("PV "+m_nom+" : "+m_hp+"/"+m_max_hp);
-    }
 
-    public void setHp(int new_hp)
-    {
-        this.m_hp=new_hp;
-    }
 
-    public void changeHp(int new_hp, Donjon donjon)
-    {
-        this.m_hp+=new_hp;
-        if(m_hp<=0)
+/*public void poser(int x, int y)
         {
-            meurt(donjon);
-        }
-    }
-
-    public void meurt(Donjon donjon)
-    {
-        System.out.println(m_nom +" est mort :(");
-        donjon.getCase(m_x,m_y).setPersonnage(null);
-    }
-
-
-}
+            m_x=x;
+            m_y=y;
+        }*/
