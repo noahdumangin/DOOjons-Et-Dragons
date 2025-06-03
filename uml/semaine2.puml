@@ -92,10 +92,8 @@ package "outils" {
     class Des {
         - m_nb_des: int
         - m_type_des: int
-        - static randomNumbers: Random
-        - static somme: int
         + Des(int, int)
-        + genererRandom(): ArrayList<Integer>
+        + genererRandom():Integer[*]
     }
 }
 

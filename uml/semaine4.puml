@@ -1,0 +1,349 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package donjon{
+    class Case {
+        - m_x : int
+        - m_y : int
+        - personnage : Personnage
+        - item : Item
+        - monstre : Monstre
+        - estObstacle : Boolean = false
+        + Case(x : int, y : int)
+        + getM_x() : int
+        + getM_y() : int
+        + getPersonnage() : Personnage
+        + setPersonnage(p : Personnage) : void
+        + getMonstre() : Monstre
+        + setMonstre(m : Monstre) : void
+        + getItem() : Item
+        + setItem(i : Item) : void
+        + isLibre() : boolean
+        + toString() : String
+        + estObstacle() : boolean
+     }
+
+    class Donjon {
+        - m_plateau : Case[][]
+        - m_tailleX : int
+        - m_tailleY : int
+        + Donjon(tailleX : int, tailleY : int)
+        + afficher() : void
+        + getCase(x : int, y : int) : Case
+        + getTailleX() : int
+        + getTailleY() : int
+        + echangerCases(x1 : int, y1 : int, x2 : int, y2 : int) : void
+        + setCase(x : int, y : int, newCase : Case) : void
+    }
+}
+
+package entite{
+    interface Entite {
+            + getX() : int
+            + getY() : int
+            + setPosition(x : int, y : int) : void
+            + toString() : String
+            + getSpeed() : int
+            + getAtk_reach() : int
+            + getDmg() : int
+            + getCaractAtt(reach : int) : int
+            + getCA() : int
+            + changeHp(hp : int) : int
+            + afficherHP() : String
+            + estMort() : boolean
+            + getInit() : int
+            + getDescription() : String
+        }
+}
+
+package items{
+    class Armor{
+        - m_CA : int
+        + Armor(nom : String, heavy : boolean, CA : int)
+        + getCA() : int
+    }
+
+    class Item{
+        - m_nom : String
+        - m_heavy : boolean
+        + Item(nom : String, heavy : boolean)
+        + getNom() : String
+    }
+
+    class Weapon{
+        - m_dmg : Des
+        - m_atk_reach : int
+        + Weapon(nom : String, heavy : boolean, dmg : Des, atk_reach : int)
+        + getDmg() : Des
+        + getAtk_reach() : int
+        + add_dmg(w : Weapon) : int
+        + add_atk_reach(w : Weapon) : int
+    }
+}
+
+package monstres{
+    class Monstre {
+            - m_x : int
+            - m_y : int
+            - m_num : int
+            - m_specie : String
+            - m_atk_reach : int
+            - m_dmg : Des
+            - m_hp : int
+            - m_strength : int
+            - m_dext : int
+            - m_armor_class : int
+            - m_init : int
+            - m_speed : int
+            - m_max_hp : int
+            + Monstre(num : int, specie : String, atk_reach : int, dmg : Des, hp : int, strength : int, dext : int, armor_class : int, init : int, speed : int)
+            + getSpecie() : String
+            + getSpeed() : int
+            + getInit() : int
+            + getAtk_reach() : int
+            + getDmg() : int
+            + getCaractAtt(portee : int) : int
+            + getCA() : int
+            + getDext() : int
+            + getStrength() : int
+            + getArmorClass() : int
+            + setHp(new_hp : int) : void
+            + changeHp(new_hp : int) : int
+            + afficherHP() : String
+            + estMort() : boolean
+            + setPosition(x : int, y : int) : void
+            + getX() : int
+            + getY() : int
+            + getDescription() : String
+            + toString() : String
+        }
+}
+
+package outils{
+    class Des{
+        - m_nb_des : int
+        - m_type_des : int
+        {static} - randomNumbers : Random
+        + Des(nb_des : int, type_des : int)
+        + genererRandom() : ArrayList<Integer>
+        + sommeDes() : int
+    }
+}
+
+package personnages{
+    class Personnage {
+            - m_nom : String
+            - m_x : int
+            - m_y : int
+            - estMort : boolean
+            - m_hp : int
+            - m_max_hp : int
+            - m_strength : int
+            - m_dext : int
+            - m_speed : int
+            - m_init : int
+            - m_inventory : ArrayList<Item>
+            - m_armor : Armor
+            - m_weapon : Weapon
+            - m_classes : Classes
+            - m_race : Race
+            + Personnage(nom : String, race : Race, classes : Classes)
+            + afficherStats() : void
+            + equiperArme(weapon : Weapon) : void
+            + equiperArmure(armor : Armor) : void
+            + desequiperArme(weapon : Weapon) : void
+            + desequiperArmmure(armor : Armor) : void
+            + getHp() : int
+            + getStrength() : int
+            + getDext() : int
+            + getSpeed() : int
+            + getInit() : int
+            + getDescription() : String
+            + getWeapon() : Weapon
+            + getArmor() : Armor
+            + getInventory() : ArrayList<Item>
+            + afficherInventaire() : void
+            + getCA() : int
+            + getAtk_reach() : int
+            + getDmg() : int
+            + getCaractAtt(portee : int) : int
+            + getMaxHp() : int
+            + setPosition(x : int, y : int) : void
+            + getX() : int
+            + getY() : int
+            + afficherHP() : String
+            + estMort() : boolean
+            + setHp(new_hp : int) : void
+            + changeHp(new_hp : int) : int
+            + toString() : String
+        }
+
+    class GameMaster{
+    }
+
+    class Personnage{
+        - m_nom : String
+        - m_x : int
+        - m_y : int
+        - estMort : boolean
+        - m_hp : int
+        - m_max_hp : int
+        - m_strength : int
+        - m_dext : int
+        - m_speed : int
+        - m_init : int
+        - m_inventory : ArrayList<Item>
+        - m_armor : Armor
+        - m_weapon : Weapon
+        + Personnage(nom : String, race : Race, classes : Classes)
+        + getNom() : String
+        + getHp() : int
+        + getMaxHp() : int
+        + getStrength() : int
+        + getDext() : int
+        + getSpeed() : int
+        + getInit() : int
+        + getInventory() : ArrayList<Item>
+        + getArmor() : Armor
+        + getWeapon() : Weapon
+        + setHp(new_hp : int) : void
+        + addHP(Soin : int) : void
+        + changeHp(new_hp : int, donjon : Donjon) : void
+        + getCA() : int
+        + setPosition(x : int, y : int) : void
+        + getX() : int
+        + getY() : int
+        + equiperArme(weapon : Weapon) : void
+        + desequiperArme(weapon : Weapon) : void
+        + equiperArmure(armor : Armor) : void
+        + desequiperArmure(armor : Armor) : void
+        + afficherStats() : void
+        + afficherInventaire() : void
+        + afficherHP() : void
+        + recupItem(donjon : Donjon) : void
+        + meurt(donjon : Donjon) : void
+        + estMort() : boolean
+    }
+
+    class Race{
+        - m_nom : String
+        - m_hp : int
+        - m_strength : int
+        - m_dext : int
+        - m_speed : int
+        - m_init : int
+
+        + Race(nom : String, hp : int, strength : int, dext : int, speed : int, init : int)
+        + getNom() : String
+        + getHp() : int
+        + getStrength() : int
+        + getDext() : int
+        + getSpeed() : int
+        + getInit() : int
+    }
+}
+
+package sorts{
+    class Arme_magique{
+        +lancer(Armechoisi : Weapon) : void
+    }
+
+    class Boogie_woogie{
+        - donjon : Donjon
+        + Boogie_woogie(donjon : Donjon)
+        + Lancer(PersoChoisi1 : Personnage, PersoChoisi2 : Personnage, donjon : Donjon) : void
+    }
+
+    class Guerison{
+        - m_persochoisi : String
+        + Lancer(PersoCible : Personnage, PersoLanceur : Personnage, Soin : int) : void
+    }
+
+    class Sort{
+    }
+}
+package systeme
+{
+    class Affichage
+    {
+        +afficher (chaine : String ) : void
+    }
+    class GestionnaireDonjon
+    {
+        -donjon : Donjon
+        -listeEntite : ArrayList<Entite>
+        +GestionnaireDonjon(donjon : Donjon)
+        +ajouterEntite(e : Entite, x : int, y : int)
+        +deplacerEntite(e : Entite, dest_x : int, dest_y : int)
+        +attaquerEntite(attaquant : Entite, x : int, y : int)
+        +meurt (e : Entite)
+        +getListeEntite(listeEntite)
+
+
+    }
+    class TourDeJeu
+    {
+            - affichage : Affichage
+            - gd : GestionnaireDonjon
+            - entree : Entree
+            - tour : int
+            - listeEntite : ArrayList<Entite>
+            + TourDeJeu(gestionnaireDonjon : GestionnaireDonjon, donjon : Donjon)
+            - gererOrdre(listeEntite : ArrayList<Entite>) : void
+            + afficherOrdre(actuelle : int) : void
+            + jouer() : void
+    }
+
+}
+
+donjon.Case --> personnages.Personnage
+donjon.Case --> items.Item
+donjon.Case --> monstres.Monstre
+
+donjon.Donjon --> donjon.Case
+donjon.Donjon --> personnages.Personnage
+donjon.Donjon --> monstres.Monstre
+
+entite.Entite ..> donjon.Donjon
+
+Armor --|> Item
+
+Weapon --|> Item
+Weapon --> outils.Des
+
+Monstre ..|> entite.Entite
+Monstre --> outils.Des
+
+Des --> java.util.Random
+Des --> java.util.ArrayList
+
+Classes --> items.Item
+
+Personnage --> items.Item
+Personnage --> items.Armor
+Personnage --> items.Weapon
+Personnage --> personnages.Race
+Personnage --> personnages.Classes
+Personnage ..|> entite.Entite
+Personnage --> outils.Des
+
+Arme_magique --> Weapon : utilise
+Boogie_woogie --> Personnage : utilise
+Boogie_woogie --> Donjon : utilise
+Guerison --> Personnage : soigne
+
+Sort <|-- Arme_magique
+Sort <|-- Boogie_woogie
+Sort <|-- Guerison
+
+systeme.GestionnaireDonjon --> donjon.Donjon
+systeme.GestionnaireDonjon --> entite.Entite : listeEntite
+systeme.GestionnaireDonjon --> systeme.Affichage
+
+TourDeJeu --> Affichage
+TourDeJeu --> GestionnaireDonjon
+TourDeJeu --> Entree
+TourDeJeu ..> Donjon
+TourDeJeu --> "listeEntite" Entite
+
+@enduml
