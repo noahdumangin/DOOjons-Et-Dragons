@@ -2,9 +2,9 @@ package systeme;
 import donjon.*;
 import entite.Entite;
 import outils.Des;
-import javax.swing.plaf.ComponentUI;
+
 import java.util.ArrayList;
-public class MJ {
+public class GestionnaireDonjon {
 
     private Donjon donjon;
 
@@ -12,7 +12,7 @@ public class MJ {
 
     Affichage affichage= new Affichage();
 
-    public MJ(Donjon donjon)
+    public GestionnaireDonjon(Donjon donjon)
     {
         this.donjon=donjon;
         this.listeEntite = new ArrayList<>();
@@ -20,7 +20,7 @@ public class MJ {
 
     public void ajouterEntite(Entite e, int x, int y)
     {
-        if (!donjon.getCase(x,y).estObstacle && donjon.getCase(x,y).getEntite()==null)
+        if (donjon.getCase(x,y).isLibre())
         {
             donjon.getCase(x, y).setEntite(e);
             e.setPosition(x, y);
@@ -38,6 +38,7 @@ public class MJ {
                 donjon.getCase(e.getX(),e.getY()).setEntite(null);
                 destination.setEntite(e);
                 e.setPosition(dest_x,dest_y);
+                donjon.afficher();
             }
             else
             {
@@ -86,13 +87,14 @@ public class MJ {
             {
                 affichage.afficher(cible.toString()+" est mort");
                 meurt(cible);
+                donjon.afficher();
             }
             else
             {
                 affichage.afficher(cible.afficherHP());
+                donjon.afficher();
             }
         }
-
 
     }
 
@@ -103,7 +105,20 @@ public class MJ {
         donjon.getCase(entite.getX(), entite.getY()).setEntite(null);
     }
 
+    public ArrayList<Entite> getListeEntite()
+    {
+        return listeEntite;
+    }
+
 }
+
+
+
+
+
+
+
+
 
 //Limbes
 /*public void attaquerMonstre(Personnage attaquant, Monstre cible)

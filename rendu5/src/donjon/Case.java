@@ -10,7 +10,7 @@ public class Case {
     private Personnage personnage;
     private Item item;
     private Monstre monstre;
-    public Boolean estObstacle=false;
+    private Boolean estObstacle=false;
 
     private Entite entite;
 
@@ -76,14 +76,13 @@ public class Case {
 
     public boolean isLibre()
     {
-        if(getPersonnage()==null && getMonstre() == null && !estObstacle)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return getPersonnage()==null && getMonstre() == null && !estObstacle;
+
+    }
+
+    public boolean estObstacle()
+    {
+        return estObstacle;
     }
 
     @Override

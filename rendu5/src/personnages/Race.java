@@ -11,6 +11,7 @@ public class Race {
 
     public Race (String nom, int hp, int strength, int dext, int speed, int init)
     {
+        this.m_nom=nom;
         this.m_hp=hp;
         this.m_strength=strength;
         this.m_dext=dext;

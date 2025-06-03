@@ -1,8 +1,13 @@
 package monstres;
 
 import outils.Des;
-import donjon.*;
 import entite.Entite;
+import systeme.actions.Action;
+import systeme.actions.ActionAttaquer;
+import systeme.actions.ActionSeDeplacer;
+
+import java.util.ArrayList;
+
 public class Monstre implements Entite {
 
     private int m_x;
@@ -36,6 +41,15 @@ public class Monstre implements Entite {
         this.m_max_hp=hp;
     }
 
+    @Override
+    public ArrayList<Action> getAction() {
+        ArrayList<Action> actions = new ArrayList<>();
+        actions.add(new ActionAttaquer());
+        actions.add(new ActionSeDeplacer());
+        return actions;
+    }
+
+
     public String getSpecie()
     {
         return m_specie;
@@ -51,11 +65,18 @@ public class Monstre implements Entite {
     public int getAtk_reach() {
         return m_atk_reach;
     }
-
+    @Override
     public int getInit()
     {
         return m_init;
     }
+
+    @Override
+    public String getDescription() {
+        return "("+afficherHP()+")";
+    }
+
+
 
     @Override
     public int getCA()
@@ -110,30 +131,6 @@ public class Monstre implements Entite {
         return this.m_y;
     }
 
-    public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
-    {
-        int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
-        System.out.println(distance);
-        if(distance <= m_speed/3)
-        {
-            if (donjon.getCase(dest_x,dest_y).isLibre())
-            {
-                System.out.println(m_x +"-"+ m_y);
-                donjon.getCase(m_x,m_y).setMonstre(null);
-                this.m_x=dest_x;
-                this.m_y=dest_y;
-                donjon.getCase(dest_x,dest_y).setMonstre(this);
-            }
-        }
-        else
-        {
-            System.out.println("distance trop élevée");
-        }
-
-    }
-
-
-
     @Override
     public String  afficherHP()
     {
@@ -142,11 +139,7 @@ public class Monstre implements Entite {
 
     @Override
     public boolean estMort() {
-        if(m_hp>0)
-        {
-            return false;
-        }
-        return true;
+        return m_hp<=0;
     }
 
     public void setHp(int new_hp)
@@ -168,7 +161,27 @@ public class Monstre implements Entite {
 }
 
 //Limbes
+/*public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
+{
+    int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
+    System.out.println(distance);
+    if(distance <= m_speed/3)
+    {
+        if (donjon.getCase(dest_x,dest_y).isLibre())
+        {
+            System.out.println(m_x +"-"+ m_y);
+            donjon.getCase(m_x,m_y).setMonstre(null);
+            this.m_x=dest_x;
+            this.m_y=dest_y;
+            donjon.getCase(dest_x,dest_y).setMonstre(this);
+        }
+    }
+    else
+    {
+        System.out.println("distance trop élevée");
+    }
 
+}*/
 /*public void attaquer(int x_cible, int y_cible, Donjon donjon) {
         Des attaque = new Des(1, 20);
         int buff_attaque = attaque.genererRandom();

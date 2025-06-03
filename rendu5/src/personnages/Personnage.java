@@ -1,8 +1,12 @@
 package personnages;
 import items.*;
 import entite.Entite;
+
 import java.util.ArrayList;
 import outils.Des;
+import systeme.actions.Action;
+import systeme.actions.ActionAttaquer;
+import systeme.actions.ActionSeDeplacer;
 
 public class Personnage implements Entite {
     private String m_nom;
@@ -18,12 +22,11 @@ public class Personnage implements Entite {
     private int m_dext;
     private int m_speed;
     private int m_init;
-
     private ArrayList<Item> m_inventory;
-
     private Armor m_armor;
-
     private Weapon m_weapon;
+    private Classes m_classes;
+    private Race m_race;
 
 
     public Personnage(String nom, Race race, Classes classes)
@@ -41,6 +44,10 @@ public class Personnage implements Entite {
         this.estMort=false;
         this.m_x=-1;
         this.m_y=-1;
+        this.m_weapon=null;
+        this.m_armor=null;
+        this.m_classes=classes;
+        this.m_race=race;
 
 
     }
@@ -51,6 +58,15 @@ public class Personnage implements Entite {
         System.out.println("Dexterité : " + m_dext);
         System.out.println("Vitesse : " + m_speed);
         System.out.println("Initiative : " + m_init);
+    }
+
+    @Override
+    public ArrayList<Action> getAction() {
+        ArrayList<Action> actions = new ArrayList<>();
+        actions.add(new ActionAttaquer());
+        actions.add(new ActionSeDeplacer());
+
+        return actions;
     }
 
 
@@ -100,14 +116,24 @@ public class Personnage implements Entite {
     {
         return m_dext;
     }
+    @Override
     public int getSpeed()
     {
         return m_speed;
     }
+    @Override
     public int getInit()
     {
         return m_init;
     }
+
+    @Override
+    public String getDescription() {
+        return "("+this.m_race.getNom() + " " + this.m_classes.getNom()+ " "+this.afficherHP()+")";
+    }
+
+
+
     public Weapon getWeapon() {
         return m_weapon;
     }
@@ -115,6 +141,7 @@ public class Personnage implements Entite {
     {
         return m_armor;
     }
+
 
 
     public ArrayList<Item> getInventory()
@@ -216,14 +243,10 @@ public class Personnage implements Entite {
     }
 
     @Override
-    public boolean estMort() {
-        if(m_hp>0)
-        {
-            return false;
-        }
-        return true;
+    public boolean estMort()
+    {
+        return m_hp <= 0;
     }
-
     public void setHp(int new_hp)
     {
         this.m_hp=new_hp;
@@ -239,6 +262,8 @@ public class Personnage implements Entite {
     {
         return m_nom;
     }
+
+
 
 
 }

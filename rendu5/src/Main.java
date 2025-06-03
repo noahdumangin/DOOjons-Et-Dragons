@@ -87,7 +87,8 @@ import monstres.Monstre;
 import personnages.*;
 import donjon.*;
 import outils.Des;
-import systeme.MJ;
+import systeme.GestionnaireDonjon;
+import systeme.TourDeJeu;
 
 import java.util.*;
 
@@ -180,10 +181,10 @@ public class Main {
         inventaireRoublard.add(ArcCourt);
 
         // Création des classes
-        Classes Magicien = new Classes(12, inventaireMagicien);
-        Classes Clerc = new Classes(16, inventaireClerc);
-        Classes Guerrier = new Classes(20, inventaireGuerrier);
-        Classes Roublard = new Classes(16, inventaireRoublard);
+        Classes Magicien = new Classes("Magicien",12, inventaireMagicien);
+        Classes Clerc = new Classes("Clerc",16, inventaireClerc);
+        Classes Guerrier = new Classes("Guerrier",20, inventaireGuerrier);
+        Classes Roublard = new Classes("Roublard",16, inventaireRoublard);
 
 
         // Création des personnages
@@ -306,7 +307,8 @@ public class Main {
 
         // Création du donjon
         Donjon donjon = new Donjon(10, 10);
-        MJ Maitre = new MJ(donjon);
+        GestionnaireDonjon gestionnaireDonjon = new GestionnaireDonjon(donjon);
+        TourDeJeu tour = new TourDeJeu(gestionnaireDonjon, donjon);
         /*
         for(int i=0;i<nb_persos;i++)
         {
@@ -327,29 +329,24 @@ public class Main {
         Lucas.afficherStats();
         Lucas.afficherInventaire();
 
-        Maitre.ajouterEntite(gobelin,0,0);
+        gestionnaireDonjon.ajouterEntite(gobelin,0,0);
 
-        Maitre.ajouterEntite(Lucas,2,0);
-        Maitre.deplacerEntite(gobelin,1,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-        Maitre.attaquer(Lucas,2,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-        Maitre.attaquer(gobelin,2,0);
-        Maitre.attaquer(Lucas,1,0);
-
+        gestionnaireDonjon.ajouterEntite(Lucas,2,0);
+        System.out.println( gestionnaireDonjon.getListeEntite());
         donjon.afficher();
+        tour.jouerTour(gestionnaireDonjon);
 
-        //Maitre.meurt(gobelin);
 
-        donjon.afficher();
+        //tour.afficherOrdre();
+
+
+
+        //tour.afficherOrdre();
+
+        //donjon.afficher();
+
+
+        //donjon.afficher();
 
 
 

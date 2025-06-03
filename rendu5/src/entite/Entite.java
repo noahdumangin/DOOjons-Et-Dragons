@@ -1,6 +1,8 @@
 package entite;
 
-import donjon.Donjon;
+import systeme.actions.Action;
+
+import java.util.ArrayList;
 
 public interface Entite
 {
@@ -21,6 +23,9 @@ public interface Entite
         int changeHp(int hp);
         String afficherHP();
         boolean estMort();
+        int getInit();
+        String getDescription();
+        ArrayList<Action> getAction();
 
 
 
