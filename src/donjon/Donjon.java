@@ -21,14 +21,21 @@ public class Donjon {
     }
 
     public void afficher() {
+        System.out.print("   ");
+        for (int x = 0; x < m_tailleX; x++) {
+            System.out.print(x + "   ");
+        }
+        System.out.println();
         for (int y = 0; y < m_tailleY; y++) {
+            System.out.print(y + " ");
             for (int x = 0; x < m_tailleX; x++) {
-                System.out.print(m_plateau[x][y].toString());
+                System.out.print(m_plateau[x][y].toString() + " ");
             }
             System.out.println();
         }
-        System.out.println("\n");
+        System.out.println();
     }
+
 
     public Case getCase(int x, int y) {
         if (x >= 0 && x < m_tailleX && y >= 0 && y < m_tailleY)

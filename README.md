@@ -251,7 +251,7 @@ Caelynn
   Vitesse: 12
 
 Caelynn il vous reste 2 actions que souhaitez vous faire ?
-  - laisser le maître du jeu commenter l'action précédente (mj <texte>)
+  - laisser le maître du jeu commenter l'action précédente (gestionnaireDonjon <texte>)
   - commenter action précédente (com <texte>)
   - attaquer (att <Case>)
   - se déplacer (dep <Case>)

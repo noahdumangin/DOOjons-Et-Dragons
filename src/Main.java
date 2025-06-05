@@ -87,6 +87,8 @@ import monstres.Monstre;
 import personnages.*;
 import donjon.*;
 import outils.Des;
+import systeme.GestionnaireDonjon;
+import systeme.TourDeJeu;
 
 import java.util.*;
 
@@ -179,10 +181,10 @@ public class Main {
         inventaireRoublard.add(ArcCourt);
 
         // Création des classes
-        Classes Magicien = new Classes(12, inventaireMagicien);
-        Classes Clerc = new Classes(16, inventaireClerc);
-        Classes Guerrier = new Classes(20, inventaireGuerrier);
-        Classes Roublard = new Classes(16, inventaireRoublard);
+        Classes Magicien = new Classes("Magicien",12, inventaireMagicien);
+        Classes Clerc = new Classes("Clerc",16, inventaireClerc);
+        Classes Guerrier = new Classes("Guerrier",20, inventaireGuerrier);
+        Classes Roublard = new Classes("Roublard",16, inventaireRoublard);
 
 
         // Création des personnages
@@ -191,7 +193,7 @@ public class Main {
         Classes temp_classe=Guerrier;
         int temp_id_race;
         int temp_id_classe;
-        ArrayList<Personnage>ListePerso = new ArrayList<>();
+        //ArrayList<Personnage>ListePerso = new ArrayList<>();
 
 
 
@@ -252,11 +254,11 @@ public class Main {
             }
 
             Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
-            ListePerso.add(personnage);
+            //ListePerso.add(personnage);
         }
 
         //Création des monstres
-        ArrayList<Monstre> ListeMonstre = new ArrayList<>();
+        //ArrayList<Monstre> ListeMonstre = new ArrayList<>();
         int temp_num;
         String temp_specie;
         int temp_atk_reach;
@@ -297,7 +299,7 @@ public class Main {
 
 
             Monstre monstre = new Monstre(1, temp_specie, temp_atk_reach, new Des(temp_nb_des, temp_type_des), temp_hp, temp_strength, temp_dext, temp_CA, temp_init, temp_speed);
-            ListeMonstre.add(monstre);
+            //ListeMonstre.add(monstre);
         }
 
         Personnage joueur = new Personnage("Conan", Humain, Magicien);
@@ -305,6 +307,8 @@ public class Main {
 
         // Création du donjon
         Donjon donjon = new Donjon(10, 10);
+        GestionnaireDonjon gestionnaireDonjon = new GestionnaireDonjon(donjon);
+        TourDeJeu tour = new TourDeJeu(gestionnaireDonjon, donjon);
         /*
         for(int i=0;i<nb_persos;i++)
         {
@@ -316,34 +320,51 @@ public class Main {
         }*/
 
         // Création des monstres
-        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 12, 2, 6);
-        Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 13, 1, 5);
 
-        Personnage Lucas = new Personnage("Lucas le grand",Elfe,Magicien);
+        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 2, 6);
+        Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
+        Personnage Lucas = new Personnage("Lucas",Elfe,Magicien);
+        Lucas.equiperArme(Baton);
         Lucas.afficherStats();
+        Lucas.afficherInventaire();
 
-        donjon.getCase(3, 3).setMonstre(gobelin);
-        donjon.getCase(7, 7).setMonstre(orc);
-        donjon.getCase(1,5).setMonstre(orc);
+        gestionnaireDonjon.ajouterEntite(gobelin,0,0);
 
-        donjon.getCase(2, 2).setItem(EpeeDeuxMains);
-        //Lucas.poser(6,6);
-        donjon.getCase(6,6).setPersonnage(Lucas);
+        gestionnaireDonjon.ajouterEntite(Lucas,2,0);
+        System.out.println( gestionnaireDonjon.getListeEntite());
         donjon.afficher();
-        System.out.println(gobelin.getSpeed());
-        gobelin.seDeplacer(4,3,donjon);
+        tour.jouerTour(gestionnaireDonjon);
 
-        //Lucas.seDeplacer(6,7,donjon);
-        donjon.afficher();
 
-        gobelin.seDeplacer(4,4,donjon);
+        //tour.afficherOrdre();
+
+
+
+        //tour.afficherOrdre();
+
+        //donjon.afficher();
+
+
+        //donjon.afficher();
+
+
+
+
+
+
+
+
+
+        /*Lucas.seDeplacer(2,2,donjon);
+        Lucas.afficherInventaire();
+        Lucas.recupItem(donjon);
+        Lucas.afficherInventaire();*/
 
         //Lucas.seDeplacer(6,8,donjon);
         //Lucas.seDeplacer(4,6,donjon);
 
 
-        donjon.afficher();
 
 
 

@@ -1,10 +1,12 @@
 package personnages;
-
-import donjon.Donjon;
 import items.*;
 import entite.Entite;
+
 import java.util.ArrayList;
 import outils.Des;
+import systeme.actions.Action;
+import systeme.actions.ActionAttaquer;
+import systeme.actions.ActionSeDeplacer;
 
 public class Personnage implements Entite {
     private String m_nom;
@@ -20,12 +22,11 @@ public class Personnage implements Entite {
     private int m_dext;
     private int m_speed;
     private int m_init;
-
     private ArrayList<Item> m_inventory;
-
     private Armor m_armor;
-
     private Weapon m_weapon;
+    private Classes m_classes;
+    private Race m_race;
 
 
     public Personnage(String nom, Race race, Classes classes)
@@ -43,6 +44,10 @@ public class Personnage implements Entite {
         this.estMort=false;
         this.m_x=-1;
         this.m_y=-1;
+        this.m_weapon=null;
+        this.m_armor=null;
+        this.m_classes=classes;
+        this.m_race=race;
 
 
     }
@@ -55,10 +60,15 @@ public class Personnage implements Entite {
         System.out.println("Initiative : " + m_init);
     }
 
-    public String getNom()
-    {
-        return m_nom;
+    @Override
+    public ArrayList<Action> getAction() {
+        ArrayList<Action> actions = new ArrayList<>();
+        actions.add(new ActionAttaquer());
+        actions.add(new ActionSeDeplacer());
+
+        return actions;
     }
+
 
     public void equiperArme(Weapon weapon)
     {
@@ -86,7 +96,7 @@ public class Personnage implements Entite {
             m_weapon=null;
         }
     }
-    public void desequiperArmure(Armor armor)
+    public void desequiperArmmure(Armor armor)
     {
         if(m_armor==armor)
         {
@@ -106,14 +116,24 @@ public class Personnage implements Entite {
     {
         return m_dext;
     }
+    @Override
     public int getSpeed()
     {
         return m_speed;
     }
+    @Override
     public int getInit()
     {
         return m_init;
     }
+
+    @Override
+    public String getDescription() {
+        return "("+this.m_race.getNom() + " " + this.m_classes.getNom()+ " "+this.afficherHP()+")";
+    }
+
+
+
     public Weapon getWeapon() {
         return m_weapon;
     }
@@ -121,6 +141,7 @@ public class Personnage implements Entite {
     {
         return m_armor;
     }
+
 
 
     public ArrayList<Item> getInventory()
@@ -136,6 +157,7 @@ public class Personnage implements Entite {
         }
     }
 
+    @Override
     public int getCA() {
         // CA de base = 1
         int baseCA = 1;
@@ -147,26 +169,114 @@ public class Personnage implements Entite {
 
         return baseCA;
     }
+    @Override
+    public int getAtk_reach()
+    {
+        int base_atk_reach=1;
+
+        if (m_weapon!=null)
+        {
+            return base_atk_reach+ m_weapon.getAtk_reach();
+        }
+        return base_atk_reach;
+
+    }
+
+    @Override
+    public int getDmg() {
+        if(m_weapon==null)
+        {
+            return 0;
+        }
+        else
+        {
+            return m_weapon.getDmg().genererRandom();
+        }
+    }
+
+    @Override
+    public int getCaractAtt(int portee) {
+        if(m_weapon==null)
+        {
+            return 0;
+        }
+        if (portee>1)
+        {
+            return m_dext;
+        }
+        else
+        {
+            return m_strength;
+        }
+    }
 
 
     public int getMaxHp() {
         return m_max_hp;
     }
 
-    /*public void poser(int x, int y)
+
+    @Override
+    public int getX()
     {
-        m_x=x;
-        m_y=y;
-    }*/
+        return m_x;
+    }
+
+    @Override
+    public int getY()
+    {
+        return m_y;
+    }
+
+
+    @Override
     public void setPosition(int x, int y)
     {
         this.m_x=x;
         this.m_y=y;
     }
-    public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
+
+    @Override
+    public String afficherHP()
+    {
+        return ("PV "+m_nom+" : "+m_hp+"/"+m_max_hp);
+    }
+
+    @Override
+    public boolean estMort()
+    {
+        return m_hp <= 0;
+    }
+    public void setHp(int new_hp)
+    {
+        this.m_hp=new_hp;
+    }
+    @Override
+    public int changeHp(int new_hp)
+    {
+        return this.m_hp+=new_hp;
+    }
+
+    @Override
+    public String toString()
+    {
+        return m_nom;
+    }
+
+
+
+
+}
+
+
+
+
+
+//Limbes
+/*public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
     {
         int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
-        if(distance <= m_speed*999)
+        if(distance <= m_speed*999)//remplacé *999 par /3 plus tard, c'est juste pour simplifier les déplacements
         {
             if (donjon.getCase(dest_x,dest_y).isLibre())
             {
@@ -176,6 +286,7 @@ public class Personnage implements Entite {
                 this.m_y=dest_y;
                 donjon.getCase(dest_x,dest_y).setPersonnage(this);
             }
+            System.out.println("La case est occupée");
         }
         else
         {
@@ -184,63 +295,47 @@ public class Personnage implements Entite {
 
     }
 
-    public void attaquer(int x_cible, int y_cible, Donjon donjon)
-    {
+    public void attaquer(int x_cible, int y_cible, Donjon donjon) {
+        Des attaque = new Des(1, 20);
+        int buff_attaque = attaque.genererRandom();
+        int distance = Math.abs(x_cible - m_x) + Math.abs(y_cible - m_y);
 
-        Des attaque = new Des(1,20);
-        if (this.m_weapon!=null)
+        Monstre cible = donjon.getCase(x_cible, y_cible).getMonstre();
+
+        if (cible == null) {
+            System.out.println("Il n'y a pas de monstre sur cette case !");
+            return;
+        }
+
+        if (distance > m_weapon.getAtk_reach()) {
+            System.out.println("La cible est trop éloignée !");
+            return;
+        }
+
+        int caract_attaque;
+        if(m_weapon.getAtk_reach() >1)
         {
-
-            int distance= Math.abs(x_cible-m_x) + Math.abs(y_cible-m_y);
-            if(distance<=m_weapon.getAtk_reach())
-            {
-                if(donjon.getCase(x_cible,y_cible).getMonstre()!=null)
-                {
-                    //System.out.println(m_nom +" attaque "+donjon.getCase(x_cible,y_cible).getMonstre().getSpecie());
-                    int buff_attaque=attaque.genererRandom();
-
-                    if(m_weapon.getAtk_reach()>1)
-                    {
-                        if(m_dext+buff_attaque>=donjon.getCase(x_cible,y_cible).getMonstre().getCA())
-                        {
-                            int degats_infliges = m_weapon.getDmg().genererRandom();
-                            System.out.println(this.m_nom+" attaque "+donjon.getCase(x_cible,y_cible).getMonstre().getSpecie()+" avec " +m_weapon.getNom() + " et inflige "+degats_infliges +" dégats !");
-                            donjon.getCase(x_cible,y_cible).getMonstre().changeHp(-degats_infliges,donjon);
-                        }
-                        else
-                        {
-                            System.out.println("L'attaque à échoué ! La classe d'armure de "+donjon.getCase(x_cible,y_cible).getMonstre().getSpecie()+" est trop grande !");
-                        }
-                    }
-
-                    if(m_weapon.getAtk_reach()==1)
-                    {
-                        if(m_strength+buff_attaque>=donjon.getCase(x_cible,y_cible).getMonstre().getCA())
-                        {
-                            System.out.println(this.m_nom+" attaque "+donjon.getCase(x_cible,y_cible).getMonstre().getSpecie()+" avec " +m_weapon.getNom() + " et inflige " +m_weapon.getDmg().genererRandom()+" dégats !");
-                            donjon.getCase(x_cible,y_cible).getMonstre().afficherHP();
-                        }
-                        else
-                        {
-                            System.out.println("L'attaque à échoué ! La classe d'armure de "+donjon.getCase(x_cible,y_cible).getMonstre().getSpecie()+" est trop grande !");
-                        }
-                    }
-                }
-                else
-                {
-                    System.out.println("Il n'y a pas de monstres sur cette case");
-                }
-            }
-            else
-            {
-                System.out.println("La cible est trop éloignée");
-            }
+            caract_attaque=m_dext;
         }
         else
         {
-            System.out.println("Pas d'arme équipée");
+            caract_attaque=m_strength;
+        }
+
+        int total_attaque = caract_attaque + buff_attaque;
+
+        if (total_attaque >= cible.getCA()) {
+            int degats = m_weapon.getDmg().genererRandom();
+            System.out.println(m_nom + " attaque " + cible.getSpecie() + " et inflige " + degats + " dégâts !");
+            cible.changeHp(-degats);
+            cible.afficherHP();
+        }
+        else
+        {
+            System.out.println("L'attaque a échoué ! La classe d'armure de " + cible.getSpecie() + " était trop élevée");
         }
     }
+
     public void recupItem(Donjon donjon)
     {
         if(donjon.getCase(m_x,m_y).getItem()!=null)
@@ -248,46 +343,12 @@ public class Personnage implements Entite {
             m_inventory.add(donjon.getCase(m_x,m_y).getItem());
             donjon.getCase(m_x,m_y).setItem(null);
         }
-    }
+    }*/
 
-    public void afficherHP()
-    {
-        System.out.println("PV "+m_nom+" : "+m_hp+"/"+m_max_hp);
-    }
 
-    public void setHp(int new_hp)
-    {
-        this.m_hp=new_hp;
-    }
 
-    public void changeHp(int new_hp, Donjon donjon)
-    {
-        this.m_hp+=new_hp;
-        if(m_hp<=0)
+/*public void poser(int x, int y)
         {
-            meurt(donjon);
-        }
-    }
-    public void addHP(int Soin){
-        m_hp += Soin;
-    }
-
-    public void meurt(Donjon donjon)
-    {
-        System.out.println(m_nom +" est mort :(");
-        donjon.getCase(m_x,m_y).setPersonnage(null);
-    }
-
-    public int getX(){
-        return m_x;
-    }
-
-    public int getY(){
-        return m_y;
-    }
-
-    public boolean estMort() {
-        return estMort;
-    }
-
-}
+            m_x=x;
+            m_y=y;
+        }*/
