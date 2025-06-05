@@ -4,7 +4,7 @@ import entite.Entite;
 import systeme.GestionnaireDonjon;
 
 public interface Action {
-    void executer (Entite entite, GestionnaireDonjon gestionnaireDonjon);
+    boolean executer (Entite entite, GestionnaireDonjon gestionnaireDonjon);
     String getNom();
 
 }
