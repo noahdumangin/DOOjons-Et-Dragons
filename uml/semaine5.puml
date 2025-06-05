@@ -1,5 +1,7 @@
 @startuml
 skinparam classAttributeIconSize 0
+left to right direction
+skinparam linetype ortho
 
 package donjon{
     class Case{
@@ -240,7 +242,7 @@ package systeme{
     class Entree{
         - scanner : Scanner
     }
-    class GestionnnaireDonjon{
+    class GestionnaireDonjon{
             - donjon : Donjon
             - listeEntite : ArrayList<Entite>
             - affichage : Affichage
@@ -263,5 +265,40 @@ package systeme{
             + jouer(entite : Entite, gestionnaireDonjon : GestionnaireDonjon) : void
             + jouerTour(gestionnaireDonjon : GestionnaireDonjon) : void
     }
-    }
+}
+
+ActionAttaquer --|> Action
+ActionSeDeplacer --|> Action
+TourDeJeu --> GestionnaireDonjon
+TourDeJeu --> Affichage
+TourDeJeu --> Entree
+TourDeJeu --> "1..*" Entite
+GestionnaireDonjon --> Donjon
+GestionnaireDonjon --> Affichage
+GestionnaireDonjon --> "1..*" Entite
+Entite --> "1..*" Action
+Action --> GestionnaireDonjon
+Action --> Entite
+GestionnaireDonjon --> Des
+TourDeJeu --> Affichage
+TourDeJeu --> Entree
+Case --> Personnage
+Case --> Monstre
+Case --> Item
+Case --> Entite
+Donjon --> Case
+Monstre ..|> Entite
+Personnage ..|> Entite
+Personnage --> Weapon
+Personnage --> Armor
+Personnage --> Item
+Personnage --> Race
+Personnage --> Classes
+Classes --> Item
+Weapon --> Des
+GameMaster --> Donjon
+GameMaster --> Monstre
+GameMaster --> Personnage
+GameMaster --> Case
+
 @enduml
