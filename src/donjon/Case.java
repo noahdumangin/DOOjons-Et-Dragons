@@ -76,7 +76,7 @@ public class Case {
 
     public boolean isLibre()
     {
-        return getPersonnage()==null && getMonstre() == null && !estObstacle;
+        return getEntite()==null && !estObstacle;
 
     }
 

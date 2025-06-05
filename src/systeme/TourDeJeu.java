@@ -16,6 +16,7 @@ public class TourDeJeu
     private Entree entree = new Entree();
     private int tour;
     private ArrayList<Entite> listeEntite;
+    private int action_restante;
 
 
     public TourDeJeu(GestionnaireDonjon gestionnaireDonjon, Donjon donjon) //constructeur
@@ -24,11 +25,12 @@ public class TourDeJeu
         this.listeEntite = gestionnaireDonjon.getListeEntite();
         this.entree = new Entree();
         gererOrdre(this.listeEntite);
+        this.action_restante=0;
     }
 
     private void gererOrdre(ArrayList<Entite> listeEntite)
     {
-       Collections.sort(listeEntite, Comparator.comparingInt(Entite::getInit).reversed());
+        Collections.sort(listeEntite, Comparator.comparingInt(Entite::getInit).reversed());
     }
 
     public void afficherOrdre(int actuelle)
@@ -56,10 +58,20 @@ public class TourDeJeu
         }
         affichage.afficher("Choisissez une action :");
         int choix  = entree.scanner.nextInt();
+        entree.scanner.nextLine();
 
         if (choix >= 1 && choix <= listeActions.size())
         {
-            listeActions.get(choix - 1).executer(entite, gestionnaireDonjon);
+            boolean succes = listeActions.get(choix - 1).executer(entite, gestionnaireDonjon);
+            if(succes)
+            {
+                action_restante--;
+                affichage.afficher("Succès !");
+            }
+            else
+            {
+                affichage.afficher("l'action a échoué");
+            }
         }
         else
         {
@@ -68,15 +80,18 @@ public class TourDeJeu
     }
     public void jouerTour(GestionnaireDonjon gestionnaireDonjon)
     {
+
         for(int i=0;i< listeEntite.size();i++)
         {
+            action_restante=3;
+            afficherOrdre(i);
             affichage.afficher("C'est au tour de "+listeEntite.get(i).toString());
-            for(int j=0;j<3;j++)
+            while (action_restante > 0)
             {
+                affichage.afficher("Action restantes : " +action_restante  +"/3");
                 jouer(listeEntite.get(i),gestionnaireDonjon);
             }
 
         }
     }
 }
-

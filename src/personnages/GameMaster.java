@@ -8,7 +8,7 @@ import outils.Des;
 
 public class GameMaster
 {
-    private String m_nom;
+    /*private String m_nom;
 
     public GameMaster(String nom)
     {
@@ -53,5 +53,5 @@ public class GameMaster
     public void changeCase(Donjon plateau, Case newCase,int x, int y)
     {
         plateau.setCase(x,y,newCase);
-    }
+    }*/
 }

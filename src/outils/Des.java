@@ -33,16 +33,7 @@ public class Des {
         return resultat;
     }
 
-    public int sommeDes()
-    {
-        int somme = 0;
-        ArrayList<Integer> des = genererRandom();
-        for (int val : des)
-        {
-            somme += val;
-        }
-        return somme;
-    }
+    
 }
 
 

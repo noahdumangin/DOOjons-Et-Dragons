@@ -27,7 +27,7 @@ public class GestionnaireDonjon {
             listeEntite.add(e);
         }
     }
-    public void deplacerEntite(Entite e, int dest_x, int dest_y)
+    public boolean deplacerEntite(Entite e, int dest_x, int dest_y)
     {
         if(donjon.getCase(dest_x,dest_y).isLibre())
         {
@@ -39,6 +39,8 @@ public class GestionnaireDonjon {
                 destination.setEntite(e);
                 e.setPosition(dest_x,dest_y);
                 donjon.afficher();
+
+                return true;
             }
             else
             {
@@ -50,29 +52,30 @@ public class GestionnaireDonjon {
         {
             affichage.afficher("Cette case est déjà occupée");
         }
+        return false;
     }
 
 
 
-    public void attaquer(Entite attaquant, int x_cible, int y_cible)
+    public boolean attaquer(Entite attaquant, int x_cible, int y_cible)
     {
         Entite cible = donjon.getCase(x_cible,y_cible).getEntite();
         if (cible == null)
         {
             affichage.afficher("Aucune cible à ces coordonnées");
-            return;
+            return false;
         }
         if(cible==attaquant)
         {
             affichage.afficher("Impossible de s'attaquer soit-même");
-            return;
+            return false;
         }
         int distance = Math.abs(cible.getX()-attaquant.getX()) + Math.abs(cible.getY()-attaquant.getY()) ;
         int portee = attaquant.getAtk_reach();
         if(distance > portee)
         {
             affichage.afficher("La cible est hors-portée");
-            return;
+            return false;
         }
         int buff_attaque= new Des (1,20).genererRandom();
         int caractAttaque= attaquant.getCaractAtt(portee);
@@ -88,13 +91,16 @@ public class GestionnaireDonjon {
                 affichage.afficher(cible.toString()+" est mort");
                 meurt(cible);
                 donjon.afficher();
+                return true;
             }
             else
             {
                 affichage.afficher(cible.afficherHP());
                 donjon.afficher();
+                return true;
             }
         }
+        return false;
 
     }
 

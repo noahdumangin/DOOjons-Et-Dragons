@@ -5,7 +5,7 @@ import donjon.*;
 
 public class Boogie_woogie extends Sort {
 
-    private Donjon donjon;
+    /*private Donjon donjon;
 
     public Boogie_woogie(Donjon donjon) {
         this.donjon = donjon;
@@ -22,5 +22,5 @@ public class Boogie_woogie extends Sort {
 
         System.out.println("Le personnage " + PersoChoisi1.getNom() + " et le personnage " +
                 PersoChoisi2.getNom() + " ont été échangés de places!\n");
-    }
+    }*/
 }

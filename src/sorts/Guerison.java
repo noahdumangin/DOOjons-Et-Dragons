@@ -11,7 +11,7 @@ public class Guerison extends Sort{
         {
             if (PersoCible.getHp()!=PersoCible.getMaxHp())
             {
-                PersoCible.addHP(Soin);
+                //PersoCible.addHP(Soin);
             }
             else
             {

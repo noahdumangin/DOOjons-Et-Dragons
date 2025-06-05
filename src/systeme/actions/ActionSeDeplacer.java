@@ -9,14 +9,21 @@ import java.util.Scanner;
 public class ActionSeDeplacer implements Action {
 
     @Override
-    public void executer(Entite entite, GestionnaireDonjon gestionnaire) {
+    public boolean executer(Entite entite, GestionnaireDonjon gestionnaire) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Coordonnée X de destination : ");
         int x = scanner.nextInt();
+        scanner.nextLine();
         System.out.print("Coordonnée Y de destination : ");
         int y = scanner.nextInt();
+        scanner.nextLine();
 
-        gestionnaire.deplacerEntite(entite, x, y);
+        boolean succes = gestionnaire.deplacerEntite(entite, x, y);
+        if(succes)
+        {
+            return true;
+        }
+        return false;
     }
 
     @Override
