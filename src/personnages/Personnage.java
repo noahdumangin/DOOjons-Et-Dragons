@@ -1,6 +1,7 @@
 package personnages;
 import items.*;
 import entite.Entite;
+import sorts.*;
 
 import java.util.ArrayList;
 import outils.Des;
@@ -282,6 +283,19 @@ public class Personnage implements Entite {
         return m_max_hp;
     }
 
+    public void addHP(int Soin){
+        m_hp+=Soin;
+    }
+    public String getNom()
+    {
+        String nom = m_nom;
+        return nom;
+    }
+    /*public boolean peutLancerSort(Sort sort) {
+        if (classe == Classes.MAGICIEN) return true;
+        if (classe == Classes.CLERC && sort instanceof Guerison) return true;
+        return false;
+    }*/
 
     @Override
     public int getX()

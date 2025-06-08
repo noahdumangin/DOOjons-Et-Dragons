@@ -1,5 +1,7 @@
 @startuml
 skinparam classAttributeIconSize 0
+left to right direction
+skinparam linetype ortho
 
 package donjon{
     class Case{
@@ -8,8 +10,9 @@ package donjon{
         - Personnage personnage
         - Item item
         - Monstre monstre
-        - Boolean estObstacle
+        - Boolean estObstacle = false
         - Entite entite
+
         + Case(int x, int y)
         + int getM_x()
         + int getM_y()
@@ -81,20 +84,131 @@ package items{
 }
 package monstres{
     class Monstre{
+        - int m_x
+        - int m_y
+        - int m_num
+        - String m_specie
+        - int m_atk_reach
+        - Des m_dmg
+        - int m_hp
+        - int m_strength
+        - int m_dext
+        - int m_armor_class
+        - int m_init
+        - int m_speed
+        - int m_max_hp
+        + Monstre(int, String, int, Des, int, int, int, int, int, int)
+        + String getSpecie()
+        + int getSpeed()
+        + int getAtk_reach()
+        + int getInit()
+        + String getDescription()
+        + int getCA()
+        + int getDext()
+        + int getStrength()
+        + int getDmg()
+        + int getCaractAtt(int)
+        + int getX()
+        + int getY()
+        + void setPosition(int, int)
+        + String afficherHP()
+        + boolean estMort()
+        + void setHp(int)
+        + int changeHp(int)
+        + ArrayList<Action> getAction()
+        + String toString()
     }
 }
 package outils{
     class Des{
+        - static Random randomNumbers
+        - int m_nb_des
+        - int m_type_des
+        + Des(int nb_des, int type_des)
+        + ArrayList<Integer> genererListeRandom()
+        + int genererRandom()
     }
 }
 package personnages{
     class Classes{
+        - int m_hp
+        - ArrayList<Item> m_inventory
+        - String m_nom
+        + Classes(String nom, int hp, ArrayList<Item> inventory)
+        + int getHp()
+        + ArrayList<Item> getInventory()
+        + String getNom()
     }
     class GameMaster{
+        - String m_nom
+        + GameMaster(String nom)
+        + void degatMonstre(Monstre cible, Des des)
+        + void degatPerso(Personnage cible, Des des)
+        + Donjon deplacerPerso(Donjon plateau, Personnage cible, int x, int y)
+        + void deplacerMonstre(Donjon plateau, Monstre cible, int x, int y)
+        + void changeCase(Donjon plateau, Case newCase, int x, int y)
     }
     class Personnage{
+        - String m_nom
+        - int m_x
+        - int m_y
+        - boolean estMort
+        - int m_hp
+        - int m_max_hp
+        - int m_strength
+        - int m_dext
+        - int m_speed
+        - int m_init
+        - ArrayList<Item> m_inventory
+        - Armor m_armor
+        - Weapon m_weapon
+        - Classes m_classes
+        - Race m_race
+        + Personnage(String nom, Race race, Classes classes)
+        + void afficherStats()
+        + ArrayList<Action> getAction()
+        + void equiperArme(Weapon weapon)
+        + void equiperArmure(Armor armor)
+        + void desequiperArme(Weapon weapon)
+        + void desequiperArmmure(Armor armor)
+        + int getHp()
+        + int getStrength()
+        + int getDext()
+        + int getSpeed()
+        + int getInit()
+        + String getDescription()
+        + Weapon getWeapon()
+        + Armor getArmor()
+        + ArrayList<Item> getInventory()
+        + void afficherInventaire()
+        + int getCA()
+        + int getAtk_reach()
+        + int getDmg()
+        + int getCaractAtt(int portee)
+        + int getMaxHp()
+        + int getX()
+        + int getY()
+        + void setPosition(int x, int y)
+        + String afficherHP()
+        + boolean estMort()
+        + void setHp(int new_hp)
+        + int changeHp(int new_hp)
+        + String toString()
     }
     class Race{
+        - String m_nom
+        - int m_hp
+        - int m_strength
+        - int m_dext
+        - int m_speed
+        - int m_init
+        + Race(String nom, int hp, int strength, int dext, int speed, int init)
+        + String getNom()
+        + int getHp()
+        + int getStrength()
+        + int getDext()
+        + int getSpeed()
+        + int getInit()
     }
 }
 package sorts{
@@ -110,19 +224,81 @@ package sorts{
 package systeme{
     package actions{
         interface Action{
+            + executer(entite : Entite, gestionnaireDonjon : GestionnaireDonjon) : boolean
+            + getNom() : String
         }
         class ActionAttaquer{
+            + executer(entite : Entite, gestionnaire : GestionnaireDonjon) : boolean
+            + getNom() : String
         }
         class ActionSeDeplacer{
+            + executer(entite : Entite, gestionnaire : GestionnaireDonjon) : boolean
+            + getNom() : String
         }
     }
     class Affichage{
+        + afficher(chaine : String) : void
     }
     class Entree{
+        - scanner : Scanner
     }
-    class GestionnnaireDonjon{
+    class GestionnaireDonjon{
+            - donjon : Donjon
+            - listeEntite : ArrayList<Entite>
+            - affichage : Affichage
+            + ajouterEntite(e : Entite, x : int, y : int) : void
+            + deplacerEntite(e : Entite, dest_x : int, dest_y : int) : boolean
+            + attaquer(attaquant : Entite, x_cible : int, y_cible : int) : boolean
+            + meurt(entite : Entite) : void
+            + getListeEntite() : ArrayList<Entite>
     }
     class TourDeJeu{
+            - affichage : Affichage
+            - gd : GestionnaireDonjon
+            - entree : Entree
+            - tour : int
+            - listeEntite : ArrayList<Entite>
+            - action_restante : int
+            + TourDeJeu(gestionnaireDonjon : GestionnaireDonjon, donjon : Donjon)
+            - gererOrdre(listeEntite : ArrayList<Entite>) : void
+            + afficherOrdre(actuelle : int) : void
+            + jouer(entite : Entite, gestionnaireDonjon : GestionnaireDonjon) : void
+            + jouerTour(gestionnaireDonjon : GestionnaireDonjon) : void
     }
-    }
+}
+
+ActionAttaquer --|> Action
+ActionSeDeplacer --|> Action
+TourDeJeu --> GestionnaireDonjon
+TourDeJeu --> Affichage
+TourDeJeu --> Entree
+TourDeJeu --> "1..*" Entite
+GestionnaireDonjon --> Donjon
+GestionnaireDonjon --> Affichage
+GestionnaireDonjon --> "1..*" Entite
+Entite --> "1..*" Action
+Action --> GestionnaireDonjon
+Action --> Entite
+GestionnaireDonjon --> Des
+TourDeJeu --> Affichage
+TourDeJeu --> Entree
+Case --> Personnage
+Case --> Monstre
+Case --> Item
+Case --> Entite
+Donjon --> Case
+Monstre ..|> Entite
+Personnage ..|> Entite
+Personnage --> Weapon
+Personnage --> Armor
+Personnage --> Item
+Personnage --> Race
+Personnage --> Classes
+Classes --> Item
+Weapon --> Des
+GameMaster --> Donjon
+GameMaster --> Monstre
+GameMaster --> Personnage
+GameMaster --> Case
+
 @enduml
