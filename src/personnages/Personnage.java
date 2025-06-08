@@ -51,9 +51,9 @@ public class Personnage implements Entite {
 
 
     }
+
+    @Override
     public void afficherStats() {
-        Affichage.afficher("Nom : " + m_nom);
-        Affichage.afficher("PV : " + m_hp +"/"+m_max_hp);
         Affichage.afficher("Force : " + m_strength);
         Affichage.afficher("Dexterité : " + m_dext);
         Affichage.afficher("Vitesse : " + m_speed);

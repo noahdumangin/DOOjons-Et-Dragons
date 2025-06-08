@@ -228,7 +228,7 @@ public class Main {
         for (int i = 0; i < nb_perso; i++) {
             String nom = entree.lireString("Nom du personnage ?");
             // Sélection race
-            int choixRace = entree.lireInt("1. Humain  2. Elfe  3. Nain  4. Halfelins");
+            int choixRace = entree.lireInt("Choix de la race :\n1. Humain  2. Elfe  3. Nain  4. Halfelins");
             Race raceChoisie;
             switch (choixRace) {
                 case 1:
@@ -250,7 +250,7 @@ public class Main {
 
 
             // Sélection classe
-            int choixClasse = entree.lireInt("1. Magicien  2. Clerc  3. Guerrier  4. Roublard");
+            int choixClasse = entree.lireInt("Choix de la classe :\n1. Magicien  2. Clerc  3. Guerrier  4. Roublard");
             Classes classeChoisie;
             switch (choixClasse) {
                 case 1:

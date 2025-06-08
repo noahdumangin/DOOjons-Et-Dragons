@@ -2,6 +2,7 @@ package monstres;
 
 import outils.Des;
 import entite.Entite;
+import systeme.Affichage;
 import systeme.actions.Action;
 import systeme.actions.ActionAttaquer;
 import systeme.actions.ActionSeDeplacer;
@@ -86,6 +87,16 @@ public class Monstre implements Entite {
         {
             return 0;
         }
+    }
+
+    @Override
+    public void afficherStats()
+    {
+        Affichage.afficher("Force : " + m_strength);
+        Affichage.afficher("Dexterité : " + m_dext);
+        Affichage.afficher("Vitesse : " + m_speed);
+        Affichage.afficher("Initiative : " + m_init);
+
     }
 
     @Override

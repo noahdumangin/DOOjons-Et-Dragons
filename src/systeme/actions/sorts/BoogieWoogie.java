@@ -26,14 +26,12 @@ public class BoogieWoogie implements Sort {
             return false;
         }
         Entite cible1 = gestionnaireDonjon.getListeEntite().get(choix-1);
-        Entree.fermer();
         choix = Entree.lireInt("\nVeuillez choisir l'id de la cible 2");
         if(choix>gestionnaireDonjon.getListeEntite().size())
         {
             return false;
         }
             Entite cible2 = gestionnaireDonjon.getListeEntite().get(choix-1);
-        Entree.fermer();
 
         if(cible2 != cible1) {
             int temp_x_cible1 = cible1.getX();

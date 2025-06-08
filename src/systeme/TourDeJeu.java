@@ -115,6 +115,30 @@ public class TourDeJeu
                 while (action_restante > 0)
                 {
                     m_donjon.afficher();
+                    Entite entite_temp= listeEntite.get(i);
+                    entite_temp.afficherHP();
+                    if(entite_temp.getType()== Entite.TypeEntite.PERSONNAGE)
+                    {
+                        Personnage personnage_temp = (Personnage) entite_temp;
+                        if(personnage_temp.getArmor()!=null)
+                        affichage.afficher("Armure : "+personnage_temp.getArmor().toString() );
+                        else {
+                            affichage.afficher("Armure : Aucune");
+                        }
+                        if(personnage_temp.getWeapon()!=null)
+                        {
+                            affichage.afficher("Arme : "+personnage_temp.getWeapon().toString()+"(degats");
+                        }
+                        else
+                        {
+                            affichage.afficher("Arme : Aucune");
+                        }
+                        personnage_temp.afficherInventaire();
+
+
+                    }
+                    entite_temp.afficherStats();
+
                     affichage.afficher("Action restantes : " +action_restante  +"/3");
                     jouer(listeEntite.get(i),gestionnaireDonjon);
                     //affichage.afficher("Laissez le maitre du jeu doit-il intervenir ?");

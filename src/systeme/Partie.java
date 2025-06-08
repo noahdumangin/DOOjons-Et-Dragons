@@ -2,6 +2,7 @@ package systeme;
 
 import donjon.Donjon;
 import entite.Entite;
+import items.Item;
 import monstres.Monstre;
 import personnages.Personnage;
 import systeme.Affichage;
@@ -67,7 +68,7 @@ public class Partie
 
             // Afficher plateau et lancer la partie de ce donjon
             donjon.afficher();
-
+            phasePreparation(personnages, gestionnaireDonjon);
             while (!donjonTermine(gestionnaireDonjon)) {
                 tour.jouerTour(gestionnaireDonjon);
 
@@ -132,4 +133,49 @@ public class Partie
                 "                                                     ░                   \n" +
                 "\n");
     }
+
+    public void phasePreparation(ArrayList<Personnage> joueurs, GestionnaireDonjon gestionnaireDonjon) {
+        Affichage affichage = new Affichage();
+        Entree entree = new Entree();
+
+        affichage.afficher("\n════════════════════════════════════");
+        affichage.afficher("        PHASE D'ÉQUIPEMENT         ");
+        affichage.afficher("════════════════════════════════════");
+
+        for (Personnage p : joueurs)
+        {
+            if (!p.estMort()) {
+                affichage.afficher("\n->" + p.toString() + ", c'est ton tour pour t'équiper !");
+                boolean continuer = true;
+                while (continuer)
+                {
+                    p.afficherInventaire();
+                    if (p.getInventory().isEmpty())
+                    {
+                        affichage.afficher("Inventaire vide.");
+                        break;
+                    }
+
+                    int choix = entree.lireInt("Choisissez l'ID d'un objet à équiper (0 pour passer) :");
+                    if (choix == 0) {
+                        continuer = false;
+                    }
+                    else if (choix >= 1 && choix <= p.getInventory().size())
+                    {
+                        Item item = p.getInventory().get(choix - 1);
+                        p.equiper(item);
+                    }
+                    else
+                    {
+                        affichage.afficher("Choix invalide.");
+                    }
+                }
+            }
+        }
+
+        affichage.afficher("\n════════════════════════════════════");
+        affichage.afficher(" Fin de la phase d'équipement !");
+        affichage.afficher("════════════════════════════════════\n");
+    }
+
 }

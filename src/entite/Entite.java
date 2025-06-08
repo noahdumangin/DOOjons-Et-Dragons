@@ -36,6 +36,7 @@ public interface Entite
                 PERSONNAGE,
                 MONSTRE
         }
+        public void afficherStats();
 
 
 
