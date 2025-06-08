@@ -6,11 +6,6 @@ import java.util.ArrayList;
 
 public interface Entite
 {
-    /*void seDeplacer(int x_cible, int y_cible, Donjon donjon);
-
-    void attaquer(int x_cible, int y_cible, Donjon donjon);*/
-
-
         int getX();
         int getY();
         void setPosition(int x, int y);

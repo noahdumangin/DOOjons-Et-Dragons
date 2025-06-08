@@ -3,7 +3,6 @@ package systeme.actions;
 import entite.Entite;
 import systeme.GestionnaireDonjon;
 import systeme.Entree;
-import systeme.actions.Action;
 
 import java.util.Scanner;
 

@@ -1,9 +1,7 @@
 package systeme;
 import donjon.*;
 import entite.Entite;
-import outils.Des;
 import personnages.Personnage;
-import items.*;
 import java.util.ArrayList;
 public class GestionnaireDonjon {
 
@@ -155,7 +153,6 @@ public class GestionnaireDonjon {
 
     public void meurt(Entite entite)
     {
-        //listeEntite.remove(entite);
         donjon.getCase(entite.getX(), entite.getY()).setEntite(null);
     }
 
@@ -186,79 +183,3 @@ public class GestionnaireDonjon {
 
 
 }
-
-
-
-
-
-
-
-
-
-//Limbes
-/*public void attaquerMonstre(Personnage attaquant, Monstre cible)
-    {
-        Des attaque = new Des(1, 20);
-        int buff_attaque = attaque.genererRandom();
-        int distance = Math.abs(cible.getX()-attaquant.getX()) + Math.abs(cible.getY()-attaquant.getY()) ;
-        if(attaquant.getWeapon()==null)
-        {
-            affichage.afficher("Pas d'arme d'équipée");
-            return;
-        }
-        if (distance > attaquant.getWeapon().getAtk_reach())
-        {
-            affichage.afficher("La cible est trop éloignée");
-            return;
-
-        }
-        int caract_attaque;
-        if(attaquant.getWeapon().getAtk_reach() >1)
-        {
-            caract_attaque=attaquant.getDext();
-        }
-        else
-        {
-            caract_attaque=attaquant.getStrength();
-        }
-        int total_attaque=caract_attaque+buff_attaque;
-        if(total_attaque >= cible.getCA())
-        {
-            int degats= attaquant.getWeapon().getDmg().genererRandom();
-            affichage.afficher(attaquant.getNom() + " attaque " + cible.getSpecie() + " et inflige " + degats + " dégâts !");
-            cible.changeHp(-degats);
-            cible.afficherHP();
-        }
-        else
-        {
-            affichage.afficher("La classe d'armure du monstre est trop élevée ! L'attaque a échoué !");
-        }
-    }
-    public void attaquerPersonnage(Personnage cible, Monstre attaquant)
-    {
-        Des attaque = new Des(1, 20);
-        int buff_attaque = attaque.genererRandom();
-        int distance = Math.abs(cible.getX()-attaquant.getX()) + Math.abs(cible.getY()-attaquant.getY()) ;
-        if(distance > attaquant.getAtk_reach())
-        {
-            affichage.afficher("La cible est trop éloignée");
-            return;
-        }
-        int caract_attaque;
-        if(attaquant.getAtkReach()>1)
-        {
-            caract_attaque=attaquant.getDext();
-        }
-        else
-        {
-            caract_attaque=attaquant.getStrength();
-        }
-        int total_attaque=caract_attaque+buff_attaque;
-        if (total_attaque>=cible.getCA())
-        {
-            int degats=attaquant.getDmg();
-            affichage.afficher(attaquant.getSpecie() + " attaque " + cible.getNom() + " et inflige " + degats + " dégâts !");
-            cible.changeHp(-degats);
-            cible.afficherHP();
-        }
-    }*/

@@ -4,7 +4,6 @@ import entite.Entite;
 import systeme.Affichage;
 import systeme.Entree;
 import systeme.GestionnaireDonjon;
-import systeme.actions.Action;
 
 public class BoogieWoogie implements Sort {
 
