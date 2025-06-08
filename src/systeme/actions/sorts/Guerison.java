@@ -23,8 +23,7 @@ public class Guerison implements Sort{
             Personnage personnage = gestionnaireDonjon.listePersonnage().get(i);
             affichage.afficher(i+1+"."+personnage.toString()+" : "+personnage.getHp()+"/"+personnage.getMaxHp());
         }
-        affichage.afficher("Selectionnez l'id d'un des joueurs que vous voulez soigner");
-        int choix = entre.scanner.nextInt();
+        int choix = Entree.lireInt("Sélectionnez l'id d'un des joueurs que vous voulez soigner");
         if(choix<=gestionnaireDonjon.listePersonnage().size() && choix > 0)
         {
             Personnage personnageCible = gestionnaireDonjon.listePersonnage().get(choix-1);

@@ -31,8 +31,7 @@ public class ActionSorts implements Action {
             affichage.afficher((i + 1) + ". " + listeSorts.get(i).Description());
         }
 
-        affichage.afficher("Sélectionnez un sort à lancer :");
-        int choix = entree.scanner.nextInt();
+        int choix = Entree.lireInt("Sélectionnez un sort à lancer :");
 
         if (choix >= 1 && choix <= listeSorts.size()) {
             Sort sortChoisi = listeSorts.get(choix - 1);

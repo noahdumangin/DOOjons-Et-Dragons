@@ -23,8 +23,7 @@ public class ArmeMagique implements Sort{
             affichage.afficher((i + 1) + ". " + personnage.toString());
         }
 
-        affichage.afficher("Sélectionnez l'id du joueur dont vous voulez enchanter une arme");
-        int choix = entre.scanner.nextInt();
+        int choix = Entree.lireInt("Sélectionnez l'id du joueur dont vous voulez enchanter une arme");
         if (choix <= 0 || choix > gestionnaireDonjon.listePersonnage().size())
             return false;
 
@@ -41,8 +40,7 @@ public class ArmeMagique implements Sort{
             affichage.afficher((i + 1) + ". " + armeTemp.getNom() + " (" + armeTemp.getNbDes() + "d" + armeTemp.getTypeDes() + " + " + armeTemp.getBonusDegats() + ")");
         }
 
-        affichage.afficher("Sélectionnez l'arme à enchanter :");
-        choix = entre.scanner.nextInt();
+        choix = Entree.lireInt("Sélectionnez l'arme à enchanter :");
         if (choix <= 0 || choix > personnageChoisi.listeArmes().size())
             return false;
 

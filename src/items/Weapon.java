@@ -37,4 +37,3 @@ public class Weapon extends Item{
     public int getTypeDes() { return m_dmg.getTypeDes(); }
     public int getBonusDegats() { return m_bonusDegats; }
 }
-

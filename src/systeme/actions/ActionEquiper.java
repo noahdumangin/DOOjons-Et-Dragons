@@ -28,8 +28,7 @@ public class ActionEquiper implements Action{
         }
 
         personnage.afficherInventaire();
-        affichage.afficher("\nSélectionner l'id de l'item que vous voulez equiper");
-        int choix = entree.scanner.nextInt();
+        int choix = Entree.lireInt("\nSélectionner l'id de l'item que vous voulez equiper");
 
         if(choix<=inventaire_personnage.size() && choix > 0)
         {

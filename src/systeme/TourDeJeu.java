@@ -5,6 +5,7 @@ import entite.Entite;
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Collections;
+import systeme.*;
 
 import personnages.Personnage;
 import systeme.actions.*;
@@ -80,9 +81,9 @@ public class TourDeJeu
         {
             affichage.afficher(i+1+"."+listeActions.get(i).getNom());
         }
-        affichage.afficher("Choisissez une action :");
-        int choix  = entree.scanner.nextInt();
-        entree.scanner.nextLine();
+
+        int choix  = Entree.lireInt("Choisissez une action :");
+        Entree.fermer();
 
         if (choix >= 1 && choix <= listeActions.size())
         {

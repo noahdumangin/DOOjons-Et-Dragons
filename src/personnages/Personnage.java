@@ -1,6 +1,7 @@
 package personnages;
 import items.*;
 import entite.Entite;
+import systeme.Affichage;
 
 import java.util.ArrayList;
 import outils.Des;
@@ -51,12 +52,12 @@ public class Personnage implements Entite {
 
     }
     public void afficherStats() {
-        System.out.println("Nom : " + m_nom);
-        System.out.println("PV : " + m_hp +"/"+m_max_hp);
-        System.out.println("Force : " + m_strength);
-        System.out.println("Dexterité : " + m_dext);
-        System.out.println("Vitesse : " + m_speed);
-        System.out.println("Initiative : " + m_init);
+        Affichage.afficher("Nom : " + m_nom);
+        Affichage.afficher("PV : " + m_hp +"/"+m_max_hp);
+        Affichage.afficher("Force : " + m_strength);
+        Affichage.afficher("Dexterité : " + m_dext);
+        Affichage.afficher("Vitesse : " + m_speed);
+        Affichage.afficher("Initiative : " + m_init);
     }
 
     @Override
@@ -202,7 +203,7 @@ public class Personnage implements Entite {
         for(int i=0;i<m_inventory.size();i++)
         {
             Item item_afficher = m_inventory.get(i);
-            System.out.println(i+1+"."+item_afficher.toString()+"("+item_afficher.getType()+")");
+            Affichage.afficher(i+1+"."+item_afficher.toString()+"("+item_afficher.getType()+")");
         }
     }
 
@@ -380,7 +381,7 @@ public class Personnage implements Entite {
             }
             m_weapon=nouvelleArme;
             m_inventory.remove(nouvelleArme);
-            System.out.println(nouvelleArme+" équipé avec succès");
+            Affichage.afficher(nouvelleArme+" équipé avec succès");
             return true;
         }
         if(item.getType()== Item.TypeItem.ARMURE)
@@ -393,10 +394,10 @@ public class Personnage implements Entite {
 
             m_armor=nouvelleArmure;
             m_inventory.remove(nouvelleArmure);
-            System.out.println(nouvelleArmure+" équipé avec succès");
+            Affichage.afficher(nouvelleArmure+" équipé avec succès");
             return true;
         }
-        System.out.println("Le type de l'item n'est pas identifié");
+        Affichage.afficher("Le type de l'item n'est pas identifié");
         return false;
     }
 

@@ -1,6 +1,7 @@
 package donjon;
 
 import entite.Entite;
+import systeme.Affichage;
 
 public class Donjon {
     private Case[][] m_plateau;
@@ -30,15 +31,15 @@ public class Donjon {
         for (int x = 0; x < m_tailleX; x++) {
             System.out.print(x + "   ");
         }
-        System.out.println();
+        Affichage.afficher("");
         for (int y = 0; y < m_tailleY; y++) {  // On boucle uniquement jusqu'à m_tailleY
             System.out.print(y + " ");
             for (int x = 0; x < m_tailleX; x++) {
                 System.out.print(m_plateau[x][y].toString() + " ");
             }
-            System.out.println();
+            Affichage.afficher("");
         }
-        System.out.println();
+        Affichage.afficher("");
     }
 
     public Case getCase(int x, int y) {

@@ -19,23 +19,21 @@ public class BoogieWoogie implements Sort {
         {
             affichage.afficher(i+1+"." +gestionnaireDonjon.getListeEntite().get(i).toString());
         }
-        affichage.afficher("\nVeuillez choisir l'id de la cible 1");
-        int choix = entre.scanner.nextInt();
+        int choix = Entree.lireInt("\nVeuillez choisir l'id de la cible 1");
 
         if(choix>gestionnaireDonjon.getListeEntite().size())
         {
             return false;
         }
         Entite cible1 = gestionnaireDonjon.getListeEntite().get(choix-1);
-        entre.scanner.nextLine();
-        affichage.afficher("\nVeuillez choisir l'id de la cible 2");
-        choix = entre.scanner.nextInt();
+        Entree.fermer();
+        choix = Entree.lireInt("\nVeuillez choisir l'id de la cible 2");
         if(choix>gestionnaireDonjon.getListeEntite().size())
         {
             return false;
         }
             Entite cible2 = gestionnaireDonjon.getListeEntite().get(choix-1);
-        entre.scanner.nextLine();
+        Entree.fermer();
 
         if(cible2 != cible1) {
             int temp_x_cible1 = cible1.getX();
