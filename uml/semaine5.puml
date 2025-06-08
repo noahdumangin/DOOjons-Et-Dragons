@@ -21,16 +21,17 @@ package donjon #FF6961{
     }
 
     class Donjon{
-       - m_plateau : Case[*]
-        - m_tailleX : Integer
-        - m_tailleY : Integer
-        + <<create>> Donjon(tailleX : Integer, tailleY : Integer)
-        + afficher()
-        + getCase(x : Integer, y : Integer) : Case
-        + getTailleX() : Integer
-        + getTailleY() : Integer
-        + setCase(x : Integer, y : Integer, newCase : Case)
-        + getCaseInvisible() : Case
+    - m_plateau : Case[*]
+    - m_tailleX : Integer
+    - m_tailleY : Integer
+    + <<create>> Donjon(tailleX : Integer, tailleY : Integer)
+    + afficher()
+    + getCase(x : Integer, y : Integer) : Case
+    + getTailleX() : Integer
+    + getTailleY() : Integer
+    + setCase(x : Integer, y : Integer, newCase : Case)
+    + getCaseInvisible() : Case
+
     }
 }
 package entite #AEC6CF{
@@ -320,24 +321,51 @@ package systeme #77DD77 {
         + PersonnageSurItem(entite : Entite, donjon : Donjon) : Boolean
     }
     class Partie{
+        - affichage : Affichage
+        - entree : Entree
+        - random : Random
+        - personnages : ArrayList<Personnage>
+        - bestiaire : ArrayList<Monstre>
+        - listeItems : ArrayList<Item>
+        + Partie(personnages, bestiaire, listeItems)
+        + demarrer() : void
+        - aucunPersoEnVie() : boolean
+        - donjonTermine(gestionnaire) : boolean
+        - afficherGameOver() : void
+        + phasePreparation(joueurs, gestionnaire) : void
     }
     class TourDeJeu{
+        - affichage : Affichage
+        - gd : GestionnaireDonjon
+        - entree : Entree
+        - tour : int
+        - listeEntite : ArrayList<Entite>
+        - action_restante : int
+        - m_donjon : Donjon
+        + TourDeJeu(gd : GestionnaireDonjon, donjon : Donjon)
+        + getActionsDisponibles(entite, gd) : ArrayList<Action>
+        + jouer(entite, gd) : void
+        + jouerTour(gd) : void
+        - gererOrdre(listeEntite) : void
+        + afficherOrdre(actuelle : int) : void
+        - interventionMJ(gd) : void
     }
 }
-items.Armor       --|> items.Item
-items.Weapon      --|> items.Item
-monstres.Monstre  --|> entite.Entite
+items.Armor --|> items.Item
+items.Weapon --|> items.Item
+
+monstres.Monstre --|> entite.Entite
 personnages.Personnage --|> entite.Entite
 
-systeme.actions.ActionAttaquer   --|> systeme.actions.Action
+systeme.actions.ActionAttaquer --|> systeme.actions.Action
 systeme.actions.ActionSeDeplacer --|> systeme.actions.Action
-systeme.actions.ActionEquiper    --|> systeme.actions.Action
-systeme.actions.ActionRamasser   --|> systeme.actions.Action
-systeme.actions.ActionSorts      --|> systeme.actions.Action
+systeme.actions.ActionEquiper --|> systeme.actions.Action
+systeme.actions.ActionRamasser --|> systeme.actions.Action
+systeme.actions.ActionSorts --|> systeme.actions.Action
 
-systeme.actions.sorts.ArmeMagique   --|> systeme.actions.sorts.Sort
-systeme.actions.sorts.BoogieWoogie  --|> systeme.actions.sorts.Sort
-systeme.actions.sorts.Guerison      --|> systeme.actions.sorts.Sort
+systeme.actions.sorts.ArmeMagique --|> systeme.actions.sorts.Sort
+systeme.actions.sorts.BoogieWoogie --|> systeme.actions.sorts.Sort
+systeme.actions.sorts.Guerison --|> systeme.actions.sorts.Sort
 
 donjon.Case --> entite.Entite
 donjon.Case --> items.Item
@@ -359,7 +387,8 @@ systeme.actions.sorts.ArmeMagique --> personnages.Personnage
 systeme.actions.sorts.BoogieWoogie --> entite.Entite
 
 personnages.Personnage o-- items.Item : m_inventory
-personnages.Classes    o-- items.Item : m_inventory
+personnages.Classes o-- items.Item : m_inventory
 systeme.GestionnaireDonjon o-- entite.Entite : listeEntite
 donjon.Donjon *-- donjon.Case : m_plateau
+
 @enduml
