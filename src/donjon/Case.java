@@ -1,8 +1,8 @@
 package donjon;
 import entite.Entite;
-import personnages.*;
-import items.*;
-import monstres.*;
+import personnages.Personnage;
+import items.Item;
+import monstres.Monstre;
 
 public class Case {
     private int m_x;

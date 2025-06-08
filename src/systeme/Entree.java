@@ -1,7 +1,6 @@
 package systeme;
 
 import java.util.Scanner;
-import systeme.*;
 
 public class Entree {
 

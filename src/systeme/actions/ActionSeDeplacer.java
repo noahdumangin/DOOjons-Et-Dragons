@@ -2,7 +2,6 @@ package systeme.actions;
 
 import entite.Entite;
 import systeme.GestionnaireDonjon;
-import systeme.actions.Action;
 import systeme.*;
 
 import java.util.Scanner;

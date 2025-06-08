@@ -2,7 +2,6 @@ package systeme.actions.sorts;
 
 import entite.Entite;
 import items.Weapon;
-import outils.Des;
 import personnages.Personnage;
 import systeme.Affichage;
 import systeme.Entree;
