@@ -1,6 +1,5 @@
 package donjon;
 
-import entite.Entite;
 import systeme.Affichage;
 
 public class Donjon {

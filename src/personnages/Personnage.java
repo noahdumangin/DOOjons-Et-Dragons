@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import outils.Des;
 import systeme.actions.sorts.Sort;
 import systeme.actions.*;
-import systeme.*;
 public class Personnage implements Entite {
     private String m_nom;
 
@@ -291,11 +290,6 @@ public class Personnage implements Entite {
         String nom = m_nom;
         return nom;
     }
-    /*public boolean peutLancerSort(Sort sort) {
-        if (classe == Classes.MAGICIEN) return true;
-        if (classe == Classes.CLERC && sort instanceof Guerison) return true;
-        return false;
-    }*/
 
     @Override
     public int getX()
@@ -401,102 +395,7 @@ public class Personnage implements Entite {
         return false;
     }
 
-    public void addItemInventory(Item item)
-    {
+    public void addItemInventory(Item item) {
         m_inventory.add(item);
     }
-
-    /*public void ameliorerArme(Weapon weapon)
-    {
-        m_weapon.
-    }*/
-
-
-
-
-}
-
-
-
-
-
-//Limbes
-/*public void seDeplacer(int dest_x, int dest_y, Donjon donjon)
-    {
-        int distance= Math.abs(dest_x-m_x) + Math.abs(dest_y-m_y);
-        if(distance <= m_speed*999)//remplacé *999 par /3 plus tard, c'est juste pour simplifier les déplacements
-        {
-            if (donjon.getCase(dest_x,dest_y).isLibre())
-            {
-                //System.out.println(m_x +"-"+ m_y);
-                donjon.getCase(m_x,m_y).setPersonnage(null);
-                this.m_x=dest_x;
-                this.m_y=dest_y;
-                donjon.getCase(dest_x,dest_y).setPersonnage(this);
-            }
-            System.out.println("La case est occupée");
-        }
-        else
-        {
-            System.out.println("distance trop élevée");
-        }
-
     }
-
-    public void attaquer(int x_cible, int y_cible, Donjon donjon) {
-        Des attaque = new Des(1, 20);
-        int buff_attaque = attaque.genererRandom();
-        int distance = Math.abs(x_cible - m_x) + Math.abs(y_cible - m_y);
-
-        Monstre cible = donjon.getCase(x_cible, y_cible).getMonstre();
-
-        if (cible == null) {
-            System.out.println("Il n'y a pas de monstre sur cette case !");
-            return;
-        }
-
-        if (distance > m_weapon.getAtk_reach()) {
-            System.out.println("La cible est trop éloignée !");
-            return;
-        }
-
-        int caract_attaque;
-        if(m_weapon.getAtk_reach() >1)
-        {
-            caract_attaque=m_dext;
-        }
-        else
-        {
-            caract_attaque=m_strength;
-        }
-
-        int total_attaque = caract_attaque + buff_attaque;
-
-        if (total_attaque >= cible.getCA()) {
-            int degats = m_weapon.getDmg().genererRandom();
-            System.out.println(m_nom + " attaque " + cible.getSpecie() + " et inflige " + degats + " dégâts !");
-            cible.changeHp(-degats);
-            cible.afficherHP();
-        }
-        else
-        {
-            System.out.println("L'attaque a échoué ! La classe d'armure de " + cible.getSpecie() + " était trop élevée");
-        }
-    }
-
-    public void recupItem(Donjon donjon)
-    {
-        if(donjon.getCase(m_x,m_y).getItem()!=null)
-        {
-            m_inventory.add(donjon.getCase(m_x,m_y).getItem());
-            donjon.getCase(m_x,m_y).setItem(null);
-        }
-    }*/
-
-
-
-/*public void poser(int x, int y)
-        {
-            m_x=x;
-            m_y=y;
-        }*/
