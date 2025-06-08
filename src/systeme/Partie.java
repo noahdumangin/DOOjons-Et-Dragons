@@ -22,10 +22,12 @@ public class Partie
 
     private ArrayList<Personnage> personnages;
     private ArrayList<Monstre> bestiaire;
+    private ArrayList<Item> listeItems;
 
-    public Partie(ArrayList<Personnage> personnages, ArrayList<Monstre> bestiaire) {
+    public Partie(ArrayList<Personnage> personnages, ArrayList<Monstre> bestiaire, ArrayList<Item> listeItems) {
         this.personnages = personnages;
         this.bestiaire = bestiaire;
+        this.listeItems=listeItems;
     }
 
     public void demarrer() {
@@ -34,27 +36,54 @@ public class Partie
 
             int tailleX = entree.lireInt("Entrez la taille X du donjon : ");
             int tailleY = entree.lireInt("Entrez la taille Y du donjon : ");
-
+            if(tailleX<=0)
+            {
+                tailleX=6; //taille par défault
+            }
+            if(tailleY<=0)
+            {
+                tailleY=6;
+            }
             Donjon donjon = new Donjon(tailleX, tailleY);
             GestionnaireDonjon gestionnaireDonjon = new GestionnaireDonjon(donjon);
             TourDeJeu tour = new TourDeJeu(gestionnaireDonjon, donjon);
 
-            // Ajouter personnages vivants dans le donjon
-            for (Personnage p : personnages) {
+            // Ajouter les personnages
+            for (Personnage p : personnages)
+            {
                 if (!p.estMort()) {
-                    gestionnaireDonjon.ajouterEntite(p, random.nextInt(tailleX), random.nextInt(tailleY));
+                    affichage.afficher("Placer " + p + " :\n(-1 -1 pour placement aléatoire)");
+                    int x = entree.lireInt("X :");
+                    int y = entree.lireInt("Y :");
+                    if (x == -1 && y == -1) {
+                        do
+                        {
+                            x = random.nextInt(tailleX);
+                            y = random.nextInt(tailleY);
+                        } while (!donjon.getCase(x, y).isLibre());
+                    }
+                    gestionnaireDonjon.ajouterEntite(p, x, y);
                 }
             }
 
-            // Ajouter obstacles
+// Ajouter obstacles
             int nbObstacles = entree.lireInt("Combien d'obstacles souhaitez-vous placer ?");
             for (int i = 0; i < nbObstacles; i++) {
-                int x = random.nextInt(tailleX);
-                int y = random.nextInt(tailleY);
+                affichage.afficher("Position de l'obstacle " + (i + 1) + " :\n(-1 -1 pour placement aléatoire)");
+                int x = entree.lireInt("X :");
+                int y = entree.lireInt("Y :");
+                if (x == -1 && y == -1)
+                {
+                    do
+                    {
+                        x = random.nextInt(tailleX);
+                        y = random.nextInt(tailleY);
+                    } while (donjon.getCase(x, y).estObstacle());
+                }
                 donjon.getCase(x, y).setObstacle(true);
             }
 
-            // Ajouter monstres
+// Ajouter monstres
             int nbMonstres = entree.lireInt("Combien de monstres voulez-vous ajouter ?");
             for (int i = 0; i < nbMonstres; i++) {
                 affichage.afficher("Choisissez un monstre dans le bestiaire :");
@@ -62,9 +91,42 @@ public class Partie
                     affichage.afficher((j + 1) + ". " + bestiaire.get(j).getSpecie());
                 }
                 int choix = entree.lireInt("Votre choix :") - 1;
-                Monstre monstreChoisi = new Monstre(bestiaire.get(choix));
-                gestionnaireDonjon.ajouterEntite(monstreChoisi, random.nextInt(tailleX), random.nextInt(tailleY));
+                Monstre monstreChoisi = new Monstre(bestiaire.get(choix)); // constructeur copie
+
+                affichage.afficher("Position du monstre " + monstreChoisi.getSpecie() + " :\n(-1 -1 pour placement aléatoire)");
+                int x = entree.lireInt("X :");
+                int y = entree.lireInt("Y :");
+                if (x == -1 && y == -1) {
+                    do {
+                        x = random.nextInt(tailleX);
+                        y = random.nextInt(tailleY);
+                    } while (!donjon.getCase(x, y).isLibre());
+                }
+                gestionnaireDonjon.ajouterEntite(monstreChoisi, x, y);
             }
+
+// Ajouter items
+            int nbItems = entree.lireInt("Combien d'items voulez-vous placer ?");
+            for (int i = 0; i < nbItems; i++) {
+                affichage.afficher("Choisissez un item dans la liste :");
+                for (int j = 0; j < listeItems.size(); j++) {
+                    affichage.afficher((j + 1) + ". " + listeItems.get(j).toString());
+                }
+                int choixItem = entree.lireInt("Votre choix :") - 1;
+                Item itemChoisi = listeItems.get(choixItem);
+
+                affichage.afficher("Position de l'item " + itemChoisi.getNom() + " :\n(-1 -1 pour placement aléatoire)");
+                int x = entree.lireInt("X :");
+                int y = entree.lireInt("Y :");
+                if (x == -1 && y == -1) {
+                    do {
+                        x = random.nextInt(tailleX);
+                        y = random.nextInt(tailleY);
+                    } while (!donjon.getCase(x, y).isLibre() || donjon.getCase(x, y).getItem() != null);
+                }
+                donjon.getCase(x, y).setItem(itemChoisi);
+            }
+
 
             // Afficher plateau et lancer la partie de ce donjon
             donjon.afficher();

@@ -158,7 +158,20 @@ public class Main {
         Weapon Fronde = new Weapon("Fronde", false, new Des(1, 4), 6);
         Weapon ArbaleteLegere = new Weapon("Arbalète légère", false, new Des(1, 8), 16);
         Weapon ArcCourt = new Weapon("Arc Court", false, new Des(1, 6), 16);
+
         ArrayList<Item> listeItems = new ArrayList<>();
+        listeItems.add(ArbaleteLegere);
+        listeItems.add(ArcCourt);
+        listeItems.add(Fronde);
+        listeItems.add(EpeeDeuxMains);
+        listeItems.add(Rapiere);
+        listeItems.add(EpeeLongue);
+        listeItems.add(Baton);
+        listeItems.add(MasseArme);
+        listeItems.add(Harnois);
+        listeItems.add(CoteMaille);
+        listeItems.add(ArmureEcailles);
+        listeItems.add(CoteMaille);
 
         //Création des sorts pour les classes qui les intègrent
         //Permet d'ajouter simplement des sorts aux classes
@@ -275,7 +288,7 @@ public class Main {
             Personnage joueur = new Personnage(nom, raceChoisie, classeChoisie);
             listeJoueurs.add(joueur);
         }
-        Partie partie = new Partie(listeJoueurs,bestiaire);
+        Partie partie = new Partie(listeJoueurs,bestiaire,listeItems);
         partie.demarrer();
 
 

@@ -1,7 +1,7 @@
 package systeme;
 import donjon.Donjon;
 import entite.Entite;
-
+import outils.Des;
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,7 +127,7 @@ public class TourDeJeu
                         }
                         if(personnage_temp.getWeapon()!=null)
                         {
-                            affichage.afficher("Arme : "+personnage_temp.getWeapon().toString()+"(degats");
+                            affichage.afficher("Arme : "+personnage_temp.getWeapon().toString());
                         }
                         else
                         {
@@ -136,17 +136,98 @@ public class TourDeJeu
                         personnage_temp.afficherInventaire();
 
 
+
+
                     }
                     entite_temp.afficherStats();
 
-                    affichage.afficher("Action restantes : " +action_restante  +"/3");
+                    affichage.afficher("\nAction restantes : " +action_restante  +"/3");
                     jouer(listeEntite.get(i),gestionnaireDonjon);
-                    //affichage.afficher("Laissez le maitre du jeu doit-il intervenir ?");
+                    interventionMJ(gd);
 
                 }
             }
-            //if(li)
+
 
         }
     }
+    private void interventionMJ(GestionnaireDonjon gestionnaireDonjon) {
+        String reponse = entree.lireString("Le MJ souhaite-t-il intervenir ? (o/n)");
+        if (reponse.equalsIgnoreCase("o")) {
+            affichage.afficher("Intervention MJ !");
+            boolean continuer = true;
+            while (continuer) {
+                affichage.afficher("1. Déplacer une entité\n" +
+                        "2. Lancer un jet de dés et infliger des dégâts\n" +
+                        "3. Ajouter un obstacle\n" +
+                        "4. Terminer intervention");
+
+                int choix = Entree.lireInt("Choix :");
+                switch (choix) {
+                    case 1:
+                        int x = Entree.lireInt("Coordonnée X de l'entité à déplacer :");
+                        int y = Entree.lireInt("Coordonnée Y de l'entité à déplacer :");
+                        Entite entite = gestionnaireDonjon.getDonjon().getCase(x, y).getEntite();
+                        if (entite != null) {
+                            int newX = Entree.lireInt("Nouvelle coordonnée X :");
+                            int newY = Entree.lireInt("Nouvelle coordonnée Y :");
+                            if (gestionnaireDonjon.getDonjon().getCase(newX, newY).isLibre()) {
+                                gestionnaireDonjon.getDonjon().getCase(x, y).setEntite(null);
+                                gestionnaireDonjon.getDonjon().getCase(newX, newY).setEntite(entite);
+                                entite.setPosition(newX, newY);
+                                affichage.afficher(entite + " déplacé avec succès.");
+                            } else {
+                                affichage.afficher("La case de destination est occupée.");
+                            }
+                        } else {
+                            affichage.afficher("Aucune entité à cette position.");
+                        }
+                        break;
+
+                    case 2:
+                        int nbDes = Entree.lireInt("Combien de dés ?");
+                        int faces = Entree.lireInt("Nombre de faces par dé ?");
+                        Des des = new Des(nbDes, faces);
+                        int degats = des.genererRandom();
+                        affichage.afficher("Dégâts à infliger : " + degats);
+
+                        int cibleX = Entree.lireInt("Coordonnée X de la cible :");
+                        int cibleY = Entree.lireInt("Coordonnée Y de la cible :");
+                        Entite cible = gestionnaireDonjon.getDonjon().getCase(cibleX, cibleY).getEntite();
+                        if (cible != null) {
+                            cible.changeHp(-degats);
+                            affichage.afficher(cible + " subit " + degats + " dégâts. PV restants : " + cible.afficherHP());
+                            if (cible.estMort()) {
+                                affichage.afficher(cible + " est mort.");
+                                gestionnaireDonjon.meurt(cible);
+                            }
+                        } else {
+                            affichage.afficher("Aucune cible ici.");
+                        }
+                        break;
+
+                    case 3:
+                        int obstX = Entree.lireInt("Coordonnée X de l'obstacle :");
+                        int obstY = Entree.lireInt("Coordonnée Y de l'obstacle :");
+                        if (!gestionnaireDonjon.getDonjon().getCase(obstX, obstY).estObstacle()) {
+                            gestionnaireDonjon.getDonjon().getCase(obstX, obstY).setObstacle(true);
+                            affichage.afficher("Obstacle ajouté en (" + obstX + "," + obstY + ")");
+                        } else {
+                            affichage.afficher("Il y a déjà un obstacle ici.");
+                        }
+                        break;
+
+                    case 4:
+                        continuer = false;
+                        break;
+
+                    default:
+                        affichage.afficher("Choix invalide.");
+                }
+            }
+        }
+    }
+
+
+
 }
