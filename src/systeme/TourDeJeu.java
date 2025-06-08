@@ -83,7 +83,6 @@ public class TourDeJeu
         }
 
         int choix  = Entree.lireInt("Choisissez une action :");
-        Entree.fermer();
 
         if (choix >= 1 && choix <= listeActions.size())
         {
@@ -118,6 +117,8 @@ public class TourDeJeu
                     m_donjon.afficher();
                     affichage.afficher("Action restantes : " +action_restante  +"/3");
                     jouer(listeEntite.get(i),gestionnaireDonjon);
+                    //affichage.afficher("Laissez le maitre du jeu doit-il intervenir ?");
+
                 }
             }
             //if(li)

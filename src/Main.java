@@ -87,19 +87,23 @@ import monstres.Monstre;
 import personnages.*;
 import donjon.*;
 import outils.Des;
+import systeme.*;
 import systeme.actions.sorts.*;
-import systeme.GestionnaireDonjon;
-import systeme.TourDeJeu;
-import systeme.Partie;
 
 import java.util.*;
 
 public class Main {
     private static int tourActuel = 0;
-    private static Scanner scanner = new Scanner(System.in);
+
+
+
     private static Random randomNumbers = new Random();
 
     public static void main(String[] args) {
+
+        Affichage affichage = new Affichage();
+        Entree entree = new Entree();
+
         System.out.println("Bienvenue dans\n");
         System.out.println(
 
@@ -154,6 +158,7 @@ public class Main {
         Weapon Fronde = new Weapon("Fronde", false, new Des(1, 4), 6);
         Weapon ArbaleteLegere = new Weapon("Arbalète légère", false, new Des(1, 8), 16);
         Weapon ArcCourt = new Weapon("Arc Court", false, new Des(1, 6), 16);
+        ArrayList<Item> listeItems = new ArrayList<>();
 
         //Création des sorts pour les classes qui les intègrent
         //Permet d'ajouter simplement des sorts aux classes
@@ -168,15 +173,10 @@ public class Main {
         ArrayList<Sort> sortsGuerrier = new ArrayList<>();
         ArrayList<Sort> sortsRoublard = new ArrayList<>();
 
-
-
-
-
         ArrayList<Item> inventaireMagicien = new ArrayList<>();
         ArrayList<Item> inventaireClerc = new ArrayList<>();
         ArrayList<Item> inventaireGuerrier = new ArrayList<>();
         ArrayList<Item> inventaireRoublard = new ArrayList<>();
-
 
 
         // Création inventaire Magicien
@@ -203,14 +203,86 @@ public class Main {
         Classes Guerrier = new Classes("Guerrier",20, inventaireGuerrier, sortsGuerrier);
         Classes Roublard = new Classes("Roublard",16, inventaireRoublard, sortsRoublard);
 
+        //int choixPartie = entree.lireInt("Comment voulez-vous jouer ?\n1.Nouveau Donjon\n2.Preset de Donjon");
+
+
+        ArrayList<Monstre> bestiaire = new ArrayList<>();
+        Monstre orc = new Monstre(0, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 3);
+        Monstre gobelin = new Monstre(0, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 3, 6);
+        Monstre dragon = new Monstre(0,"Dragon", 4,new Des(2,10),20,0,6,7,3,3);
+        Monstre demon = new Monstre(0,"Demon", 1,new Des(3,6),17,12,0,6,3,6);
+        Monstre squelette = new Monstre(0,"Squelette", 1,new Des(2,4),7,8,0,1,1,3);
+        Monstre golem = new Monstre(0,"Golem", 1,new Des(1,2),30,6,0,8,1,3);
+
+        bestiaire.add(orc);
+        bestiaire.add(gobelin);
+        bestiaire.add(dragon);
+        bestiaire.add(demon);
+        bestiaire.add(squelette);
+        bestiaire.add(golem);
+
+
+
+        ArrayList<Personnage> listeJoueurs = new ArrayList<>();
+        int nb_perso = entree.lireInt("Combien de personnages voulez vous créer ?");
+        for (int i = 0; i < nb_perso; i++) {
+            String nom = entree.lireString("Nom du personnage ?");
+            // Sélection race
+            int choixRace = entree.lireInt("1. Humain  2. Elfe  3. Nain  4. Halfelins");
+            Race raceChoisie;
+            switch (choixRace) {
+                case 1:
+                    raceChoisie = Humain;
+                    break;
+                case 2:
+                    raceChoisie = Elfe;
+                    break;
+                case 3:
+                    raceChoisie = Nain;
+                    break;
+                case 4:
+                    raceChoisie = Halfelins;
+                    break;
+                default:
+                    raceChoisie = Humain;
+                    break;
+            }
+
+
+            // Sélection classe
+            int choixClasse = entree.lireInt("1. Magicien  2. Clerc  3. Guerrier  4. Roublard");
+            Classes classeChoisie;
+            switch (choixClasse) {
+                case 1:
+                    classeChoisie = Magicien;
+                    break;
+                case 2:
+                    classeChoisie = Clerc;
+                    break;
+                case 3:
+                    classeChoisie = Guerrier;
+                    break;
+                case 4:
+                    classeChoisie = Roublard;
+                    break;
+                default:
+                    classeChoisie = Guerrier;
+                    break;
+            }
+
+
+            // Création personnage et ajout dans la liste
+            Personnage joueur = new Personnage(nom, raceChoisie, classeChoisie);
+            listeJoueurs.add(joueur);
+        }
+        Partie partie = new Partie(listeJoueurs,bestiaire);
+        partie.demarrer();
+
+
+
 
         // Création des personnages
-        String temp_nom="Michel";
-        Race temp_race=Humain;
-        Classes temp_classe=Guerrier;
-        int temp_id_race;
-        int temp_id_classe;
-        //ArrayList<Personnage>ListePerso = new ArrayList<>();
+
 
 
 
@@ -218,65 +290,15 @@ public class Main {
 
 
         //Début partie non définini
-        System.out.println("Combien de personnages voulez vous créer ?");
-        int nb_persos = scanner.nextInt();
-        scanner.nextLine();
-        for (int i=0; i<nb_persos; i++)
-        {
-            System.out.println("Rentrez le nom du personnage");
-            temp_nom=scanner.nextLine();
 
-            System.out.println("Rentrez la race du personnage\n1.Humain\n2.Elfe\n3.Nain\n4.Halfelins");
-            temp_id_race=scanner.nextInt();
-            switch(temp_id_race)
-            {
-                case 1:
-                    temp_race=Humain;
-                    break;
-                case 2:
-                    temp_race=Elfe;
-                    break;
-                case 3:
-                    temp_race=Nain;
-                    break;
-                case 4:
-                    temp_race=Halfelins;
-                    break;
-                default:
-                    System.out.println("Choix incorrect");
-                    break;
 
-            }
-            System.out.println("Rentrez la classe du personnage\n1.Magicien\n2.Clerc\n3.Guerrier\n4.Roublard");
-            temp_id_classe=scanner.nextInt();
-            scanner.nextLine();
-            switch (temp_id_classe)
-            {
-                case 1:
-                    temp_classe=Magicien;
-                    break;
-                case 2:
-                    temp_classe=Clerc;
-                     break;
-                case 3:
-                    temp_classe=Guerrier;
-                    break;
-                case 4:
-                    temp_classe=Roublard;
-                    break;
 
-                default:
-                    System.out.println("Choix incorrect");
-                    break;
-            }
 
-            Personnage personnage = new Personnage(temp_nom,temp_race,temp_classe);
-            //ListePerso.add(personnage);
-        }
+
 
         //Création des monstres
         //ArrayList<Monstre> ListeMonstre = new ArrayList<>();
-        int temp_num;
+        /*int temp_num;
         String temp_specie;
         int temp_atk_reach;
         int temp_nb_des;
@@ -319,14 +341,11 @@ public class Main {
             //ListeMonstre.add(monstre);
         }
 
-        Personnage joueur = new Personnage("Conan", Humain, Magicien);
+        Personnage joueur = new Personnage("Conan", Humain, Magicien);*/
 
 
         // Création du donjon
-        Donjon donjon = new Donjon(10, 10);
-        GestionnaireDonjon gestionnaireDonjon = new GestionnaireDonjon(donjon);
-        TourDeJeu tour = new TourDeJeu(gestionnaireDonjon, donjon);
-        Partie partie = new Partie(donjon, gestionnaireDonjon);
+
         /*
         for(int i=0;i<nb_persos;i++)
         {
@@ -339,7 +358,7 @@ public class Main {
 
         // Création des monstres
 
-        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 0, 6);
+        /*Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 0, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
         Personnage Lucas = new Personnage("Lucas",Halfelins,Magicien);
@@ -354,7 +373,7 @@ public class Main {
         //gestionnaireDonjon.ajouterEntite(Abel,2,4);
         gestionnaireDonjon.ajouterEntite(gobelin,1,0);
         gestionnaireDonjon.ajouterEntite(Lucas,0,0);
-        partie.jouerPartie(donjon,gestionnaireDonjon);
+        partie.jouerPartie(gestionnaireDonjon);*/
 
 
 

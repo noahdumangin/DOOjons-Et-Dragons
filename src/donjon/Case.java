@@ -48,6 +48,10 @@ public class Case {
     {
         this.item = i;
     }
+    public void setObstacle(boolean obstacle)
+    {
+        this.estObstacle=true;
+    }
 
     public boolean isLibre()
     {
@@ -87,4 +91,6 @@ public class Case {
 
         return " . ";
     }
+
+
 }

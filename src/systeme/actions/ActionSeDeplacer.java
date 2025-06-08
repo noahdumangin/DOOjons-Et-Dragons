@@ -13,9 +13,7 @@ public class ActionSeDeplacer implements Action {
     public boolean executer(Entite entite, GestionnaireDonjon gestionnaire) {
         Scanner scanner = new Scanner(System.in);
         int x = Entree.lireInt("Coordonnée X de destination : ");
-        Entree.fermer();
         int y = Entree.lireInt("Coordonnée Y de destination : ");
-        Entree.fermer();
 
         boolean succes = gestionnaire.deplacerEntite(entite, x, y);
         if(succes)

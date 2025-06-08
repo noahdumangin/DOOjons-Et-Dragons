@@ -41,6 +41,21 @@ public class Monstre implements Entite {
         this.m_max_hp=hp;
     }
 
+    public Monstre(Monstre other) {
+        this.m_num = other.m_num;
+        this.m_specie = other.m_specie;
+        this.m_atk_reach = other.m_atk_reach;
+        this.m_dmg = new Des(other.m_dmg.getNbDes(), other.m_dmg.getTypeDes()); // bien créer un nouvel objet Des
+        this.m_hp = other.m_hp;
+        this.m_strength = other.m_strength;
+        this.m_dext = other.m_dext;
+        this.m_armor_class = other.m_armor_class;
+        this.m_init = other.m_init;
+        this.m_speed = other.m_speed;
+        this.m_max_hp = other.m_max_hp;
+    }
+
+
     @Override
     public ArrayList<Action> getActionDeBase() {
         ArrayList<Action> actions = new ArrayList<>();
