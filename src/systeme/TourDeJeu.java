@@ -6,7 +6,8 @@ import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import systeme.actions.Action;
+import personnages.Personnage;
+import systeme.actions.*;
 
 public class TourDeJeu
 {
@@ -17,6 +18,7 @@ public class TourDeJeu
     private int tour;
     private ArrayList<Entite> listeEntite;
     private int action_restante;
+    Donjon m_donjon;
 
 
     public TourDeJeu(GestionnaireDonjon gestionnaireDonjon, Donjon donjon) //constructeur
@@ -26,11 +28,30 @@ public class TourDeJeu
         this.entree = new Entree();
         gererOrdre(this.listeEntite);
         this.action_restante=0;
+        this.m_donjon=donjon;
+    }
+
+    public ArrayList<Action> getActionsDisponibles(Entite entite, GestionnaireDonjon gestionnaireDonjon)
+    {
+        ArrayList<Action> actions = new ArrayList<>();
+        if(entite.getType()== Entite.TypeEntite.PERSONNAGE)
+        {
+            actions.addAll(((Personnage) entite).getActionDeBase());
+            if (gestionnaireDonjon.PersonnageSurItem(entite,m_donjon)) //Si le personnage est sur un item, alors on lui rajoute l'action Ramasser
+            {
+                actions.add(new ActionRamasser());
+            }
+        }
+        if(entite.getType()== Entite.TypeEntite.MONSTRE)
+        {
+            actions.addAll(entite.getActionDeBase());
+        }
+        return actions;
     }
 
     private void gererOrdre(ArrayList<Entite> listeEntite)
     {
-       Collections.sort(listeEntite, Comparator.comparingInt(Entite::getInit).reversed());
+        Collections.sort(listeEntite, Comparator.comparingInt(Entite::getInit).reversed());
     }
 
     public void afficherOrdre(int actuelle)
@@ -40,17 +61,20 @@ public class TourDeJeu
         for(int i=0;i<listeEntite.size();i++)
         {
             Entite entite_temp = listeEntite.get(i);
-            String fleche="  ";
-            if(listeEntite.indexOf(entite_temp)==actuelle)
+            if(!entite_temp.estMort())
             {
-                fleche="->";
+                String fleche="  ";
+                if(listeEntite.indexOf(entite_temp)==actuelle)
+                {
+                    fleche="->";
+                }
+                affichage.afficher(fleche+entite_temp.toString()+" "+entite_temp.getDescription() );
             }
-            affichage.afficher(fleche+entite_temp.toString()+" "+entite_temp.getDescription() );
         }
     }
     public void jouer(Entite entite, GestionnaireDonjon gestionnaireDonjon)
     {
-        ArrayList<Action> listeActions= entite.getAction();
+        ArrayList<Action> listeActions= getActionsDisponibles(entite, gestionnaireDonjon);
         affichage.afficher("Actions disponibles :");
         for(int i=0;i<listeActions.size();i++)
         {
@@ -83,16 +107,20 @@ public class TourDeJeu
 
         for(int i=0;i< listeEntite.size();i++)
         {
-            action_restante=3;
-            afficherOrdre(i);
-            affichage.afficher("C'est au tour de "+listeEntite.get(i).toString());
-            while (action_restante > 0)
+            if(!listeEntite.get(i).estMort())
             {
-                affichage.afficher("Action restantes : " +action_restante  +"/3");
-                jouer(listeEntite.get(i),gestionnaireDonjon);
+                action_restante=3;
+                afficherOrdre(i);
+                affichage.afficher("C'est au tour de "+listeEntite.get(i).toString());
+                while (action_restante > 0)
+                {
+                    m_donjon.afficher();
+                    affichage.afficher("Action restantes : " +action_restante  +"/3");
+                    jouer(listeEntite.get(i),gestionnaireDonjon);
+                }
             }
+            //if(li)
 
         }
     }
 }
-

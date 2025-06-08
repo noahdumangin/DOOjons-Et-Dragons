@@ -42,11 +42,40 @@ public class Monstre implements Entite {
     }
 
     @Override
-    public ArrayList<Action> getAction() {
+    public ArrayList<Action> getActionDeBase() {
         ArrayList<Action> actions = new ArrayList<>();
         actions.add(new ActionAttaquer());
         actions.add(new ActionSeDeplacer());
         return actions;
+    }
+
+    @Override
+    public int attaquer(Entite cible) {
+        int distance = Math.abs(cible.getX() - this.getX()) + Math.abs(cible.getY() - this.getY());
+        int portee = this.getAtk_reach();
+
+        if (distance > portee) {
+            return -1; // hors portée
+        }
+
+        Des d20 = new Des(1, 20);
+        int buffAttaque = d20.genererRandom();
+        int caractAtt = this.getCaractAtt(portee);
+        int totalAttaque = buffAttaque + caractAtt;
+
+        if (totalAttaque >= cible.getCA())
+        {
+            return this.getDmg();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    @Override
+    public TypeEntite getType() {
+        return TypeEntite.MONSTRE;
     }
 
 
@@ -147,9 +176,34 @@ public class Monstre implements Entite {
         this.m_hp=new_hp;
     }
     @Override
-    public int changeHp(int new_hp)
+    public boolean changeHp(int adding_hp)
     {
-        return this.m_hp+=new_hp;
+        if (adding_hp > 0)
+        {
+            if (m_hp == m_max_hp)
+            {
+                return false;
+            }
+
+
+            m_hp += adding_hp;
+            if (m_hp > m_max_hp)
+            {
+                m_hp = m_max_hp;
+            }
+            return true;
+        }
+
+        if (adding_hp < 0) {
+            m_hp += adding_hp;
+            if (m_hp < 0)
+            {
+                m_hp = 0;
+            }
+            return true;
+        }
+
+        return false;
     }
 
     @Override

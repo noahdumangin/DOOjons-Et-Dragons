@@ -32,6 +32,18 @@ public class Des {
         }
         return resultat;
     }
+
+    public int getNbDes()
+    {
+        return m_nb_des;
+    }
+
+    public int getTypeDes()
+    {
+        return m_type_des;
+    }
+
+    
 }
 
 

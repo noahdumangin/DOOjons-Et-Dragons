@@ -20,7 +20,6 @@ package donjon{
         + setItem(i : Item) : void
         + isLibre() : boolean
         + toString() : String
-        + estObstacle() : boolean
      }
 
     class Donjon {
@@ -39,21 +38,9 @@ package donjon{
 
 package entite{
     interface Entite {
-            + getX() : int
-            + getY() : int
-            + setPosition(x : int, y : int) : void
-            + toString() : String
-            + getSpeed() : int
-            + getAtk_reach() : int
-            + getDmg() : int
-            + getCaractAtt(reach : int) : int
-            + getCA() : int
-            + changeHp(hp : int) : int
-            + afficherHP() : String
-            + estMort() : boolean
-            + getInit() : int
-            + getDescription() : String
-        }
+        + seDeplacer(dest_x : int, dest_y : int, donjon : Donjon) : void
+        + attaquer() : void
+    }
 }
 
 package items{
@@ -74,7 +61,7 @@ package items{
         - m_dmg : Des
         - m_atk_reach : int
         + Weapon(nom : String, heavy : boolean, dmg : Des, atk_reach : int)
-        + getDmg() : Des
+        + retournerDmg() : int
         + getAtk_reach() : int
         + add_dmg(w : Weapon) : int
         + add_atk_reach(w : Weapon) : int
@@ -82,41 +69,33 @@ package items{
 }
 
 package monstres{
-    class Monstre {
-            - m_x : int
-            - m_y : int
-            - m_num : int
-            - m_specie : String
-            - m_atk_reach : int
-            - m_dmg : Des
-            - m_hp : int
-            - m_strength : int
-            - m_dext : int
-            - m_armor_class : int
-            - m_init : int
-            - m_speed : int
-            - m_max_hp : int
-            + Monstre(num : int, specie : String, atk_reach : int, dmg : Des, hp : int, strength : int, dext : int, armor_class : int, init : int, speed : int)
-            + getSpecie() : String
-            + getSpeed() : int
-            + getInit() : int
-            + getAtk_reach() : int
-            + getDmg() : int
-            + getCaractAtt(portee : int) : int
-            + getCA() : int
-            + getDext() : int
-            + getStrength() : int
-            + getArmorClass() : int
-            + setHp(new_hp : int) : void
-            + changeHp(new_hp : int) : int
-            + afficherHP() : String
-            + estMort() : boolean
-            + setPosition(x : int, y : int) : void
-            + getX() : int
-            + getY() : int
-            + getDescription() : String
-            + toString() : String
-        }
+    class Monstre{
+        - m_x : int
+        - m_y : int
+        - m_num : int
+        - m_specie : String
+        - m_atk_reach : int
+        - m_dmg : Des
+        - m_hp : int
+        - m_strength : int
+        - m_dext : int
+        - m_armor_class : int
+        - m_init : int
+        - m_speed : int
+        - m_max_hp : int
+        + Monstre(num : int, specie : String, atk_reach : int, dmg : Des, hp : int, strength : int, dext : int, armor_class : int, init : int, speed : int)
+        + getSpecie() : String
+        + getSpeed() : int
+        + getInit() : int
+        + getAtkReach() : int
+        + getCA() : int
+        + getArmorClass() : int
+        + estMort() : boolean
+        + setPosition(x : int, y : int) : void
+        + seDeplacer(dest_x : int, dest_y : int, donjon : Donjon) : void
+        + attaquer() : void
+        + prendreDegats(degats : int) : void
+    }
 }
 
 package outils{
@@ -131,52 +110,13 @@ package outils{
 }
 
 package personnages{
-    class Personnage {
-            - m_nom : String
-            - m_x : int
-            - m_y : int
-            - estMort : boolean
-            - m_hp : int
-            - m_max_hp : int
-            - m_strength : int
-            - m_dext : int
-            - m_speed : int
-            - m_init : int
-            - m_inventory : ArrayList<Item>
-            - m_armor : Armor
-            - m_weapon : Weapon
-            - m_classes : Classes
-            - m_race : Race
-            + Personnage(nom : String, race : Race, classes : Classes)
-            + afficherStats() : void
-            + equiperArme(weapon : Weapon) : void
-            + equiperArmure(armor : Armor) : void
-            + desequiperArme(weapon : Weapon) : void
-            + desequiperArmmure(armor : Armor) : void
-            + getHp() : int
-            + getStrength() : int
-            + getDext() : int
-            + getSpeed() : int
-            + getInit() : int
-            + getDescription() : String
-            + getWeapon() : Weapon
-            + getArmor() : Armor
-            + getInventory() : ArrayList<Item>
-            + afficherInventaire() : void
-            + getCA() : int
-            + getAtk_reach() : int
-            + getDmg() : int
-            + getCaractAtt(portee : int) : int
-            + getMaxHp() : int
-            + setPosition(x : int, y : int) : void
-            + getX() : int
-            + getY() : int
-            + afficherHP() : String
-            + estMort() : boolean
-            + setHp(new_hp : int) : void
-            + changeHp(new_hp : int) : int
-            + toString() : String
-        }
+    class Classes{
+        - m_hp : int
+        - m_inventory : ArrayList<Item>
+        + Classes(hp : int, inventory : ArrayList<Item>)
+        + getHp() : int
+        + getInventory() : ArrayList<Item>
+    }
 
     class GameMaster{
     }
@@ -213,6 +153,8 @@ package personnages{
         + setPosition(x : int, y : int) : void
         + getX() : int
         + getY() : int
+        + seDeplacer(dest_x : int, dest_y : int, donjon : Donjon) : void
+        + attaquer(x_cible : int, y_cible : int, donjon : Donjon) : void
         + equiperArme(weapon : Weapon) : void
         + desequiperArme(weapon : Weapon) : void
         + equiperArmure(armor : Armor) : void
@@ -262,39 +204,6 @@ package sorts{
     class Sort{
     }
 }
-package systeme
-{
-    class Affichage
-    {
-        +afficher (chaine : String ) : void
-    }
-    class GestionnaireDonjon
-    {
-        -donjon : Donjon
-        -listeEntite : ArrayList<Entite>
-        +GestionnaireDonjon(donjon : Donjon)
-        +ajouterEntite(e : Entite, x : int, y : int)
-        +deplacerEntite(e : Entite, dest_x : int, dest_y : int)
-        +attaquerEntite(attaquant : Entite, x : int, y : int)
-        +meurt (e : Entite)
-        +getListeEntite(listeEntite)
-
-
-    }
-    class TourDeJeu
-    {
-            - affichage : Affichage
-            - gd : GestionnaireDonjon
-            - entree : Entree
-            - tour : int
-            - listeEntite : ArrayList<Entite>
-            + TourDeJeu(gestionnaireDonjon : GestionnaireDonjon, donjon : Donjon)
-            - gererOrdre(listeEntite : ArrayList<Entite>) : void
-            + afficherOrdre(actuelle : int) : void
-            + jouer() : void
-    }
-
-}
 
 donjon.Case --> personnages.Personnage
 donjon.Case --> items.Item
@@ -313,6 +222,7 @@ Weapon --> outils.Des
 
 Monstre ..|> entite.Entite
 Monstre --> outils.Des
+Monstre --> donjon.Donjon
 
 Des --> java.util.Random
 Des --> java.util.ArrayList
@@ -324,6 +234,7 @@ Personnage --> items.Armor
 Personnage --> items.Weapon
 Personnage --> personnages.Race
 Personnage --> personnages.Classes
+Personnage --> donjon.Donjon
 Personnage ..|> entite.Entite
 Personnage --> outils.Des
 
@@ -335,15 +246,4 @@ Guerison --> Personnage : soigne
 Sort <|-- Arme_magique
 Sort <|-- Boogie_woogie
 Sort <|-- Guerison
-
-systeme.GestionnaireDonjon --> donjon.Donjon
-systeme.GestionnaireDonjon --> entite.Entite : listeEntite
-systeme.GestionnaireDonjon --> systeme.Affichage
-
-TourDeJeu --> Affichage
-TourDeJeu --> GestionnaireDonjon
-TourDeJeu --> Entree
-TourDeJeu ..> Donjon
-TourDeJeu --> "listeEntite" Entite
-
 @enduml

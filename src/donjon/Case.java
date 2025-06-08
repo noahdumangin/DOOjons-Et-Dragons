@@ -29,31 +29,6 @@ public class Case {
     {
         return m_y;
     }
-    public Personnage getPersonnage()
-    {
-        return personnage;
-    }
-    public void setPersonnage(Personnage p)
-    {
-        this.personnage = p;
-        if(this.personnage !=null)
-        {
-            this.personnage.setPosition(m_x,m_y);
-        }
-    }
-
-    public Monstre getMonstre()
-    {
-        return monstre;
-    }
-    public void setMonstre(Monstre m)
-    {
-        this.monstre=m;
-        if(this.monstre!=null)
-        {
-            this.monstre.setPosition(m_x,m_y);
-        }
-    }
 
     public Entite getEntite()
     {
@@ -92,11 +67,6 @@ public class Case {
         {
             return "[ ]";
         }
-        if (item != null)
-        {
-            return " * ";
-        }
-        
         if (entite != null)
         {
             if(entite.toString().length() >=3)
@@ -108,6 +78,13 @@ public class Case {
                 return String.format("%-3s", entite.toString());
             }
         }
+
+        if (item != null)
+        {
+            return " * ";
+        }
+
+
         return " . ";
     }
 }

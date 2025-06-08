@@ -87,8 +87,10 @@ import monstres.Monstre;
 import personnages.*;
 import donjon.*;
 import outils.Des;
+import systeme.actions.sorts.*;
 import systeme.GestionnaireDonjon;
 import systeme.TourDeJeu;
+import systeme.Partie;
 
 import java.util.*;
 
@@ -153,6 +155,21 @@ public class Main {
         Weapon ArbaleteLegere = new Weapon("Arbalète légère", false, new Des(1, 8), 16);
         Weapon ArcCourt = new Weapon("Arc Court", false, new Des(1, 6), 16);
 
+        //Création des sorts pour les classes qui les intègrent
+        //Permet d'ajouter simplement des sorts aux classes
+        ArrayList<Sort> sortsMagicien = new ArrayList<>();
+        sortsMagicien.add(new ArmeMagique());
+        sortsMagicien.add(new BoogieWoogie());
+        sortsMagicien.add(new Guerison());
+
+        ArrayList<Sort> sortsClerc = new ArrayList<>();
+        sortsClerc.add(new Guerison());
+
+        ArrayList<Sort> sortsGuerrier = new ArrayList<>();
+        ArrayList<Sort> sortsRoublard = new ArrayList<>();
+
+
+
 
 
         ArrayList<Item> inventaireMagicien = new ArrayList<>();
@@ -181,10 +198,10 @@ public class Main {
         inventaireRoublard.add(ArcCourt);
 
         // Création des classes
-        Classes Magicien = new Classes("Magicien",12, inventaireMagicien);
-        Classes Clerc = new Classes("Clerc",16, inventaireClerc);
-        Classes Guerrier = new Classes("Guerrier",20, inventaireGuerrier);
-        Classes Roublard = new Classes("Roublard",16, inventaireRoublard);
+        Classes Magicien = new Classes("Magicien",12, inventaireMagicien, sortsMagicien);
+        Classes Clerc = new Classes("Clerc",16, inventaireClerc, sortsClerc);
+        Classes Guerrier = new Classes("Guerrier",20, inventaireGuerrier, sortsGuerrier);
+        Classes Roublard = new Classes("Roublard",16, inventaireRoublard, sortsRoublard);
 
 
         // Création des personnages
@@ -309,6 +326,7 @@ public class Main {
         Donjon donjon = new Donjon(10, 10);
         GestionnaireDonjon gestionnaireDonjon = new GestionnaireDonjon(donjon);
         TourDeJeu tour = new TourDeJeu(gestionnaireDonjon, donjon);
+        Partie partie = new Partie(donjon, gestionnaireDonjon);
         /*
         for(int i=0;i<nb_persos;i++)
         {
@@ -321,20 +339,24 @@ public class Main {
 
         // Création des monstres
 
-        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 2, 6);
+        Monstre gobelin = new Monstre(1, "Gobelin", 1, new Des(1, 6), 7, 2, 3, 3, 0, 6);
         Monstre orc = new Monstre(2, "Orc", 1, new Des(1, 8), 15, 4, 1, 3, 1, 5);
 
-        Personnage Lucas = new Personnage("Lucas",Elfe,Magicien);
+        Personnage Lucas = new Personnage("Lucas",Halfelins,Magicien);
+
+        Personnage Abel = new Personnage("Abel", Humain, Guerrier);
+
         Lucas.equiperArme(Baton);
         Lucas.afficherStats();
+        Abel.afficherStats();
         Lucas.afficherInventaire();
+        donjon.getCase (0,1).setItem(ArmureEcailles);
+        //gestionnaireDonjon.ajouterEntite(Abel,2,4);
+        gestionnaireDonjon.ajouterEntite(gobelin,1,0);
+        gestionnaireDonjon.ajouterEntite(Lucas,0,0);
+        partie.jouerPartie(donjon,gestionnaireDonjon);
 
-        gestionnaireDonjon.ajouterEntite(gobelin,0,0);
 
-        gestionnaireDonjon.ajouterEntite(Lucas,2,0);
-        System.out.println( gestionnaireDonjon.getListeEntite());
-        donjon.afficher();
-        tour.jouerTour(gestionnaireDonjon);
 
 
         //tour.afficherOrdre();

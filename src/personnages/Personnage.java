@@ -4,10 +4,9 @@ import entite.Entite;
 
 import java.util.ArrayList;
 import outils.Des;
-import systeme.actions.Action;
-import systeme.actions.ActionAttaquer;
-import systeme.actions.ActionSeDeplacer;
-
+import systeme.actions.sorts.Sort;
+import systeme.actions.*;
+import systeme.*;
 public class Personnage implements Entite {
     private String m_nom;
 
@@ -61,12 +60,61 @@ public class Personnage implements Entite {
     }
 
     @Override
-    public ArrayList<Action> getAction() {
+    public ArrayList<Action> getActionDeBase()
+    {
         ArrayList<Action> actions = new ArrayList<>();
         actions.add(new ActionAttaquer());
         actions.add(new ActionSeDeplacer());
-
+        if(m_inventory!=null)
+        {
+            actions.add((new ActionEquiper()));
+        }
+        if(!m_classes.getSorts().isEmpty())
+        {
+            actions.add(new ActionSorts());
+        }
         return actions;
+
+    }
+
+    @Override
+    public int attaquer(Entite cible) {
+        int distance = Math.abs(cible.getX() - this.getX()) + Math.abs(cible.getY() - this.getY());
+        int portee = this.getAtk_reach();
+
+        if (distance > portee)
+        {
+            return -1; // hors portée
+        }
+
+        Des d20 = new Des(1, 20);
+        int buffAttaque = d20.genererRandom();
+        int caractAtt = this.getCaractAtt(portee);
+        int totalAttaque = buffAttaque + caractAtt;
+
+        if (totalAttaque >= cible.getCA()) {
+            return this.getDmg();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+
+    public ArrayList<Sort> getSorts()
+    {
+        return m_classes.getSorts();
+    }
+
+    @Override
+    public TypeEntite getType() {
+        return TypeEntite.PERSONNAGE;
+    }
+
+    public void ajouterAction()
+    {
+
     }
 
 
@@ -153,7 +201,8 @@ public class Personnage implements Entite {
     {
         for(int i=0;i<m_inventory.size();i++)
         {
-            System.out.println(m_inventory.get(i).getNom());
+            Item item_afficher = m_inventory.get(i);
+            System.out.println(i+1+"."+item_afficher.toString()+"("+item_afficher.getType()+")");
         }
     }
 
@@ -182,6 +231,24 @@ public class Personnage implements Entite {
 
     }
 
+    public ArrayList<Weapon> listeArmes()
+    {
+        ArrayList<Weapon> malisteArmes = new ArrayList<>();
+        if(m_weapon!=null)
+        {
+            malisteArmes.add(m_weapon);
+        }
+        for(int i=0;i<getInventory().size();i++)
+        {
+            Item item = getInventory().get(i);
+            if(item.getType()== Item.TypeItem.ARME)
+            {
+                Weapon nouvelleArme = (Weapon) item;
+                malisteArmes.add(nouvelleArme);
+            }
+        }
+        return malisteArmes;
+    }
     @Override
     public int getDmg() {
         if(m_weapon==null)
@@ -190,7 +257,7 @@ public class Personnage implements Entite {
         }
         else
         {
-            return m_weapon.getDmg().genererRandom();
+            return m_weapon.getDmg();
         }
     }
 
@@ -252,16 +319,83 @@ public class Personnage implements Entite {
         this.m_hp=new_hp;
     }
     @Override
-    public int changeHp(int new_hp)
+    public boolean changeHp(int adding_hp)
     {
-        return this.m_hp+=new_hp;
+        if (adding_hp > 0)
+        {
+            if (m_hp == m_max_hp)
+            {
+                return false;
+            }
+
+
+            m_hp += adding_hp;
+            if (m_hp > m_max_hp)
+            {
+                m_hp = m_max_hp;
+            }
+            return true;
+        }
+
+        if (adding_hp < 0) {
+            m_hp += adding_hp;
+            if (m_hp < 0)
+            {
+                m_hp = 0;
+            }
+            return true;
+        }
+
+        return false;
     }
+
 
     @Override
     public String toString()
     {
         return m_nom;
     }
+
+    public boolean equiper(Item item) //méthode équiper partagé entre Weapon et Armor (accessoirement un crime de guerre pour LeQuentrec
+    {
+        if(item.getType()== Item.TypeItem.ARME)
+        {
+            Weapon nouvelleArme = (Weapon) item;
+            if(m_weapon!=null)
+            {
+                m_inventory.add(m_weapon);
+            }
+            m_weapon=nouvelleArme;
+            m_inventory.remove(nouvelleArme);
+            System.out.println(nouvelleArme+" équipé avec succès");
+            return true;
+        }
+        if(item.getType()== Item.TypeItem.ARMURE)
+        {
+            Armor nouvelleArmure = (Armor) item;
+            if(m_armor!=null)
+            {
+                m_inventory.add(m_armor);
+            }
+
+            m_armor=nouvelleArmure;
+            m_inventory.remove(nouvelleArmure);
+            System.out.println(nouvelleArmure+" équipé avec succès");
+            return true;
+        }
+        System.out.println("Le type de l'item n'est pas identifié");
+        return false;
+    }
+
+    public void addItemInventory(Item item)
+    {
+        m_inventory.add(item);
+    }
+
+    /*public void ameliorerArme(Weapon weapon)
+    {
+        m_weapon.
+    }*/
 
 
 

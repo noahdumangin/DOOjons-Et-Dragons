@@ -1,6 +1,6 @@
 package items;
 
-public class Item {
+public abstract class Item {
     private String m_nom;
     private boolean m_heavy;
 
@@ -13,4 +13,18 @@ public class Item {
     {
         return m_nom;
     }
+
+    public enum TypeItem
+    {
+        ARME,
+        ARMURE
+    }
+
+    public abstract TypeItem getType();
+
+    @Override
+    public String toString() {
+        return m_nom;
+    }
+
 }

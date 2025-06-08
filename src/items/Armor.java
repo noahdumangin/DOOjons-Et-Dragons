@@ -16,4 +16,8 @@ public class Armor extends Item{
         return m_CA;
     }
 
+    @Override
+    public TypeItem getType() {
+        return TypeItem.ARMURE;
+    }
 }

@@ -1,0 +1,128 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package donjon{
+    class Case{
+        - int m_x
+        - int m_y
+        - Personnage personnage
+        - Item item
+        - Monstre monstre
+        - Boolean estObstacle
+        - Entite entite
+        + Case(int x, int y)
+        + int getM_x()
+        + int getM_y()
+        + Personnage getPersonnage()
+        + void setPersonnage(Personnage p)
+        + Monstre getMonstre()
+        + void setMonstre(Monstre m)
+        + Entite getEntite()
+        + Entite setEntite(Entite e)
+        + Item getItem()
+        + void setItem(Item i)
+        + boolean isLibre()
+        + boolean estObstacle()
+        + String toString()
+    }
+
+    class Donjon{
+        - Case[][] m_plateau
+        - int m_tailleX
+        - int m_tailleY
+
+        + Donjon(int tailleX, int tailleY)
+        + void afficher()
+        + Case getCase(int x, int y)
+        + int getTailleX()
+        + int getTailleY()
+        + void echangerCases(int x1, int y1, int x2, int y2)
+        + void setCase(int x, int y, Case newCase)
+    }
+}
+package entite{
+    interface Entite{
+        + int getX()
+        + int getY()
+        + void setPosition(int x, int y)
+        + String toString()
+        + int getSpeed()
+        + int getAtk_reach()
+        + int getDmg()
+        + int getCaractAtt(int reach)
+        + int getCA()
+        + int changeHp(int hp)
+        + String afficherHP()
+        + boolean estMort()
+        + int getInit()
+        + String getDescription()
+        + ArrayList<Action> getAction()
+    }
+}
+package items{
+    class Armor{
+        - int m_CA
+        + Armor(String nom, boolean heavy, int CA)
+        + int getCA()
+    }
+    class Item{
+        - String m_nom
+        - boolean m_heavy
+        + Item(String nom, boolean heavy)
+        + String getNom()
+    }
+    class Weapon{
+        - Des m_dmg
+        - int m_atk_reach
+        + Weapon(String nom, boolean heavy, Des dmg, int atk_reach)
+        + int getAtk_reach()
+        + Des getDmg()
+    }
+}
+package monstres{
+    class Monstre{
+    }
+}
+package outils{
+    class Des{
+    }
+}
+package personnages{
+    class Classes{
+    }
+    class GameMaster{
+    }
+    class Personnage{
+    }
+    class Race{
+    }
+}
+package sorts{
+    class Arme_magique{
+    }
+    class Boogie_woogie{
+    }
+    class Guerison{
+    }
+    class Sort{
+    }
+}
+package systeme{
+    package actions{
+        interface Action{
+        }
+        class ActionAttaquer{
+        }
+        class ActionSeDeplacer{
+        }
+    }
+    class Affichage{
+    }
+    class Entree{
+    }
+    class GestionnnaireDonjon{
+    }
+    class TourDeJeu{
+    }
+    }
+@enduml
