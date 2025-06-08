@@ -1,7 +1,6 @@
 package personnages;
 import items.*;
 import entite.Entite;
-import sorts.*;
 
 import java.util.ArrayList;
 import outils.Des;
