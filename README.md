@@ -3,6 +3,32 @@
 Nous avoons développé une application pour **un nouveau un jeu D&D** dans le cadre d'un projet au sein de l'IUT.
 C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des personnages affrontant des monstres dans plusieurs donjons successifs.
 
+# Table des matières
+
+- [Organisation](#organisation)
+- [Le jeu (PHASE 1)](#le-jeu-phase-1)
+  - [Les personnages](#les-personnages)
+    - [Les caractéristiques](#les-caractéristiques)
+    - [Les équipements](#les-équipements)
+    - [Les races](#les-races)
+    - [Les classes](#les-classes)
+    - [Création d'un personnage](#création-dun-personnage)
+  - [Les monstres](#les-monstres)
+  - [Déroulement d'un donjon](#déroulement-dun-donjon)
+    - [Mise en place](#mise-en-place)
+    - [Tour d'un personnage ou d'un monstre](#tour-dun-personnage-ou-dun-monstre)
+    - [Se déplacer](#se-déplacer)
+    - [Attaquer](#attaquer)
+    - [Fin d'un donjon](#fin-dun-donjon)
+  - [Exemple d'affichage](#exemple-daffichage)
+- [Le jeu (PHASE 2)](#le-jeu-phase-2)
+  - [Le maître du jeu intervient](#le-maître-du-jeu-intervient)
+  - [Sorts](#sorts)
+  - [Une nouvelle arme](#une-nouvelle-arme)
+- [Fin du jeu](#fin-du-jeu)
+
+
+
 ## Organisation
 
 - Durée : 5 semaines
