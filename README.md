@@ -1,35 +1,15 @@
 # DOOnjon&Dragon Project
 
-On souhaite développer une application pour **un nouveau un jeu D&D**.
+Nous avoons développé une application pour **un nouveau un jeu D&D** dans le cadre d'un projet au sein de l'IUT.
 C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des personnages affrontant des monstres dans plusieurs donjons successifs.
 
 ## Organisation
 
-- Travail en **binôme** au sein d'un même groupe de TP
-- Le travail doit être réalisé sur un fork du projet dans le groupe <nom_etudiant_1>-<nom_etudiant_2> que vous aurez créé
 - Durée : 5 semaines
-- Nombre de séances :
-   - 8h encadrées en groupe de TD
-   - 12h encadrées, en groupe TP
-   - 10h tutorées, en promo complète
-   - travail non-encadré (SAé libre)
-- Sujet dévoilé en deux phases :
-  - Phase 1 dévoilée **Lundi 5 mai** sur les deux premières semaines
-  - Phase 2 dévoilée le **Lundi 19 mai**
+- Sujet dévoilé en deux phases
 
-## Calendrier
-
-- Lundi **5 mai** : début du projet
-- Dimanche **18 mai** : rendu intermédiaire
-- Lundi 19 mai : début de la phase 2
-- Dimanche **8 Juin** à minuit : rendu final
-- De Mercredi **11** à Vendredi **13 juin** : soutenances
-
-De plus, il y aura un rendu hebdomadaire avant chaque **dimanche, minuit**.
-
-
-
-## Le jeu
+  
+## Le jeu *(PHASE 1)*
 
 Il s'agit d'un jeu avec plusieurs joueurs face à des monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les personnages doivent éliminer les monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
 
@@ -96,7 +76,6 @@ Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 
 - les Nains ont leur force de base augmentée de 6 points
 
 
-
 #### Les classes
 - les Clercs possèdent à leur création:
   - 16 points de vie
@@ -111,6 +90,7 @@ Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 
   - 16 points de vie
   - un équipement contenant une rapière et un arc court
 
+
 #### Création d'un personnage
 Au début d'une partie, chaque joueur crée son personnage de la façon suivante:
 - le joueur choisit un nom pour son personnage
@@ -121,6 +101,7 @@ Au début d'une partie, chaque joueur crée son personnage de la façon suivante
   - 4d4
   - 3 points
   - l'augmentation déterminée par la race du personnage
+
 
 ### Les monstres
 
@@ -204,127 +185,35 @@ En cas de victoire, les personnages regagnent l'intégralité de leur vie et pas
 
 ### Exemple d'affichage
 
-```console
-********************************************************************************
-Donjon 2:
-                                    Caelynn (Elfe magicienne)              
-
-********************************************************************************
-Tour 3:
-   And   Andry (Naine Clerc, 15/16)
-   X(    Demogorgon (25/45)
-   Dar   Darvin (Humain Guerrier, 13/20)
--> Cae   Caelynn (Elfe Magicienne, 10/12)
-   X^    Dragon bleu (35/50)
-   Alt   Alton (Halfelin Roublard, 14/16)
-
-      A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W
-   *-----------------------------------------------------------------------*
-1  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-2  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-3  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-4  |  .  .  .  .  X^ .  .  .  .  .  *  .  .  .  .  .  .  .  .  .  .  .  .  |
-5  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-6  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-7  |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  *  .  .  .  .  .  .  |
-8  |  .  .  .  .  .  .  .  .  . [ ] .  .  .  .  .  .  .  .  .  .  .  .  .  |
-9  |  .  .  .  .  .  .  .  .  . [ ][ ] .  .  .  .  .  .  .  .  .  .  .  .  |
-10 |  .  .  .  .  .  .  .  .  .  . [ ] . Alt .  .  .  .  .  .  .  .  .  .  |
-11 |  .  .  .  .  .  .  .  .  .  . [ ] .  .  .  .  .  .  .  .  .  .  .  .  |
-12 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-13 |  .  .  .  .  .  .  .  .  .  .  . Cae .  .  .  .  .  .  .  .  .  .  .  |
-14 |  .  .  .  .  .  .  .  .  .  .  . And .  .  .  X( .  .  .  *  .  .  .  |
-15 |  .  .  .  .  *  .  .  .  .  *  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-16 |  .  .  .  .  .  .  .  .  .  .  .  .  . Dar .  .  .  .  .  .  .  .  .  |
-17 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-18 |  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  |
-   *-----------------------------------------------------------------------*
-    * Equipement   |   [ ] Obstacle  |
-
-Caelynn
-  Vie : 10/12
-  Armure: aucune
-  Arme: fronde (degat: 1d4, portee: 6)
-  Inventaire: [1] baton
-  Force: 8
-  Dextérité: 16
-  Vitesse: 12
-
-Caelynn il vous reste 2 actions que souhaitez vous faire ?
-  - laisser le maître du jeu commenter l'action précédente (gestionnaireDonjon <texte>)
-  - commenter action précédente (com <texte>)
-  - attaquer (att <Case>)
-  - se déplacer (dep <Case>)
-  - s'équiper (equ <numero equipement>)
-```
-
-```
-  $ att P14
-  Lancer un dé de 20 (appuyer sur n'importe quelle touche)
-  $
-  Vous avez fait 13
-  Votre attaque est de 13+16(Dextérité)=29.
-  Votre attaque perce l'armure du Demogorgon (18).
-  Lancer un dé de 4 pour infliger des dégâts (appuyer sur n'importe quelle touche)
-  $
-  Le Demogorgon subit 3 dégâts!
-  Il lui reste 22 PV.
-```
+![affichage du début du jeu](photos/debut.png)
+![affichage du choix du donjon](photos/choix_donjon.png)
+![affichage du donjon + suite](photos/affichage_donjon.png)
 
 Il n'est pas nécessaire de reproduire le visuel tel quel mais toutes les informations doivent être présentes.
+
+## Le jeu *(PHASE 2)*
+
+On souhaite ajouter les fonctionnalités suivantes au jeu.
+
+## Le maître du jeu intervient
+En plus de pouvoir commenter l'action d'un joueur, le maître du jeu peut intervenir à la fin d'une action d'un joueur ou d'un monstre pour :
+- déplacer un monstre ou un personnage
+- par le jet de dés de son choix(nombre de dés et nombre de faces au choix), il peut infliger des dégâts à un joueur ou un monstre,
+- ajouter des obstacles dans le donjon
+
+## Sorts
+Certains personnages vont se voir dotés de sorts. L'utilisation d'un sort se fait au tour de jeu du personnage doté de ce sort. L'utilisation d'un sort compte comme une action. Les monstres ne peuvent pas être dotés de sorts.
+- Guérison: le personnage détenteur du sort peut choisir un personnage (y compris lui-même) et lance 1d10 pour connaître le nombre de points de vie que le personnage visé regagnera. Le personnage soigné ne peut pas dépasser le nombre de points de vie qu'il avait à sa création.
+- Boogie Woogie : le personnage détenteur du sort peut choisir deux personnages (y compris lui-même), de deux monstres ou d'un personnage (y compris lui-même) et d'un monstre et échanger leur position dans le donjon.  
+- Arme magique : le personnage détenteur du pouvoir peut choisir une arme détenue par un personnage (mais pas forcément équipée) à améliorer. L'arme gagne alors un bonus de 1 lors des jets d'attaque et de 1 lors des jets de dégâts (les bonus peuvent se cumuler).
+
+Les personnages de classe Clerc peuvent lancer le sort Guérison. Les magiciens peuvent lancer n'importe quel sort.
+
+
+## Une nouvelle arme
+Une nouvelle arme de guerre est disponible pour toujours plus de sang !
+- l'épée à deux mains, dégât: 2d6, portée: 1 case
 
 ### Fin du jeu
 
 À la fin du jeu, un écran affiche "Vous avez perdu" ou "Vous avez gagné" et indique la cause de la défaite ou de la victoire.
-## Rendus hebdomadaires
-
-Votre projet doit être un fork de ce dépôt dans un groupe ayant pour nom `<nom_etudiant_1>-<nom_etudiant_2>`.
-Votre enseignant en TP et le responsable du module doivent être ajoutés comme Reporter à votre projet.
-
-Vous devez effectuer un rendu par semaine au plus tard le dimanche soir à minuit : la régularité des rendus sera prise en compte dans l'évaluation.
-Un rendu est une branche qui a pour nom `rendu<numéro-rendu>`.
-Le dernier rendu sera évalué en tant que rendu final.
-
-Chaque rendu doit contenir :
-
-- un programme qui compile dont les sources sont dans le répertoire `src/`,
-- un diagramme de classes à jour placé dans le répertoire `uml/` ayant pour nom `semaine<numero>.puml`,
-
-La structure du dépôt git doit être la suivante :
-```bash
-.
-├── README.md
-├── .gitignore
-├── src/
-    ├── Main.java
-    ├── ...
-├── uml/
-    ├── semaine1.puml
-    ├──...
-```
-
-## Rendus évalués
-
-#### 1er rendu : 18 mai
-
-Seront évalués :
-
-- Diagramme de classes complet de la phase 1
-  - respect des conventions UML
-- Code
-  - cohérence avec l'UML
-
-## Quelques consignes
-
-Veillez :
-
-- à respecter les [P21 Guidelines](https://git.unistra.fr/p21/p21/-/blob/main/guidelines.pdf?ref_type=heads)
-- à la bonne conception du code : il doit être lisible et facile à corriger, à réutiliser, à modifier et à étendre.
-
-## Quelques conseils
-
-- N'essayez pas d'implémenter toutes les fonctionnalités en une seule fois. Commencez par un programme simple mais fonctionnel et intégrez progressivement les fonctionnalités.
-- Il s'agit d'une version très simplifiée de Donjon et Dragon. Il peut être tentant d'améliorer le projet et d'intégrer beaucoup de fonctionnalités et règles du jeu originel. Cependant cela ne vous permettra pas d'augmenter votre note. Ne négligez pas le projet de base ni les projets des autres modules. Vous aurez tout le loisir d'améliorer le projet durant votre été.
-- Faites des commits réguliers sur vos branches de travail.
-- Concevez votre code de façon à ce qu'il soit facile à modifier et à étendre avec de nouvelles fonctionnalités, notamment en prévision de la phase 2.
-- La qualité de la conception et du code produit est plus importante que le nombre de fonctionnalités intégrées.
